@@ -1,6 +1,10 @@
 #!/usr/bin/python
 import numpy as np
 
+'''
+Job data is a 4-tuple: (arrival, duration, value, index)
+'''
+
 class Machine(object):
     '''
     Machine states can be either idle or busy. If any other states are added, please modify here
@@ -26,29 +30,37 @@ class Machine(object):
 
     def load_job(self, job):
         turn_on()
-        self.job = job
-        self.work_start = job.arrival
-        self.work_end = job.arrival + job.duration
-        self.current_job_value = job.value
+        self.job = job[3]
+        self.work_start = job[0]
+        self.work_end = job.arrival + job[1]
+        self.current_job_value = job[2]
 
-    def unload_job(self, job):
+    def unload_job(self):
         self.job = None
         self.current_job_value = None
         self.work_start = None
         self.work_end = None
-        turn_off()
+        self.turn_off()
 
     def start_job(self, job):
         if (job is not None):
-            load_job(job)
+            self.oad_job(job)
+            print "Job " + self.job + " is on machine " + self.number
         else:
             raise Error("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
         if (self.state):
+            print "Machine " + self.number + " finished job " + self.job
+            self.unload_job()
             self.total_value += self.current_job_value
         else:
             raise Error("No job can be finished on Machine %d" & (self.number))
+
+# Time always increments by amount of TIME_INCREMENT
+# TIME_INCREMENT should be greater than EPSILON
+TIME_INCREMENT = 1
+EPSILON = 0.000001
 
 class Scheduler(object):
     '''
@@ -62,6 +74,7 @@ class Scheduler(object):
     def __init__(self):
         self.machines = []
         self.mechanism = 0
+        self.time = -1
 
     def setup_machines(self):
         print "Machines are prepared to be set up"
@@ -81,15 +94,41 @@ class Scheduler(object):
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         print "Machines finished setup"
 
+    def regular_check(self):
+        self.time += TIME_INCREMENT
+        for machine in self.machines:
+            if (machine.state and self.time == machine.work_end):
+                machine.finish_job()
+   
+    def heuristic1(self, job):
+        print "heuristic1 has %d at time %d" % (job[3], self.time ) 
+
+    def heuristic2(self, job):
+        print "heuristic2 has %d at time %d" % (job[3], self.time )
+
+    def heuristic3(self, job):
+        print "heuristic3 has %d at time %d" % (job[3], self.time )
+
+    def process_job(self, job):
+        function_name = "self.heuristic" + str(self.mechanism)
+        eval(function_name)(job)
+
     def run_schedule(self):
         print "Start running schedules"
+        
+        n = len(self.jobs)
+        index = 0
+        while (index < n):
+            self.regular_check()
+            while (index < n and abs(self.jobs[index][0] - self.time ) < EPSILON):
+                self.process_job(self.jobs[index])
+                index += 1
 
     def select_dataset(self):
         filename = raw_input("Please choose a set of jobs: ")
         jobs = np.loadtxt(filename)
         print jobs
-        jobs = np.array(sorted(jobs, key = lambda x: x[0]))
-        return jobs
+        self.jobs = np.array(sorted(jobs, key = lambda x: x[0])) 
 
     def show_result(self):
         print "-----------------------------------------------------"

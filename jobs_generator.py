@@ -35,7 +35,7 @@ class JobsGenerationScheme(object):
         filename = self.__class__.__name__ + '_' + time.strftime("%y:%m:%d:%H:%M:%S") + ".txt"
         if not os.path.exists(directory):
             os.makedirs(directory)
-        np.savetxt(directory + '/' + filename, jobs, '''fmt="%d"''')
+        np.savetxt(directory + '/' + filename, jobs)
 
 class SchemePUS(JobsGenerationScheme):
 
@@ -59,13 +59,15 @@ class SchemePUS(JobsGenerationScheme):
 
     def generate(self):
         print "Generating jobs using PUS scheme"
-        jobs = np.zeros((self.n, 3), dtype = np.int)
+        jobs = np.zeros((self.n, 4), dtype = np.int)
         # Randomly generate arrival time of jobs by a poisson random variable
         jobs[:, 0] = np.random.poisson(self.lamb, self.n)
         # Randomly generate duration of jobs by a discrete uniform distribution
         jobs[:, 1] = np.random.randint(low = self.a, high = self.b, size = self.n)
         # Calculate values of the jobs by function f(x)
         jobs[:, 2] = self.f(jobs[:, 1])
+        # Index the jobs
+        jobs[:, 3] = np.array(range(self.n))
         print jobs
         return jobs
 
