@@ -1,5 +1,5 @@
 #!/usr/bin/python
-
+import numpy as np
 
 class Machine(object):
     '''
@@ -56,7 +56,7 @@ class Scheduler(object):
     If new abortion mechanisms were added, please modify this comment
     1. Abort according to priority
     2. Abort by chance
-    3. Abort if the job on that machine has the least value 
+    3. Abort the least value job 
     '''
 
     def __init__(self):
@@ -74,6 +74,10 @@ class Scheduler(object):
                 alpha = float(raw_input("Please give abortion ratio to machine %d: " % i))
             machine = Machine(alpha, i)
             self.machines.append(machine)
+        print "There are three mechanism at this point: " 
+        print "1. Abort according to priority"
+        print "2. Abort by chance"
+        print "3. Abort the least value job"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         print "Machines finished setup"
 
@@ -81,7 +85,11 @@ class Scheduler(object):
         print "Start running schedules"
 
     def select_dataset(self):
-        pass
+        filename = raw_input("Please choose a set of jobs: ")
+        jobs = np.loadtxt(filename)
+        print jobs
+        jobs = np.array(sorted(jobs, key = lambda x: x[0]))
+        return jobs
 
     def show_result(self):
         print "-----------------------------------------------------"

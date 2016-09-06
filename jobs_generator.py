@@ -32,7 +32,7 @@ class JobsGenerationScheme(object):
     # Write generated jobs to local storage
     def record(self, jobs):
         directory = "job_base/" + self.__class__.__name__
-        filename = self.__class__.__name__ + '_' + time.strftime("%d:%m:%y:%H:%M:%S") + ".txt"
+        filename = self.__class__.__name__ + '_' + time.strftime("%y:%m:%d:%H:%M:%S") + ".txt"
         if not os.path.exists(directory):
             os.makedirs(directory)
         np.savetxt(directory + '/' + filename, jobs, '''fmt="%d"''')
