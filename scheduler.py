@@ -94,6 +94,12 @@ class Scheduler(object):
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         print "Machines finished setup"
 
+    def select_dataset(self):
+        filename = raw_input("Please choose a set of jobs: ")
+        jobs = np.loadtxt(filename)
+        print jobs
+        self.jobs = np.array(sorted(jobs, key = lambda x: x[0])) 
+
     def regular_check(self):
         self.time += TIME_INCREMENT
         for machine in self.machines:
@@ -123,12 +129,6 @@ class Scheduler(object):
             while (index < n and abs(self.jobs[index][0] - self.time ) < EPSILON):
                 self.process_job(self.jobs[index])
                 index += 1
-
-    def select_dataset(self):
-        filename = raw_input("Please choose a set of jobs: ")
-        jobs = np.loadtxt(filename)
-        print jobs
-        self.jobs = np.array(sorted(jobs, key = lambda x: x[0])) 
 
     def show_result(self):
         print "-----------------------------------------------------"

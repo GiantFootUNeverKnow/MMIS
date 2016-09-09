@@ -43,31 +43,30 @@ class SchemePUS(JobsGenerationScheme):
         return x * x
 
     def get_helpinfo(self):
-        return "In PUS scheme, the arriving time is determined by Poisson distribution; the length of a job follows a uniform distribution; f(x) = x^2 is the benevoent function. A parameter lambda is needed for the Poisson distribution and a range [a, b) is needed for the uniform distribution"
+        return "In PUS scheme, the arriving time is determined by Poisson process; the length of a job follows a uniform distribution; f(x) = x^2 is the benevoent function. A parameter p is needed for the Poisson process and a range [a, b) is needed for the uniform distribution"
 
     def __init__(self):
         self.name = "PUS"
-        self.n = JOBS_AMOUNT
 
     def set_parameter(self):
-        self.lamb = float(raw_input("Please enter lambda as a positive real number:"))
+        self.p = float(raw_input("Please enter p as a positive real number between 0 and 1:"))
         self.a = int(raw_input("Please enter range as a pair of integers (a,b), first enter a:"))
         self.b = int(raw_input("Then enter b:"))
-        if (self.lamb <= 0 or self.a < 0 or self.b <= 0 or self.a > self.b):
+        if (self.p <= 0 or self.p > 1 or self.a < 0 or self.b <= 0 or self.a > self.b):
             print "Invalid parameter, please enter them again"
             self.set_parameter()
 
     def generate(self):
         print "Generating jobs using PUS scheme"
-        jobs = np.zeros((self.n, 4), dtype = np.int)
-        # Randomly generate arrival time of jobs by a poisson random variable
-        jobs[:, 0] = np.random.poisson(self.lamb, self.n)
-        # Randomly generate duration of jobs by a discrete uniform distribution
-        jobs[:, 1] = np.random.randint(low = self.a, high = self.b, size = self.n)
-        # Calculate values of the jobs by function f(x)
-        jobs[:, 2] = self.f(jobs[:, 1])
-        # Index the jobs
-        jobs[:, 3] = np.array(range(self.n))
+        odds = np.random.randint(2, size = DEFAULT_JOBS_AMOUNT)        
+        
+        arrivals = [i for i in range(DEFAULT_JOBS_AMOUNT) if odds[i] == 1]
+        self.n = len(arrivals)
+        durations = np.random.randint(low = self.a, high = self.b, size = self.n)
+        values = self.f(durations) 
+             
+        jobs = np.array([arrivals, durations, values, np.array(range(self.n))], dtype = np.int).T
+        
         print jobs
         return jobs
 
@@ -78,7 +77,7 @@ class SchemePUS(JobsGenerationScheme):
 
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
-JOBS_AMOUNT = 999
+DEFAULT_JOBS_AMOUNT = 999
 
 def select_scheme():
     print "Which generating scheme do you want to use to generate jobs?"
