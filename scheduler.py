@@ -29,10 +29,10 @@ class Machine(object):
         self.state = 0
 
     def load_job(self, job):
-        turn_on()
+        self.turn_on()
         self.job = job[3]
         self.work_start = job[0]
-        self.work_end = job.arrival + job[1]
+        self.work_end = job[0] + job[1]
         self.current_job_value = job[2]
 
     def unload_job(self):
@@ -44,18 +44,18 @@ class Machine(object):
 
     def start_job(self, job):
         if (job is not None):
-            self.oad_job(job)
-            print "Job " + self.job + " is on machine " + self.number
+            self.load_job(job)
+            print "Job " + str(self.job) + " is on machine " + str(self.number)
         else:
             raise Error("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
         if (self.state):
-            print "Machine " + self.number + " finished job " + self.job
-            self.unload_job()
+            print "Machine " + str(self.number) + " finished job " + str(self.job)
             self.total_value += self.current_job_value
+            self.unload_job()
         else:
-            raise Error("No job can be finished on Machine %d" & (self.number))
+            raise Error("No job can be finished on Machine %d" % (self.number))
 
 # Time always increments by amount of TIME_INCREMENT
 # TIME_INCREMENT should be greater than EPSILON
@@ -106,6 +106,12 @@ class Scheduler(object):
             if (machine.state and self.time == machine.work_end):
                 machine.finish_job()
    
+    def check_idle_machines(self):
+        for machine in self.machines:
+            if (machine.state == 0):
+                return machine
+        return None
+
     def heuristic1(self, job):
         print "heuristic1 has %d at time %d" % (job[3], self.time ) 
 
@@ -116,8 +122,12 @@ class Scheduler(object):
         print "heuristic3 has %d at time %d" % (job[3], self.time )
 
     def process_job(self, job):
-        function_name = "self.heuristic" + str(self.mechanism)
-        eval(function_name)(job)
+        idle_machine = self.check_idle_machines()
+        if (idle_machine is not None):
+            idle_machine.start_job(job)
+        else:
+            function_name = "self.heuristic" + str(self.mechanism)
+            eval(function_name)(job)
 
     def run_schedule(self):
         print "Start running schedules"
@@ -127,6 +137,7 @@ class Scheduler(object):
         while (index < n):
             self.regular_check()
             while (index < n and abs(self.jobs[index][0] - self.time ) < EPSILON):
+                # The while loop is for simultaneous jobs
                 self.process_job(self.jobs[index])
                 index += 1
 
