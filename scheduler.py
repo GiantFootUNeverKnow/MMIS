@@ -88,6 +88,7 @@ class Scheduler(object):
             machine = Machine(alpha, i)
             self.machines.append(machine)
         print "There are three mechanism at this point: " 
+        print "0. Vanilla (Never abort)"
         print "1. Abort according to priority"
         print "2. Abort by chance"
         print "3. Abort the least value job"
@@ -112,14 +113,35 @@ class Scheduler(object):
                 return machine
         return None
 
+    def heuristic0(self, job):
+        print "heuristic0 has %d at time %d" % (job[3], self.time)
+        return
+
     def heuristic1(self, job):
         print "heuristic1 has %d at time %d" % (job[3], self.time ) 
+        # Assume priority of mahcines are ordered by their indices
+        for i in range(len(self.machines)):
+            if (job[2] > self.machines[i].current_job_value * self.machines[i].alpha):
+                self.machines[i].start_job(job)
+                return
 
     def heuristic2(self, job):
         print "heuristic2 has %d at time %d" % (job[3], self.time )
+        low_wage_machines = [machine for machine in self.machines 
+            if (job[2] > machine.current_job_value * machine.alpha)]
+        if (low_wage_machines != []):
+            return np.random.choice(low_wage_machines).start_job(job)
 
     def heuristic3(self, job):
         print "heuristic3 has %d at time %d" % (job[3], self.time )
+        lowest_wage_machine = None
+        for machine in self.machines:
+            if (job[2] > machine.current_job_value * machine.alpha):
+                if (lowest_wage_machine is None or 
+                    lowest_wage_machine.current_job_value > machine.current_job_value):
+                    lowest_wage_machine = machine
+        if lowest_wage_machine is not None:
+            lowest_wage_machine.start_job(job)
 
     def process_job(self, job):
         idle_machine = self.check_idle_machines()
