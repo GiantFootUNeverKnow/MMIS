@@ -165,6 +165,12 @@ class Scheduler(object):
                 # The while loop is for simultaneous jobs
                 self.process_job(self.jobs[index])
                 index += 1
+        
+        # We can expect current jobs on the machines can all be done 
+        for machine in self.machines:
+            if (machine.state):
+                machine.finish_job()
+            
 
     def show_result(self):
         print "-----------------------------------------------------"
