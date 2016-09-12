@@ -1,5 +1,8 @@
 #!/usr/bin/python
 import numpy as np
+import logging
+
+log = logging.getLogger("MMISLogger")
 
 '''
 Job data is a 4-tuple: (arrival, duration, value, index)
@@ -45,13 +48,13 @@ class Machine(object):
     def start_job(self, job):
         if (job is not None):
             self.load_job(job)
-            print "Job " + str(self.job) + " is on machine " + str(self.number)
+            log.debug( "Job " + str(self.job) + " is on machine " + str(self.number) )
         else:
             raise Error("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
         if (self.state):
-            print "Machine " + str(self.number) + " finished job " + str(self.job)
+            log.debug( "Machine " + str(self.number) + " finished job " + str(self.job) )
             self.total_value += self.current_job_value
             self.unload_job()
         else:
@@ -98,7 +101,7 @@ class Scheduler(object):
     def select_dataset(self):
         filename = raw_input("Please choose a set of jobs: ")
         jobs = np.loadtxt(filename)
-        print jobs
+        log.info(jobs)
         self.jobs = np.array(sorted(jobs, key = lambda x: x[0])) 
 
     def regular_check(self):
@@ -114,11 +117,11 @@ class Scheduler(object):
         return None
 
     def heuristic0(self, job):
-        print "heuristic0 has %d at time %d" % (job[3], self.time)
+        log.debug( "heuristic0 has %d at time %d" % (job[3], self.time) )
         return
 
     def heuristic1(self, job):
-        print "heuristic1 has %d at time %d" % (job[3], self.time ) 
+        log.debug( "heuristic1 has %d at time %d" % (job[3], self.time ) ) 
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             if (job[2] > self.machines[i].current_job_value * self.machines[i].alpha):
@@ -126,14 +129,14 @@ class Scheduler(object):
                 return
 
     def heuristic2(self, job):
-        print "heuristic2 has %d at time %d" % (job[3], self.time )
+        log.debug( "heuristic2 has %d at time %d" % (job[3], self.time ) )
         low_wage_machines = [machine for machine in self.machines 
             if (job[2] > machine.current_job_value * machine.alpha)]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
 
     def heuristic3(self, job):
-        print "heuristic3 has %d at time %d" % (job[3], self.time )
+        log.debug( "heuristic3 has %d at time %d" % (job[3], self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
             if (job[2] > machine.current_job_value * machine.alpha):
@@ -152,7 +155,7 @@ class Scheduler(object):
             eval(function_name)(job)
 
     def run_schedule(self):
-        print "Start running schedules"
+        log.info( "Start running schedules" )
         
         n = len(self.jobs)
         index = 0
@@ -172,12 +175,3 @@ class Scheduler(object):
             payoff += machine.total_value
         print "Totally, we earned ", payoff
 
-def main():
-    scheduler = Scheduler()
-    scheduler.setup_machines()
-    scheduler.select_dataset()
-    scheduler.run_schedule()
-    scheduler.show_result()
-
-if __name__ == "__main__":
-    main();
