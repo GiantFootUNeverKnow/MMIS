@@ -9,52 +9,41 @@ Job data is a 4-tuple: (arrival, duration, value, index)
 '''
 
 class Machine(object):
-    '''
-    Machine states can be either idle or busy. If any other states are added, please modify here
-        0 -> idle
-        1 -> busy
-    '''
 
     def __init__(self, alpha, number):
         self.number = number
         self.alpha = alpha
         self.total_value = 0
-        self.state = 0
-        self.job = None
+        self.job_name = None
         self.work_start = None
         self.work_end = None
-        self.current_job_value = None
-
-    def turn_on(self):
-        self.state = 1
-
-    def turn_off(self):
-        self.state = 0
+        self.current_job_value = 0
 
     def load_job(self, job):
-        self.turn_on()
-        self.job = job[3]
+        self.job_name = job[3]
         self.work_start = job[0]
         self.work_end = job[0] + job[1]
         self.current_job_value = job[2]
 
+    def is_idle(self):
+        return (self.job_name == None)
+
     def unload_job(self):
-        self.job = None
-        self.current_job_value = None
+        self.job_name = None
+        self.current_job_value = 0
         self.work_start = None
         self.work_end = None
-        self.turn_off()
 
     def start_job(self, job):
         if (job is not None):
             self.load_job(job)
-            log.debug( "Job " + str(self.job) + " is on machine " + str(self.number) )
+            log.debug( "Job " + str(self.job_name) + " is on machine " + str(self.number) )
         else:
             raise Error("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
-        if (self.state):
-            log.debug( "Machine " + str(self.number) + " finished job " + str(self.job) )
+        if (self.current_job_value > 0):
+            log.debug( "Machine " + str(self.number) + " finished job " + str(self.job_name) )
             self.total_value += self.current_job_value
             self.unload_job()
         else:
@@ -91,7 +80,6 @@ class Scheduler(object):
             machine = Machine(alpha, i)
             self.machines.append(machine)
         print "There are three mechanism at this point: " 
-        print "0. Vanilla (Never abort)"
         print "1. Abort according to priority"
         print "2. Abort by chance"
         print "3. Abort the least value job"
@@ -107,18 +95,8 @@ class Scheduler(object):
     def regular_check(self):
         self.time += TIME_INCREMENT
         for machine in self.machines:
-            if (machine.state and self.time == machine.work_end):
+            if ( not machine.is_idle() and self.time == machine.work_end):
                 machine.finish_job()
-   
-    def check_idle_machines(self):
-        for machine in self.machines:
-            if (machine.state == 0):
-                return machine
-        return None
-
-    def heuristic0(self, job):
-        log.debug( "heuristic0 has %d at time %d" % (job[3], self.time) )
-        return
 
     def heuristic1(self, job):
         log.debug( "heuristic1 has %d at time %d" % (job[3], self.time ) ) 
@@ -147,12 +125,8 @@ class Scheduler(object):
             lowest_wage_machine.start_job(job)
 
     def process_job(self, job):
-        idle_machine = self.check_idle_machines()
-        if (idle_machine is not None):
-            idle_machine.start_job(job)
-        else:
-            function_name = "self.heuristic" + str(self.mechanism)
-            eval(function_name)(job)
+        function_name = "self.heuristic" + str(self.mechanism)
+        eval(function_name)(job)
 
     def run_schedule(self):
         log.info( "Start running schedules" )
@@ -168,7 +142,7 @@ class Scheduler(object):
         
         # We can expect current jobs on the machines can all be done 
         for machine in self.machines:
-            if (machine.state):
+            if (not machine.is_idle()):
                 machine.finish_job()
             
 
