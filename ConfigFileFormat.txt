@@ -1,0 +1,15 @@
+A complete config file should have at least the following three components in this order:
+1. An integer n: Number of machines
+2. One line for each machine: Alphas for each machines 
+3. An integer: The index of mechanism used for the schedular.
+
+Some optional (not implemented feature) can also be filled in:
+4. The randomized component function
+5. Output filepath
+
+Example:
+3
+2 2
+3 1
+2 3
+1 

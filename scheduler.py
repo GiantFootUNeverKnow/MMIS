@@ -19,6 +19,10 @@ class Machine(object):
         self.work_end = None
         self.current_job_value = 0
 
+    def clear(self):
+        self.total_value = 0
+        self.unload_job()
+
     def load_job(self, job):
         self.job_name = job[3]
         self.work_start = job[0]
@@ -66,9 +70,13 @@ class Scheduler(object):
     def __init__(self):
         self.machines = []
         self.mechanism = 0
+        self.clear()
+
+    def clear(self):
+        self.jobs = None
         self.time = -1
 
-    def setup_machines(self):
+    def setup_machines_ui(self):
         print "Machines are prepared to be set up"
         n = int(raw_input("How many machines do you need? "))
         while (n <= 0):
@@ -86,11 +94,25 @@ class Scheduler(object):
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         print "Machines finished setup"
 
-    def select_dataset(self):
-        filename = raw_input("Please choose a set of jobs: ")
+    def setup_machines_file(self, filename):
+        with open(filename) as f:
+            n = int(f.readline())
+            for i in range(n):
+                line = f.readline().split()
+                [alpha1, alpha2] = [int(j) for j in line]
+                machine = Machine(alpha1, i)
+                self.machines.append(machine)
+            self.mechanism = int(f.readline())
+        logging.debug("machines are setup")
+
+    def select_dataset_file(self, filename):
         jobs = np.loadtxt(filename)
-        log.info(jobs)
+        log.debug(jobs)
         self.jobs = np.array(sorted(jobs, key = lambda x: x[0])) 
+
+    def select_dataset_ui(self):
+        filename = raw_input("Please choose a set of jobs: ")
+        select_dataset_file(filename)
 
     def regular_check(self):
         self.time += TIME_INCREMENT
@@ -154,4 +176,4 @@ class Scheduler(object):
             print "Machine %d earned %d" % (machine.number, machine.total_value)
             payoff += machine.total_value
         print "Totally, we earned ", payoff
-
+        print "-----------------------------------------------------"

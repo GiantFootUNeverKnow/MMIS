@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import logging
+import os
 import sys
 import argparse
 from scheduler import Scheduler
@@ -23,13 +24,18 @@ def main():
     scheduler = Scheduler()
     if args.experiment:
         config = args.experiment
-        print config
-        if args.jb is None:
+        job_base = args.jb
+        if job_base is None:
             raise NameError("Please use --jb to specify the job base")
-        print args.jb
+        scheduler.setup_machines_file(config)
+        for jobfile in os.listdir(job_base):
+            scheduler.select_dataset_file(job_base + jobfile)
+            scheduler.run_schedule()
+            scheduler.show_result()
+            scheduler.clear()
     else:
-        scheduler.setup_machines()
-        scheduler.select_dataset()
+        scheduler.setup_machines_ui()
+        scheduler.select_dataset_ui()
         scheduler.run_schedule()
         scheduler.show_result()
 
