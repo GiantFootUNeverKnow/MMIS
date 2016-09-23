@@ -39,7 +39,7 @@ class Machine(object):
             self.load_job(job)
             log.debug( "Job " + str(self.job_name) + " is on machine " + str(self.number) )
         else:
-            raise Error("Invalid Job is given on Machine %d" % (self.number))
+            raise RuntimeError("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
         if (self.current_job_value > 0):
@@ -47,7 +47,7 @@ class Machine(object):
             self.total_value += self.current_job_value
             self.unload_job()
         else:
-            raise Error("No job can be finished on Machine %d" % (self.number))
+            raise RuntimeError("No job can be finished on Machine %d" % (self.number))
 
 # Time always increments by amount of TIME_INCREMENT
 # TIME_INCREMENT should be greater than EPSILON
