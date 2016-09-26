@@ -10,9 +10,10 @@ Job data is a 4-tuple: (arrival, duration, value, index)
 
 class Machine(object):
 
-    def __init__(self, alpha, number):
+    def __init__(self, alpha1, alpha2, number):
         self.number = number
-        self.alpha = alpha
+        self.alpha1 = alpha1
+        self.alpha2 = alpha2
         self.total_value = 0
         self.job_name = None
         self.work_start = None
@@ -65,6 +66,12 @@ class Scheduler(object):
     1. Abort according to priority
     2. Abort by chance
     3. Abort the least value job 
+    4. Mechanism 1 + randomized dicider says YES
+    5. Mechanism 2 + randomized dicider says YES
+    6. Mechanism 3 + randomized dicider says YES
+    7. Mechanism 1 OR randomized dicider says YES
+    8. Mechanism 2 OR randomized dicider says YES
+    9. Mechanism 3 OR randomized dicider says YES
     '''
 
     def __init__(self):
@@ -82,16 +89,27 @@ class Scheduler(object):
         while (n <= 0):
             n = int(raw_input("Invalid number of machines. Please reenter: "))
         for i in range(n):
-            alpha = float(raw_input("Please give abortion ratio to machine %d: " % i))
-            while (alpha <= 0):
-                alpha = float(raw_input("Please give abortion ratio to machine %d: " % i))
-            machine = Machine(alpha, i)
+            alpha1 = float(raw_input("Please give first abortion ratio to machine %d: " % i))
+            alpha2 = float(raw_input("Please give second abortion ratio to machine %d: " % i))
+            while (alpha1 <= 0 or alpha2 <= 0):
+                alpha1 = float(raw_input("Please give first abortion ratio to machine %d: " % i))
+                alpha2 = float(raw_input("Please give second abortion ratios to machine %d: " % i))
+            machine = Machine(alpha1, alpha2, i)
             self.machines.append(machine)
         print "There are three mechanism at this point: " 
         print "1. Abort according to priority"
         print "2. Abort by chance"
         print "3. Abort the least value job"
+        print "4. Mechanism 1 + randomized dicider says YES"
+        print "5. Mechanism 2 + randomized dicider says YES"
+        print "6. Mechanism 3 + randomized dicider says YES"
+        print "7. Mechanism 1 OR randomized dicider says YES"
+        print "8. Mechanism 2 OR randomized dicider says YES"
+        print "9. Mechanism 3 OR randomized dicider says YES"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
+        if (self.mechanism >= 4):
+            print "Please input randomized dicider function in the format\"lambda y: <function expression with respect to y>\""
+            self.randomized_dicider = eval(raw_input("Function:"))
         print "Machines finished setup"
 
     def setup_machines_file(self, filename):
@@ -100,9 +118,14 @@ class Scheduler(object):
             for i in range(n):
                 line = f.readline().split()
                 [alpha1, alpha2] = [int(j) for j in line]
-                machine = Machine(alpha1, i)
+                machine = Machine(alpha1, alpha2, i)
                 self.machines.append(machine)
             self.mechanism = int(f.readline())
+            
+            randomized_dicider_exp = f.readline()
+            if (randomized_dicider_exp != ""):
+                self.randomized_dicider = eval(randomized_dicider_exp)
+
         logging.debug("machines are setup")
 
     def select_dataset_file(self, filename):
@@ -112,7 +135,7 @@ class Scheduler(object):
 
     def select_dataset_ui(self):
         filename = raw_input("Please choose a set of jobs: ")
-        select_dataset_file(filename)
+        self.select_dataset_file(filename)
 
     def regular_check(self):
         self.time += TIME_INCREMENT
@@ -124,14 +147,14 @@ class Scheduler(object):
         log.debug( "heuristic1 has %d at time %d" % (job[3], self.time ) ) 
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
-            if (job[2] > self.machines[i].current_job_value * self.machines[i].alpha):
+            if (job[2] > self.machines[i].current_job_value * self.machines[i].alpha1):
                 self.machines[i].start_job(job)
                 return
 
     def heuristic2(self, job):
         log.debug( "heuristic2 has %d at time %d" % (job[3], self.time ) )
         low_wage_machines = [machine for machine in self.machines 
-            if (job[2] > machine.current_job_value * machine.alpha)]
+            if (job[2] > machine.current_job_value * machine.alpha1)]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
 
@@ -139,7 +162,7 @@ class Scheduler(object):
         log.debug( "heuristic3 has %d at time %d" % (job[3], self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job[2] > machine.current_job_value * machine.alpha):
+            if (job[2] > machine.current_job_value * machine.alpha1):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -168,7 +191,7 @@ class Scheduler(object):
                 machine.finish_job()
             
 
-    def show_result(self):
+    def show_result_ui(self):
         print "-----------------------------------------------------"
         print "Result of experiment:"
         payoff = 0

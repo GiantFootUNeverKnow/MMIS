@@ -10,6 +10,7 @@ out_hdlr = logging.StreamHandler(sys.stdout)
 out_hdlr.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
 log.addHandler(out_hdlr)
 log.setLevel(logging.INFO)
+log.propagate = False
 
 parser = argparse.ArgumentParser();
 parser.add_argument('--debug', action='store_const', const=True, default=False, help='Enable logging of debug message')
@@ -31,13 +32,13 @@ def main():
         for jobfile in os.listdir(job_base):
             scheduler.select_dataset_file(job_base + jobfile)
             scheduler.run_schedule()
-            scheduler.show_result()
+            scheduler.show_result_ui()
             scheduler.clear()
     else:
         scheduler.setup_machines_ui()
         scheduler.select_dataset_ui()
         scheduler.run_schedule()
-        scheduler.show_result()
-
+        scheduler.show_result_ui()
+    
 if __name__ == "__main__":
     main();
