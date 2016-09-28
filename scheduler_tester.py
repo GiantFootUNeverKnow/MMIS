@@ -10,13 +10,12 @@ class SchedulerTester1(unittest.TestCase):
     ''' 
     def setUp(self):
         self.scheduler = Scheduler()        
-        jobs = np.loadtxt("TestCase/t1.txt")
-        self.scheduler.jobs = np.array(sorted(jobs, key = lambda x:x[0]))
+        self.scheduler.select_dataset_file("TestCase/t1.txt")    
 
     def test_priority_2(self):
         self.scheduler.mechanism = 1
-        machine0 = Machine(2, 0)
-        machine1 = Machine(2, 1)
+        machine0 = Machine(2, 1, 0)
+        machine1 = Machine(2, 1, 1)
         self.scheduler.machines = [machine0, machine1]
         self.scheduler.run_schedule()
         self.assertEqual(machine0.total_value, 89.0)
@@ -24,14 +23,13 @@ class SchedulerTester1(unittest.TestCase):
 
     def test_priority_3(self):
         self.scheduler.mechanism = 1
-        machine0 = Machine(1, 0)
-        machine1 = Machine(2, 1)
-        machine2 = Machine(3, 2)
+        machine0 = Machine(1, 1, 0)
+        machine1 = Machine(2, 1, 1)
+        machine2 = Machine(3, 1, 2)
         self.scheduler.machines = [machine0, machine1, machine2]
         self.scheduler.run_schedule()
         self.assertEqual(machine0.total_value, 89.0)
         self.assertEqual(machine1.total_value, 42.0)
-       # self.assertEqual(machine2.total_value, 50)
         self.assertEqual(machine2.total_value, 34.0)
        
     def test_random_2(self):
@@ -48,8 +46,8 @@ class SchedulerTester1(unittest.TestCase):
 
     def test_low_wage_2(self):
         self.scheduler.mechanism = 3
-        machine0 = Machine(2, 0)
-        machine1 = Machine(2, 1)
+        machine0 = Machine(2, 1, 0)
+        machine1 = Machine(2, 1, 1)
         self.scheduler.machines = [machine0, machine1]
         self.scheduler.run_schedule()
         self.assertEqual(machine0.total_value, 98.0)
