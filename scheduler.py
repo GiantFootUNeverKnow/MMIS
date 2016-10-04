@@ -19,6 +19,7 @@ class Machine(object):
         self.job_name = None
         self.work_start = None
         self.work_end = None
+        self.current_job_yfactor = None
         self.current_job_value = 0
 
     def clear(self):
@@ -30,6 +31,7 @@ class Machine(object):
         self.work_start = job.arrival
         self.work_end = job.arrival + job.duration
         self.current_job_value = job.value
+        self.current_job_yfactor = job.yfactor
 
     def is_idle(self):
         return (self.job_name == None)
@@ -37,6 +39,7 @@ class Machine(object):
     def unload_job(self):
         self.job_name = None
         self.current_job_value = 0
+        self.current_job_yfactor = None
         self.work_start = None
         self.work_end = None
 

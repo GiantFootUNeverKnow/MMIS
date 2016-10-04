@@ -6,6 +6,10 @@ class Job(object):
         self.duration = duration
         self.value = value
         self.name = name
+        self.set_yfactor()
+    
+    def set_yfactor(self):
+        self.yfactor = np.random.random()
 
     @staticmethod
     def deserializeJob(data):

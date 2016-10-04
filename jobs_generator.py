@@ -99,7 +99,10 @@ def main():
     while (not is_exit):
         scheme = select_scheme();
         scheme.start();
-        is_exit = "Y" == raw_input("Do you want to exit? Y/N \n")
-
+        exit_signal = raw_input("Do you want to exit? Y/N \n")
+        while (exit_signal != "Y" and exit_signal != "N"):
+            exit_signal = raw_input("Do you want to exit? Y/N \n")
+        is_exit = "Y" == exit_signal
+        
 if __name__ == "__main__":
     main()
