@@ -19,7 +19,7 @@ class Machine(object):
         self.job_name = None
         self.work_start = None
         self.work_end = None
-        self.current_job_yfactor = None
+        self.current_job_yfactor = 0
         self.current_job_value = 0
 
     def clear(self):
@@ -39,7 +39,7 @@ class Machine(object):
     def unload_job(self):
         self.job_name = None
         self.current_job_value = 0
-        self.current_job_yfactor = None
+        self.current_job_yfactor = 0
         self.work_start = None
         self.work_end = None
 
@@ -152,7 +152,8 @@ class Scheduler(object):
         log.debug( "heuristic1 has %d at time %d" % (job.name, self.time ) ) 
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
-            if (job.value > self.machines[i].current_job_value * self.machines[i].alpha1):
+            machine = self.machines[i]
+            if (job.value > machine.current_job_value * machine.alpha1):
                 self.machines[i].start_job(job)
                 return
 
@@ -174,6 +175,66 @@ class Scheduler(object):
         if lowest_wage_machine is not None:
             lowest_wage_machine.start_job(job)
 
+    def heuristic4(self, job):
+        log.debug( "heuristic4 has %d at time %d" % (job.name, self.time ))
+        # Assume priority of mahcines are ordered by their indices
+        for i in range(len(self.machines)):
+            machine = self.machines[i]
+            if (job.value > machine.current_job_value * machine.alpha1
+                and job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+                self.machines[i].start_job(job)
+                return
+ 
+    def heuristic5(self, job):
+        log.debug( "heuristic5 has %d at time %d" % (job.name, self.time ))
+        low_wage_machines = [machine for machine in self.machines 
+            if (job.value > machine.current_job_value * machine.alpha1)
+            and (job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+        if (low_wage_machines != []):
+            return np.random.choice(low_wage_machines).start_job(job)
+ 
+    def heuristic6(self, job):
+        log.debug( "heuristic6 has %d at time %d" % (job.name, self.time ))
+        lowest_wage_machine = None
+        for machine in self.machines:
+            if (job.value > machine.current_job_value * machine.alpha1
+               and job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+                if (lowest_wage_machine is None or 
+                    lowest_wage_machine.current_job_value > machine.current_job_value):
+                    lowest_wage_machine = machine
+        if lowest_wage_machine is not None:
+            lowest_wage_machine.start_job(job)
+     
+    def heuristic7(self, job):
+        log.debug( "heuristic7 has %d at time %d" % (job.name, self.time ))
+        # Assume priority of mahcines are ordered by their indices
+        for i in range(len(self.machines)):
+            machine = self.machines[i]
+            if (job.value > machine.current_job_value * machine.alpha1
+                or job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+                self.machines[i].start_job(job)
+                return
+  
+    def heuristic8(self, job):
+        log.debug( "heuristic8 has %d at time %d" % (job.name, self.time ))
+        low_wage_machines = [machine for machine in self.machines 
+            if (job.value > machine.current_job_value * machine.alpha1)
+            or (job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+        if (low_wage_machines != []):
+            return np.random.choice(low_wage_machines).start_job(job)
+     
+    def heuristic9(self, job):
+        log.debug( "heuristic9 has %d at time %d" % (job.name, self.time ))
+        lowest_wage_machine = None
+        for machine in self.machines:
+            if (job.value > machine.current_job_value * machine.alpha1
+               or job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+                if (lowest_wage_machine is None or 
+                    lowest_wage_machine.current_job_value > machine.current_job_value):
+                    lowest_wage_machine = machine
+        if lowest_wage_machine is not None:
+            lowest_wage_machine.start_job(job)
+  
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
         eval(function_name)(job)
