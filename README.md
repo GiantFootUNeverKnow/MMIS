@@ -11,19 +11,19 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Instructions
 
-Run ./jobs_generator.py to generate a job sequence
+Run ./jobs_generator.py to generate a job sequence, which would be stored in corresponding category in job_base with a timestamp as identifier
 
 Run ./main to start the scheduling program in interactive mode
 
-Run ./main --help should show you all available usages 
+Run ./main --help should show you all available usages of the program
 
 Run ./main --experiment [Config File] --jb [JobBase directore] to start scheduling on all job sequences within JobBase directory with configurations in Config File 
 
-There are available job sequences in ./job_base and available configuration file in ./TestConfig
+There are available job sequences in ./job_base and available configuration file in ./testConfigs
 
 ## Running the tests
 
-Run ./scheduler_tester.py
+Run ./scheduler_tester.py to do regreesion testings
 
 ## License
 
