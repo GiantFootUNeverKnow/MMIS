@@ -13,6 +13,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 Run ./jobs_generator.py to generate a job sequence
 
+Run ./jobs_generator.py --batch --redir [DIR_NAME] to generate a batch of jobs in job_base/[DIR_NAME]
+
 Run ./main to start the scheduling program in interactive mode
 
 Run ./main --help should show you all available usages 

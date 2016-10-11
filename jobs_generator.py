@@ -100,6 +100,7 @@ class SchemePUS(JobsGenerationScheme):
 
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
+# TODO make this variable controlled by user
 DEFAULT_JOBS_AMOUNT = 999
 
 def select_scheme():
