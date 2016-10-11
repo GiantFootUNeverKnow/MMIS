@@ -86,6 +86,8 @@ class Scheduler(object):
     def clear(self):
         self.jobs = None
         self.time = -1
+        for machine in self.machines:
+            machine.clear()
 
     def setup_machines_ui(self):
         print "Machines are prepared to be set up"
