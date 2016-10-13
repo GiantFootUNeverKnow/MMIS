@@ -8,6 +8,7 @@ import time
 parser = argparse.ArgumentParser();
 parser.add_argument('--batch', action='store_const', const=True, default=False, help='Switch to batch mode. By default, all generated jobs will still be stored in the directory named after the generation scheme as usual, but we recommend you to use --redir to redirect batch jobs to a separate directory ')
 parser.add_argument('--redir', help='Specify name of a directory to store the generated jobs')
+parser.add_argument('--jl', help='Specify the length of a job sequence, which by default is set to 999', type=int, default=999)
 args = parser.parse_args()
 
 file_counter = 1
@@ -65,7 +66,7 @@ class JobsGenerationScheme(object):
 
 class SchemePUS(JobsGenerationScheme):
 
-    # TODO let f be input variable user can control and make y = x^2 a default choice
+    # let f be input variable user can control and make y = x^2 a default choice
     def f(self, x):
         return x * x
 
@@ -79,15 +80,20 @@ class SchemePUS(JobsGenerationScheme):
         self.p = float(raw_input("Please enter p as a positive real number between 0 and 1:"))
         self.a = int(raw_input("Please enter range as a pair of integers (a,b), first enter a:"))
         self.b = int(raw_input("Then enter b:"))
+        print "Please input benevonent function in the format \"lambda y: <function expression with respect to y>\", by default the function is set to f(y) = y * y"
+        function_input = raw_input("Function:") 
+        if (function_input is not None and len(function_input) != 0):
+            self.f = eval(function_input)
         if (self.p <= 0 or self.p > 1 or self.a < 0 or self.b <= 0 or self.a > self.b):
             print "Invalid parameter, please enter them again"
             self.set_parameter()
 
     def generate(self):
         print "Generating jobs using PUS scheme"
-        odds = np.random.randint(2, size = DEFAULT_JOBS_AMOUNT)        
-        
-        arrivals = [i for i in range(DEFAULT_JOBS_AMOUNT) if odds[i] == 1]
+        odds = np.random.randint(2, size = JOBS_AMOUNT)        
+
+        # TODO Rewrite codes to here to make it the same amount of jobs for each sequence 
+        arrivals = [i for i in range(JOBS_AMOUNT) if odds[i] == 1]
         self.n = len(arrivals)
         durations = np.random.randint(low = self.a, high = self.b, size = self.n)
         values = self.f(durations) 
@@ -100,8 +106,7 @@ class SchemePUS(JobsGenerationScheme):
 
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
-# TODO make this variable controlled by user
-DEFAULT_JOBS_AMOUNT = 999
+JOBS_AMOUNT = args.jl 
 
 def select_scheme():
     print "Which generating scheme do you want to use to generate jobs?"
