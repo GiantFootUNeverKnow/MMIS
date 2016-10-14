@@ -15,7 +15,7 @@ log.propagate = False
 parser = argparse.ArgumentParser();
 parser.add_argument('--debug', action='store_const', const=True, default=False, help='Enable logging of debug message')
 parser.add_argument('--experiment', help='This argument will switch to batch experiment mode, please specify a configuration file. Also, the option --jb must be used in experiment mode')
-parser.add_argument('--jb', help='Specify the job base')
+parser.add_argument('--jb', help='Specify the job base. It expects a name of directory, without a slash')
 
 args = parser.parse_args()
 if args.debug:
@@ -27,10 +27,10 @@ def main():
         config = args.experiment
         job_base = args.jb
         if job_base is None:
-            raise NameError("Please use --jb to specify the job base")
+            raise NameError("Please use --jb to specify the job job_base")
         scheduler.setup_machines_file(config)
         for jobfile in os.listdir(job_base):
-            scheduler.select_dataset_file(job_base + jobfile)
+            scheduler.select_dataset_file(job_base + '/' + jobfile)
             scheduler.run_schedule()
             scheduler.show_result_ui()
             scheduler.clear()
