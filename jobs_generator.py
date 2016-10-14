@@ -54,9 +54,9 @@ class JobsGenerationScheme(object):
 
     # Write generated jobs to local storage
     def record(self, jobs):
-        directory = "job_base/" + self.__class__.__name__
-        # TODO add index to the timestamp to prevent rewriting
-        filename = self.__class__.__name__ + '_' + time.strftime("%y:%m:%d:%H:%M:%S") + ".txt"
+        if (args.redir is None):
+            directory = "job_base/" + self.__class__.__name__
+            filename = self.__class__.__name__ + '_' + time.strftime("%y:%m:%d:%H:%M:%S.") + str(get_file_counter()) + ".txt"
         if (args.redir is not None):
             directory = "job_base/" + args.redir
             filename = str(get_file_counter()) + ".txt"
@@ -90,10 +90,13 @@ class SchemePUS(JobsGenerationScheme):
 
     def generate(self):
         print "Generating jobs using PUS scheme"
-        odds = np.random.randint(2, size = JOBS_AMOUNT)        
-
-        # TODO Rewrite codes to here to make it the same amount of jobs for each sequence 
-        arrivals = [i for i in range(JOBS_AMOUNT) if odds[i] == 1]
+        
+        arrivals = []
+        time = 0
+        while len(arrivals) < JOBS_AMOUNT:
+            if (np.random.randint(2)):
+                arrivals.append(time)
+            time += 1
         self.n = len(arrivals)
         durations = np.random.randint(low = self.a, high = self.b, size = self.n)
         values = self.f(durations) 
