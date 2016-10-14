@@ -81,13 +81,15 @@ class Scheduler(object):
     def __init__(self):
         self.machines = []
         self.mechanism = 0
+        self.jobs = np.array([])
         self.clear()
 
     def clear(self):
-        self.jobs = None
         self.time = -1
         for machine in self.machines:
             machine.clear()
+        for job in self.jobs:
+            job.set_yfactor()
 
     def setup_machines_ui(self):
         print "Machines are prepared to be set up"
@@ -257,7 +259,9 @@ class Scheduler(object):
         for machine in self.machines:
             if (not machine.is_idle()):
                 machine.finish_job()
-            
+        
+    def get_result(self):
+        return sum([machine.total_value for machine in self.machines])
 
     def show_result_ui(self):
         print "-----------------------------------------------------"
@@ -268,3 +272,16 @@ class Scheduler(object):
             payoff += machine.total_value
         print "Totally, we earned ", payoff
         print "-----------------------------------------------------"
+
+    def schedule(self, repetition = 1):
+        payoff = 0
+        for i in range(repetition):
+            self.run_schedule()
+            self.show_result_ui()
+            payoff += self.get_result()
+            self.clear()
+        expected_payoff = payoff * 1.0 / repetition
+        print "****************************************************"
+        print "Expected payoff: %d" % expected_payoff 
+        print "****************************************************"
+        return expected_payoff
