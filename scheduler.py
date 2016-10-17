@@ -5,10 +5,6 @@ from job import Job
 
 log = logging.getLogger("MMISLogger")
 
-'''
-Job data is a 4-tuple: (arrival, duration, value, index)
-'''
-
 class Machine(object):
 
     def __init__(self, alpha1, alpha2, number):
@@ -62,6 +58,8 @@ class Machine(object):
 # TIME_INCREMENT should be greater than EPSILON
 TIME_INCREMENT = 1
 EPSILON = 0.000001
+NUM_MECHANISMS = 9
+NUM_DETERMINISTIC_MECHANISMS = 3
 
 class Scheduler(object):
     '''
@@ -115,10 +113,14 @@ class Scheduler(object):
         print "8. Mechanism 2 OR randomized dicider says YES"
         print "9. Mechanism 3 OR randomized dicider says YES"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
-        if (self.mechanism >= 4):
+        while (n <= 0 or n > NUM_MECHANISMS):
+            self.mechanism = int(raw_input("Which mechanism would you prefer? "))
+        if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS):
             print "Please input randomized dicider function in the format\"lambda y: <function expression with respect to y>\""
             self.randomized_dicider = eval(raw_input("Function:"))
         print "Machines finished setup"
+
+        log.debug("Machines are setup")
 
     def setup_machines_file(self, filename):
         with open(filename) as f:
@@ -134,13 +136,15 @@ class Scheduler(object):
             if (randomized_dicider_exp != ""):
                 self.randomized_dicider = eval(randomized_dicider_exp)
 
-        logging.debug("machines are setup")
+        log.debug("Machines are setup")
 
     def select_dataset_file(self, filename):
         jobs_matrix = np.loadtxt(filename)
         log.debug(jobs_matrix)
         jobs = [Job.deserializeJob(job) for job in jobs_matrix]
         self.jobs = np.array(sorted(jobs, key = lambda x: x.arrival)) 
+
+        log.debug("Dataset file %s has been loaded", filename)
 
     def select_dataset_ui(self):
         filename = raw_input("Please choose a set of jobs: ")
@@ -244,7 +248,7 @@ class Scheduler(object):
         eval(function_name)(job)
 
     def run_schedule(self):
-        log.info( "Start running schedules" )
+        log.debug( "Start running schedules" )
         
         n = len(self.jobs)
         index = 0
@@ -270,7 +274,7 @@ class Scheduler(object):
         for machine in self.machines:
             print "Machine %d earned %d" % (machine.number, machine.total_value)
             payoff += machine.total_value
-        print "Totally, we earned ", payoff
+        print "Totally, we earned %d" % payoff
         print "-----------------------------------------------------"
 
     def schedule(self, repetition = 1):
