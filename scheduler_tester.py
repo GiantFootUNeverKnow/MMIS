@@ -53,7 +53,8 @@ class SchedulerTester1(unittest.TestCase):
         self.assertEqual(machine0.total_value, 98.0)
         self.assertEqual(machine1.total_value, 42.0)
 
- 
+    def test_offline_optimal(self):
+        self.assertEqual(self.scheduler.offline_single_machine(), 98.0)
 
  
 

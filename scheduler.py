@@ -215,7 +215,7 @@ class Scheduler(object):
      
     def heuristic7(self, job):
         log.debug( "heuristic7 has %d at time %d" % (job.name, self.time ))
-        # Assume priority of mahcines are ordered by their indices
+        # Assume pri ority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
             if (job.value > machine.current_job_value * machine.alpha1
@@ -267,6 +267,22 @@ class Scheduler(object):
     def get_result(self):
         return sum([machine.total_value for machine in self.machines])
 
+    def offline_single_machine(self):
+        opt = {-1: 0}
+        n = len(self.jobs)
+        self.jobs = sorted(self.jobs, key = lambda x: (x.arrival + x.duration))
+        prev = {-1: -1}
+        for i in range(n):
+            #TODO: simplify this calculation, use binary search 
+            for k in range(n):
+                if (self.jobs[k].arrival + self.jobs[k].duration > self.jobs[i].arrival):
+                    prev[i] = k - 1
+                    break
+        for i in range(n):
+            opt[i] = max([self.jobs[i].value + opt[prev[i]], opt[i-1]]) 
+        self.jobs = sorted(self.jobs, key = lambda x: x.arrival)
+        return opt[n-1]
+
     def show_result_ui(self):
         print "-----------------------------------------------------"
         print "Result of experiment:"
@@ -287,5 +303,8 @@ class Scheduler(object):
         expected_payoff = payoff * 1.0 / repetition
         print "****************************************************"
         print "Expected payoff: %d" % expected_payoff 
+        offline_optimal = self.offline_single_machine()
+        print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
+        print "The competitive ratio is ", offline_optimal * 1.0 / expected_payoff
         print "****************************************************"
         return expected_payoff
