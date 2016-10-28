@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import numpy as np
+import bisect
 import logging
 from job import Job
 
@@ -80,10 +81,12 @@ class Scheduler(object):
         self.machines = []
         self.mechanism = 0
         self.jobs = np.array([])
+        self.experiment_counter = 0
         self.clear()
-
+        
     def clear(self):
         self.time = -1
+        self.experiment_counter += 1
         for machine in self.machines:
             machine.clear()
         for job in self.jobs:
@@ -269,23 +272,19 @@ class Scheduler(object):
 
     def offline_single_machine(self):
         opt = {-1: 0}
-        n = len(self.jobs)
-        self.jobs = sorted(self.jobs, key = lambda x: (x.arrival + x.duration))
         prev = {-1: -1}
+        n = len(self.jobs)
+        reordered_jobs = sorted(self.jobs, key = lambda x: (x.arrival + x.duration))
+        finishing_times = [job.arrival + job.duration for job in reordered_jobs]
+        for i in range(n): 
+            prev[i] = bisect.bisect_right(finishing_times, reordered_jobs[i].arrival) - 1
         for i in range(n):
-            #TODO: simplify this calculation, use binary search 
-            for k in range(n):
-                if (self.jobs[k].arrival + self.jobs[k].duration > self.jobs[i].arrival):
-                    prev[i] = k - 1
-                    break
-        for i in range(n):
-            opt[i] = max([self.jobs[i].value + opt[prev[i]], opt[i-1]]) 
-        self.jobs = sorted(self.jobs, key = lambda x: x.arrival)
+            opt[i] = max([reordered_jobs[i].value + opt[prev[i]], opt[i-1]]) 
         return opt[n-1]
 
     def show_result_ui(self):
         print "-----------------------------------------------------"
-        print "Result of experiment:"
+        print "Result of experiment %d:" % (self.experiment_counter)
         payoff = 0
         for machine in self.machines:
             print "Machine %d earned %d" % (machine.number, machine.total_value)
@@ -308,3 +307,5 @@ class Scheduler(object):
         print "The competitive ratio is ", offline_optimal * 1.0 / expected_payoff
         print "****************************************************"
         return expected_payoff
+
+    # TODO: add an accumulator to record the worst case
