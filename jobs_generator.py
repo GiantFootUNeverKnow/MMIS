@@ -64,6 +64,23 @@ class JobsGenerationScheme(object):
             os.makedirs(directory)
         np.savetxt(directory + '/' + filename, jobs)
 
+class SchemeGeometriSets(JobsGenerationScheme):
+
+    def get_helpinfo(self):
+        return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job grow as twice large as that of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is not uneffective to use --jl to specify the length of jobs, and there is no default for that."
+
+    def __init__(self):
+        self.name = "GeometricSets"
+
+    def generate(self):
+        print "Generate jobs using Scheme Geometric Sets" 
+        return []
+
+    def set_parameter(self):
+        self.N = int(raw_input("Please enter the size of geometric set which will be a number between 10 and 30: "))
+        if (self.N < 10 or self.N > 30):
+            return self.set_parameter()
+    
 class SchemePUS(JobsGenerationScheme):
 
     # let f be input variable user can control and make y = x^2 a default choice
@@ -123,7 +140,9 @@ def select_scheme():
 
 def init_generator():
     PUS = SchemePUS()
+    SGS = SchemeGeometriSets()
     SCHEMES.append(PUS)
+    SCHEMES.append(SGS)
 
 def main():
     init_generator()
