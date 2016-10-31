@@ -164,14 +164,14 @@ class Scheduler(object):
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            if (job.value > machine.current_job_value * machine.alpha1):
+            if (job.value >= machine.current_job_value * machine.alpha1):
                 self.machines[i].start_job(job)
                 return
 
     def heuristic2(self, job):
         log.debug( "heuristic2 has %d at time %d" % (job.name, self.time ) )
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value > machine.current_job_value * machine.alpha1)]
+            if (job.value >= machine.current_job_value * machine.alpha1)]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
 
@@ -179,7 +179,7 @@ class Scheduler(object):
         log.debug( "heuristic3 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value > machine.current_job_value * machine.alpha1):
+            if (job.value >= machine.current_job_value * machine.alpha1):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -191,16 +191,16 @@ class Scheduler(object):
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            if (job.value > machine.current_job_value * machine.alpha1
-                and job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (job.value >= machine.current_job_value * machine.alpha1
+                and job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
                 self.machines[i].start_job(job)
                 return
  
     def heuristic5(self, job):
         log.debug( "heuristic5 has %d at time %d" % (job.name, self.time ))
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value > machine.current_job_value * machine.alpha1)
-            and (job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+            if (job.value >= machine.current_job_value * machine.alpha1)
+            and (job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
  
@@ -208,8 +208,8 @@ class Scheduler(object):
         log.debug( "heuristic6 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value > machine.current_job_value * machine.alpha1
-               and job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (job.value >= machine.current_job_value * machine.alpha1
+               and job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -218,19 +218,19 @@ class Scheduler(object):
      
     def heuristic7(self, job):
         log.debug( "heuristic7 has %d at time %d" % (job.name, self.time ))
-        # Assume pri ority of mahcines are ordered by their indices
+        # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            if (job.value > machine.current_job_value * machine.alpha1
-                or job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (job.value >= machine.current_job_value * machine.alpha1
+                or job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
                 self.machines[i].start_job(job)
                 return
   
     def heuristic8(self, job):
         log.debug( "heuristic8 has %d at time %d" % (job.name, self.time ))
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value > machine.current_job_value * machine.alpha1)
-            or (job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+            if (job.value >= machine.current_job_value * machine.alpha1)
+            or (job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
      
@@ -238,8 +238,8 @@ class Scheduler(object):
         log.debug( "heuristic9 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value > machine.current_job_value * machine.alpha1
-               or job.yfactor * job.value > machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (job.value >= machine.current_job_value * machine.alpha1
+               or job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine

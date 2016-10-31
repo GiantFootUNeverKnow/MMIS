@@ -4,6 +4,7 @@ import numpy as np
 import os
 import argparse
 import time
+from job import Job
 
 parser = argparse.ArgumentParser();
 parser.add_argument('--batch', action='store_const', const=True, default=False, help='Switch to batch mode. By default, all generated jobs will still be stored in the directory named after the generation scheme as usual, but we recommend you to use --redir to redirect batch jobs to a separate directory ')
@@ -62,7 +63,8 @@ class JobsGenerationScheme(object):
             filename = str(get_file_counter()) + ".txt"
         if not os.path.exists(directory):
             os.makedirs(directory)
-        np.savetxt(directory + '/' + filename, jobs)
+        serial = np.array([Job.serializeJob(job) for job in jobs])
+        np.savetxt(directory + '/' + filename, serial)
 
 class SchemeGeometriSets(JobsGenerationScheme):
 
@@ -74,10 +76,25 @@ class SchemeGeometriSets(JobsGenerationScheme):
 
     def generate(self):
         print "Generate jobs using Scheme Geometric Sets" 
-        return []
+        
+        # Geometric Set
+        jobs = [Job(0, 1000, 1000, 0)] 
+        for i in range(1, self.N):
+            job = Job(jobs[i-1].arrival + jobs[i-1].duration - 1, jobs[i-1].duration * 2, jobs[i-1].value * 2, i)
+            jobs.append(job)
+
+        # Main Set
+        for i in range(self.N - 1):
+            job = Job(jobs[i].arrival + 1, jobs[i].duration - 1, jobs[i].value - 1, self.N + i)
+            jobs.append(job)
+        job_n = Job(jobs[self.N - 1].arrival + 1, jobs[self.N - 1].duration - 2, jobs[self.N - 1].value - 2, 2 * self.N - 1)
+        jobs.append(job_n)
+        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - 1, jobs[self.N - 1].duration * 2 - 1, jobs[self.N - 1].duration * 2 - 1, 2 * self.N)
+        jobs.append(job_n1)
+        return jobs
 
     def set_parameter(self):
-        self.N = int(raw_input("Please enter the size of geometric set which will be a number between 10 and 30: "))
+        self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
         if (self.N < 10 or self.N > 30):
             return self.set_parameter()
     
