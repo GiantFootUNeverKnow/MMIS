@@ -29,8 +29,8 @@ class SchedulerTester1(unittest.TestCase):
         self.scheduler.machines = [machine0, machine1, machine2]
         self.scheduler.run_schedule()
         self.assertEqual(machine0.total_value, 89.0)
-        self.assertEqual(machine1.total_value, 42.0)
-        self.assertEqual(machine2.total_value, 34.0)
+        self.assertEqual(machine1.total_value, 30.0)
+        self.assertEqual(machine2.total_value, 25.0)
        
     def test_random_2(self):
         '''

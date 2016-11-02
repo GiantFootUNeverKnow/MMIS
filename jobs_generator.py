@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import numpy as np
+import math
 import os
 import argparse
 import time
@@ -135,10 +136,8 @@ class SchemePUS(JobsGenerationScheme):
         durations = np.random.randint(low = self.a, high = self.b, size = self.n)
         values = self.f(durations) 
         
-        # TODO Use Job Constructor
-        jobs = np.array([arrivals, durations, values, np.array(range(self.n))], dtype = np.int).T
-        
-        print jobs
+        jobs = [Job(arrivals[i], durations[i], values[i], i) for i in range(self.n)]
+
         return jobs
 
 #SCHEMES is a list of currently available schemes objects
