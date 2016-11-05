@@ -6,7 +6,7 @@ import argparse
 from scheduler import Scheduler
 
 log = logging.getLogger("MMISLogger")
-out_hdlr = logging.StreamHandler(sys.stdout)
+out_hdlr = logging.StreamHandler(sys.stderr)
 out_hdlr.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
 log.addHandler(out_hdlr)
 log.setLevel(logging.INFO)

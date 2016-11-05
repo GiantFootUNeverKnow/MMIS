@@ -1,0 +1,43 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+The first experiment is to validate a known result: 
+
+Competitive ratio for Heuristic 1 in the worst case is 4, and the job sequence leading to the worst case occurs when the job length and job value grows by factor alpha, which is the same alpha as the abortion ratio used for Heuristic 1. 
+
+The details for construction [Ge] of the worst case is implemented in jobs_generate.py as SchemeGeometricSets. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+A Geometric Set with stage N means there are jobs with length [l, l * alpha, l * alpha^2, ... l * alpha^(N-1)].
+
+Use jobs_generate.py to generate Geometric Sets with stage N, for all 10 <= N <= 20
+Run ./jobs_generate.py 
+    Choose SchemeGeometricSets
+    Enter N
+    Enter ratio = 2
+By default, the generation would be stored into job_base/SchemeGeometricSet
+Store the result of the generation in directory ./jobs under this directory and name each job sequence by its stage number
+
+Create a configuration file called config under this directory. This file will be used to set up machine we wanna use.
+Copy and paste the following into config:
+
+1
+2 2
+1
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult ConfigFileFormat to understand how it works
+
+Change directory to MMIS
+
+Run ./main.py --experiment Experiment/E0/config --jb Experiment/E0/jobs > Experiment/E0/result 
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+We can see the limit approaches 4 

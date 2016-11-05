@@ -67,7 +67,7 @@ class JobsGenerationScheme(object):
         serial = np.array([Job.serializeJob(job) for job in jobs])
         np.savetxt(directory + '/' + filename, serial)
 
-class SchemeGeometriSets(JobsGenerationScheme):
+class SchemeGeometricSets(JobsGenerationScheme):
 
     def get_helpinfo(self):
         return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job grow as twice large as that of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is not uneffective to use --jl to specify the length of jobs, and there is no default for that."
@@ -156,7 +156,7 @@ def select_scheme():
 
 def init_generator():
     PUS = SchemePUS()
-    SGS = SchemeGeometriSets()
+    SGS = SchemeGeometricSets()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
 
