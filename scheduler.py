@@ -304,8 +304,9 @@ class Scheduler(object):
         print "Expected payoff: %d" % expected_payoff 
         offline_optimal = self.offline_single_machine()
         print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
-        print "The competitive ratio is ", offline_optimal * 1.0 / expected_payoff
+        competitive_ratio = offline_optimal * 1.0 / expected_payoff
+        print "The competitive ratio is ", competitive_ratio
         print "****************************************************"
-        return expected_payoff
+        return (expected_payoff, competitive_ratio)
 
     # TODO: add an accumulator to record the worst case

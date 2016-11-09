@@ -56,7 +56,9 @@ class SchedulerTester1(unittest.TestCase):
     def test_offline_optimal(self):
         self.assertEqual(self.scheduler.offline_single_machine(), 98.0)
 
- 
+    def test_competitive_ratio(self):
+        # TODO add this test
+        pass 
 
 
 if __name__ == '__main__':
