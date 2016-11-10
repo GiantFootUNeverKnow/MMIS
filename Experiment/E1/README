@@ -18,11 +18,13 @@ Procedures
 First, we generate PUS sequences for different p. 
 
 For p = 0.05 * k, k = 1,2,...19
-Run ./jobs_generate.py --batch --redir PUS[p] --jl 400
+Run ./jobs_generate.py --batch --redir PUS[k] --jl 400
     Choose PUS Scheme
+    Enter p
     For a, enter 5
     For b, enter 25
-    For benevolent function, enter "lambda y: y * y" (without quotes)
+    For benevolent function, enter "lambda y: y * y" (without quotes), if this function is still set as default, dont input anything
+    For the number of job sequences, enter 100
 
 The result of generations would be in job_base, copy and paste all generations to Experiments/E1
 
@@ -36,13 +38,15 @@ Copy and paste the following into config:
 If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
 Consult ConfigFileFormat to understand how it works
 
-# TODO: add job_base expected mode to calculate expectation and variance of job sequences in a directory
-Change directory to MMIS, use "job_base expected" mode and redirect the result to the desired result file
+Change directory to MMIS, use "job_base" mode and redirect the result to the desired result file
+
+For every k, 
+Run ./main.py --experiment Experiment/E1/config --jb Experiment/E1/jobs/PUS[k] --repeat 10 > Experiment/E1/result[k] 
+(Using a bash file helps, these commands will take lots of time)
+Store resulting files into Experiment/E1/result
 
 # TODO: add python scripts to generate figures of result of this experiment
 Collect the result by writing some scripts, and draw corresponding curves
-
-# Run some command like this Run ./main.py --experiment Experiment/E0/config --jb Experiment/E0/jobs > Experiment/E0/result 
 
 ---------------------------------------------------------------------------------------
 Result
