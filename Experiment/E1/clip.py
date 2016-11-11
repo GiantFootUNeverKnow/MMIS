@@ -3,8 +3,6 @@ import os
 import matplotlib
 import matplotlib.pyplot as plt
 
-matplotlib.use('Agg')
-
 expectations = [0] * 19
 variances = [0] * 19
 directory = os.getcwd() + '/result'
@@ -23,4 +21,8 @@ for filename in os.listdir(directory):
 
 print expectations
 print variances
-plt.plot(expectation)
+plt.figure()
+plt.plot(expectations)
+plt.figure()
+plt.plot(variances)
+plt.show()
