@@ -45,8 +45,7 @@ Run ./main.py --experiment Experiment/E1/config --jb Experiment/E1/jobs/PUS[k] -
 (Using a bash file helps, these commands will take lots of time)
 Store resulting files into Experiment/E1/result
 
-# TODO: add python scripts to generate figures of result of this experiment
-Collect the result by writing some scripts, and draw corresponding curves
+Collect the result by writing a scripts, and draw corresponding curves
 
 ---------------------------------------------------------------------------------------
 Result
