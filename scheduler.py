@@ -59,7 +59,8 @@ class Machine(object):
 # TIME_INCREMENT should be greater than EPSILON
 TIME_INCREMENT = 1
 EPSILON = 0.000001
-NUM_MECHANISMS = 9
+NUM_MECHANISMS = 10
+NUM_RANDOMIZED_DECIDER_MECHANISMS = 6
 NUM_DETERMINISTIC_MECHANISMS = 3
 
 class Scheduler(object):
@@ -75,6 +76,7 @@ class Scheduler(object):
     7. Mechanism 1 OR randomized dicider says YES
     8. Mechanism 2 OR randomized dicider says YES
     9. Mechanism 3 OR randomized dicider says YES
+    10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine 
     '''
 
     def __init__(self):
@@ -115,10 +117,12 @@ class Scheduler(object):
         print "7. Mechanism 1 OR randomized dicider says YES"
         print "8. Mechanism 2 OR randomized dicider says YES"
         print "9. Mechanism 3 OR randomized dicider says YES"
+        print "10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine"  
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         while (n <= 0 or n > NUM_MECHANISMS):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
-        if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS):
+        if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS 
+            and self.mechanism <= NUM_DETERMINISTIC_MECHANISMS + NUM_RANDOMIZED_DECIDER_MECHANISMS):
             print "Please input randomized dicider function in the format\"lambda y: <function expression with respect to y>\""
             self.randomized_dicider = eval(raw_input("Function:"))
         print "Machines finished setup"
@@ -130,7 +134,7 @@ class Scheduler(object):
             n = int(f.readline())
             for i in range(n):
                 line = f.readline().split()
-                [alpha1, alpha2] = [int(j) for j in line]
+                [alpha1, alpha2] = [float(j) for j in line]
                 machine = Machine(alpha1, alpha2, i)
                 self.machines.append(machine)
             self.mechanism = int(f.readline())
@@ -245,7 +249,16 @@ class Scheduler(object):
                     lowest_wage_machine = machine
         if lowest_wage_machine is not None:
             lowest_wage_machine.start_job(job)
-  
+ 
+    def heuristic10(self, job):
+        # This mechanism is only allowed to run on single machine now, running heuristic10 on multiple machines does not make sense yet
+        assert len(self.machines) == 1
+        log.debug( "heuristic10 has %d at time %d" % (job.name, self.time ))       
+        machine = self.machines[0]
+        alpha = np.random.choice([machine.alpha1, machine.alpha2])
+        if (job.value >= machine.current_job_value * alpha):
+            machine.start_job(job)
+
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
         eval(function_name)(job)
