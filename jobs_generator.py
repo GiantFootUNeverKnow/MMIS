@@ -65,12 +65,12 @@ class JobsGenerationScheme(object):
         if not os.path.exists(directory):
             os.makedirs(directory)
         serial = np.array([Job.serializeJob(job) for job in jobs])
-        np.savetxt(directory + '/' + filename, serial)
+        np.savetxt(directory + '/' + filename, serial, fmt='%1.30e')
 
 class SchemeGeometricSets(JobsGenerationScheme):
 
     def get_helpinfo(self):
-        return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job grow as twice large as that of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is not uneffective to use --jl to specify the length of jobs, and there is no default for that."
+        return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job become c*l, where l is the length of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is not uneffective to use --jl to specify the length of jobs, and there is no default for that."
 
     def __init__(self):
         self.name = "GeometricSets"
@@ -81,24 +81,33 @@ class SchemeGeometricSets(JobsGenerationScheme):
         # Geometric Set
         jobs = [Job(0, 1000, 1000, 0)] 
         for i in range(1, self.N):
-            job = Job(jobs[i-1].arrival + jobs[i-1].duration - 1, jobs[i-1].duration * 2, jobs[i-1].value * 2, i)
+            job = Job(jobs[i-1].arrival + jobs[i-1].duration - 1, jobs[i-1].duration * self.c, jobs[i-1].value * self.c, i)
+            job.floor()
             jobs.append(job)
 
         # Main Set
         for i in range(self.N - 1):
             job = Job(jobs[i].arrival + 1, jobs[i].duration - 1, jobs[i].value - 1, self.N + i)
+            job.floor()
             jobs.append(job)
         job_n = Job(jobs[self.N - 1].arrival + 1, jobs[self.N - 1].duration - 2, jobs[self.N - 1].value - 2, 2 * self.N - 1)
+        job_n.floor()
         jobs.append(job_n)
-        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - 1, jobs[self.N - 1].duration * 2 - 1, jobs[self.N - 1].duration * 2 - 1, 2 * self.N)
+        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - 1, jobs[self.N - 1].duration * self.c - 1, jobs[self.N - 1].duration * self.c - 1, 2 * self.N)
+        job_n1.floor()
         jobs.append(job_n1)
         return jobs
 
     def set_parameter(self):
         self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
         if (self.N < 10 or self.N > 30):
+            print "Invalid Stage"
             return self.set_parameter()
-    
+        self.c = float(raw_input("Floating number c is the growth rate of length of jobs: in the set of conflicting jobs, if length of a job is l, its following job would be of length c * l. Currently we limit the choice of c in range (1.1, 4]. Please enter c : "))
+        if (self.c <= 1.1 or self.c > 4):
+            print "Invalid growth rate"
+            return self.set_parameter()
+
 class SchemePUS(JobsGenerationScheme):
 
     # let f be input variable user can control and make y = x^2 a default choice

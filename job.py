@@ -11,6 +11,12 @@ class Job(object):
     def set_yfactor(self):
         self.yfactor = np.random.random()
 
+    def floor(self):
+        self.arrival = np.floor(self.arrival)
+        self.duration = np.floor(self.duration)
+        self.value = np.floor(self.value)
+        self.name = np.floor(self.name)
+
     @staticmethod
     def deserializeJob(data):
         return Job(data[0], data[1], data[2], data[3])

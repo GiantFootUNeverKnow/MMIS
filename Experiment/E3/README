@@ -17,7 +17,7 @@ Procedures
 -----------------------------------------------------------------------------------------  
 
 Preparations: 1. Implement a mixed-abortion-ratio algorithm
-2. Enable generation of GeometricSets to support growing rate 1~4
+2. Enable generation of GeometricSets to support growing rate 1~4 [When c = 1.8, the ratio is greater than 4, not sure if my codes are right, possibly numerical error]
 
 A Geometric Set with stage N means there are jobs with length [l, l * alpha, l * alpha^2, ... l * alpha^(N-1)].
 Let N = 20 if alpha = 2
