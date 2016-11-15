@@ -1,0 +1,71 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment checks whether randomization can enhance the performance of the "Greedy-2" algorithm. 
+
+The experiment E0 validated that competitive ratio of "Greedy-2" algorithm is 4 in the worst case, and we maneged to produced a job sequence causing the algorithm to behave in the worst case. That job sequence is SchemeGeometricSets with growth rate 2.
+
+In this experiment, we will first add randomization into the naive "Greedy-2" algorithm. For example, a randomized "Greedy-2,4" algorithm is a mix of "Greedy-2" and "Greedy-4" with decision made by chance. Theoritically the competitive ratio would decrease since it avoids the worst case job sequence that targets at "Greedy-2" algorithm.  
+
+However, there are at least two uncertainties we hold. (1) How to choose another algorithm that would be mixed with "Greedy-2"? Should they have a higher abortion ratio or lower? (2) What probability should be given for each algorithm? 
+
+For this time, we will assume 1/2 is the answer for the second question and primarily focus on the first question.
+ 
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Preparations: 1. Implement a mixed-abortion-ratio algorithm
+2. Enable generation of GeometricSets to support growing rate 1~4
+
+A Geometric Set with stage N means there are jobs with length [l, l * alpha, l * alpha^2, ... l * alpha^(N-1)].
+Let N = 20 if alpha = 2
+    N = 10 if alpha = 4
+    N = 25 if alpha = 1.5
+
+For all three options of alpha = 1.5; 2; 4, generate a Geometric Sets job sequence
+
+Use jobs_generate.py to generate Geometric Sets with stage N
+Run ./jobs_generate.py 
+    Choose SchemeGeometricSets
+    Enter N
+    Enter ratio = alpha
+By default, the generation would be stored into job_base/SchemeGeometricSet
+Store the result of the generation in directory ./jobs under this E3 and name each job sequence by its alpha ratio
+
+Create 3 configuration files under this directory. These files will be used to set up machine we will use.
+Copy and paste the following into config1:
+
+1
+2 2 
+1
+
+Copy and paste the following into config2:
+
+1
+2 4
+10
+
+Copy and paste the following into config3:
+
+1
+2 1.5
+10
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult ConfigFileFormat to understand how it works
+
+Change directory to MMIS
+
+Run ./main.py --experiment Experiment/E3/config1 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result1 
+Run ./main.py --experiment Experiment/E3/config2 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result2 
+Run ./main.py --experiment Experiment/E3/config3 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result3 
+
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+We can see the limit approaches 4 

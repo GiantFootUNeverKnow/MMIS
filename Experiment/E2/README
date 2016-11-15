@@ -1,0 +1,64 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is to extend the previous experiment E1: we will explore how stable "Greedy-2" could maintain when the PUS sequence changes in a broader sense. More context is provided in E1/README
+
+(a, b) is a parameter of PUS Scheme that controls lengths of jobs such that any generated jobs would be of length between a and b.
+Benevolent function is another parameter of PUS Scheme that determines values of jobs based lengths of jobs.  
+
+We know for the fixed (a,b) and the fixed benevolent function we used in E1, the competitive ratio did not change significantly as p varies, but we want to see if this stability exists for different (a, b) or different benevolent function.
+ 
+Particularly, we will redo experiment E1 few times except that for each time we will use different combination of (a, b) and benevolent function
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Most steps are merely repetition of experiment E1, and we omit details here. There is plenty of useful information in E1/README. Therefore, we will treat E1 as a blackbox block of experiment, and use it abstractly.   
+
+Create folders E2.1, E2.2, E2.3, E2.4, E2.5, E2.6, E2.7, E2.8, E2.9
+
+Use different combinations of (a, b) and benevolent functions to do experiment E1. The location to store relevant files should be changed to E2.x
+
+Use input files to reduce time typing parameters since most input parameters will be the same
+E2.1: (Just Copy & Paste E1)
+    a = 5 
+    b = 25   
+    f = y
+E2.2:
+    a = 5
+    b = 25   
+    f = y^2
+E2.3:
+    a = 5
+    b = 25   
+    f = y^3
+E2.4:
+    a = 4
+    b = 100   
+    f = y
+E2.5:
+    a = 4
+    b = 100   
+    f = y^2
+E2.6:
+    a = 4
+    b = 100   
+    f = y^3
+E2.7:
+    a = 1
+    b = 125   
+    f = y
+E2.8:
+    a = 1
+    b = 125   
+    f = y^2
+E2.9:
+    a = 1
+    b = 125   
+    f = y^3
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
