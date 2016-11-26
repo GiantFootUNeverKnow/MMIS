@@ -58,7 +58,7 @@ Consult ConfigFileFormat to understand how it works
 
 Change directory to MMIS
 
-Run ./main.py --experiment Experiment/E3/config1 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result1 
+Run ./main.py --experiment Experiment/E3/config1 --jb Experiment/E3/jobs > Experiment/E3/result1 
 Run ./main.py --experiment Experiment/E3/config2 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result2 
 Run ./main.py --experiment Experiment/E3/config3 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result3 
 

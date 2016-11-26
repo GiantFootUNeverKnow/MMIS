@@ -55,9 +55,7 @@ class Machine(object):
         else:
             raise RuntimeError("No job can be finished on Machine %d" % (self.number))
 
-# Time always increments by amount of TIME_INCREMENT
 # TIME_INCREMENT should be greater than EPSILON
-TIME_INCREMENT = 1
 EPSILON = 0.000001
 NUM_MECHANISMS = 10
 NUM_RANDOMIZED_DECIDER_MECHANISMS = 6
@@ -145,6 +143,7 @@ class Scheduler(object):
 
         log.debug("Machines are setup")
 
+    # We assume the incoming jobs are always in the order of their arrival time
     def select_dataset_file(self, filename):
         jobs_matrix = np.loadtxt(filename)
         log.debug(jobs_matrix)
@@ -158,7 +157,6 @@ class Scheduler(object):
         self.select_dataset_file(filename)
 
     def regular_check(self):
-        self.time += TIME_INCREMENT
         for machine in self.machines:
             if ( not machine.is_idle() and self.time >= machine.work_end):
                 machine.finish_job()
@@ -270,11 +268,10 @@ class Scheduler(object):
         n = len(self.jobs)
         index = 0
         while (index < n):
+            self.time = self.jobs[index].arrival
             self.regular_check()
-            while (index < n and abs(self.jobs[index].arrival - self.time ) < EPSILON):
-                # The while loop is for simultaneous jobs
-                self.process_job(self.jobs[index])
-                index += 1
+            self.process_job(self.jobs[index])
+            index += 1
         
         # We can expect current jobs on the machines can all be done 
         for machine in self.machines:
