@@ -18,7 +18,7 @@ Procedures
 First, we generate PUS sequences for different p. 
 
 For p = 0.05 * k, k = 1,2,...19
-Run ./jobs_generate.py --batch --redir PUS[k] --jl 400
+Run ./jobs_generator.py --batch --redir PUS[k] --jl 400
     Choose PUS Scheme
     Enter p
     For a, enter 5
@@ -41,7 +41,7 @@ Consult MMIS/ConfigFileFormat to understand how it works
 Change directory to MMIS
 
 For every k, use "job_base" mode and redirect the result to the desired result file 
-Run ./main.py --experiment Experiment/E1/config --jb Experiment/E1/jobs/PUS[k] --repeat > Experiment/E1/result[k] 
+Run ./main.py --experiment Experiment/E1/config --jb Experiment/E1/jobs/PUS[k] > Experiment/E1/result[k] 
 (Using a bash file helps, running these commands will take lots of time)
 Store the resulting files into Experiment/E1/result
 

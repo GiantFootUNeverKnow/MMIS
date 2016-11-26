@@ -1,4 +1,4 @@
------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------
 Objectives
 -----------------------------------------------------------------------------------------
 
@@ -15,18 +15,31 @@ Particularly, we will redo experiment E1 few times except that for each time we 
 Procedures
 -----------------------------------------------------------------------------------------  
 
-Most steps are merely repetition of experiment E1, and we omit details here. There is plenty of useful information in E1/README. Therefore, we will treat E1 as a blackbox block of experiment, and use it abstractly.   
+Most steps are merely repetitions of experiment E1, and we omit details here. There is plenty of useful information in E1/README. Therefore, we will treat E1 as a blackbox of the experiment, and use it abstractly.   
 
 Create folders E2.1, E2.2, E2.3, E2.4, E2.5, E2.6, E2.7, E2.8, E2.9
 
 Use different combinations of (a, b) and benevolent functions to do experiment E1. The location to store relevant files should be changed to E2.x
 
-Use input files to reduce time typing parameters since most input parameters will be the same
-E2.1: (Just Copy & Paste E1)
+Use input files to reduce time of typing parameters since most input parameters will be the same
+
+Example input file(First input of E2.1):
+1
+0.05
+5
+25
+lambda y:y
+100
+Y
+
+Put this input file 1.txt into folder E2.1/input and run this command in /MMIS to generate job sequence using this following command
+./jobs_generator.py --batch --redir PUS1 --jl 400 < Experiment/E2/E2.1/input/1.txt
+
+E2.1:
     a = 5 
     b = 25   
     f = y
-E2.2:
+E2.2: (Just Copy & Paste E1) 
     a = 5
     b = 25   
     f = y^2
@@ -58,6 +71,17 @@ E2.9:
     a = 1
     b = 125   
     f = y^3
+
+Suggestions:
+
+Few bash files that help speed up the process are placed in E2. Try to use them wisely to reduce labor.
+Ideally, most jobs for this experiment are done by modifying and  running these bash files  
+If any change happens to this experiment, ideally only these bash files and config needs to be changed accordingly
+
+Steps to take for each sub-experiment:
+1. update run1.sh, run2.sh and run3.sh
+2. run run3.sh, run1.sh, run2.sh in this order in their appropriate directory
+3. go to directory E2.x and run clip.py to see the result 
 
 ---------------------------------------------------------------------------------------
 Result
