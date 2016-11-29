@@ -1,0 +1,73 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is a continuation of previous experiment E3
+
+We want to compare more scheduling algorithms against the job sequences used in E3
+
+Here are the scheduling algorithms we are interested in adding into the table: 1. Greedy-4; 2. Greedy-1.5; 3. Greedy-2 AND randomized decider; 4. Greedy-2 OR randomized decider; 5. Pure random 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Preparations: 1. Implement a mixed-abortion-ratio algorithm
+2. Enable generation of GeometricSets to support growing rate c in 1~4 
+
+A Geometric Set with stage N means there are jobs with length [l, l * alpha, l * alpha^2, ... l * alpha^(N-1)].
+For the convenience, keep a similar order of total workload across 3 different Geometric Sets
+Let N = 20 if alpha = 2
+    N = 10 if alpha = 4
+    N = 25 if alpha = 1.5
+
+For all three options of alpha = 1.5; 2; 4, generate a Geometric Sets job sequence
+
+To do so, use jobs_generate.py
+Run ./jobs_generate.py 
+    Choose SchemeGeometricSets
+    Enter N
+    Enter ratio = alpha
+By default, the generation would be stored into job_base/SchemeGeometricSet
+Store the result of the generation in directory ./jobs under this E3 and name each job sequence by its alpha ratio
+
+Create 3 configuration files under this directory. These files will be used to set up the machine we will use.
+Copy and paste the following into config1:
+
+1
+2 2 
+1
+
+Copy and paste the following into config2:
+
+1
+2 4
+10
+
+Copy and paste the following into config3:
+
+1
+2 1.5
+10
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult ConfigFileFormat to understand how it works
+
+Change directory to MMIS
+
+Run ./main.py --experiment Experiment/E3/config1 --jb Experiment/E3/jobs > Experiment/E3/result1 
+Run ./main.py --experiment Experiment/E3/config2 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result2 
+Run ./main.py --experiment Experiment/E3/config3 --jb Experiment/E3/jobs --repeat 50 > Experiment/E3/result3 
+
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 3 algorithms running on 3 sequences is obtained as below:
+
+                1.5-Geometric       2-Geometric         4-Geometric
+Greedy-2        1                   3.99999             1.33333
+Greedy-2,4      1                   1.53604             2.42424 
+Greedy-2,1.5    1.32477             2.77777             1.33333
