@@ -113,21 +113,20 @@ Steps to take for each sub-experiment:
 Result
 ---------------------------------------------------------------------------------------
 
-No matter how p varies, all experiments exihibited near 1 competitive ratio and small variations over job base
-as desired. However, figures from some results are higher than the others. I will list expected competitive 
-ratio and variations of all experiments as below:
+The vaiarion over p and variation over job base are tempoarily ignored and we focus on how competitive ratio
+varies and comparison of competitive ratios across 3 algorithms we have  
 
-(a, b), f(x) of job base    Expected comp ratio     Variation over job base
-(5, 25), f(y) = y           1.066                   0.0004
-(5, 25), f(y) = y^2         1.092                   0.0009
-(5, 25), f(y) = y^3         1.100                   0.0011
-(4, 100), f(y) = y          1.092                   0.0018      
-(4, 100), f(y) = y^2        1.124                   0.0030
-(4, 100), f(y) = y^3        1.140                   0.0045
-(1, 125), f(y) = y          1.105                   0.0025
-(1, 125), f(y) = y^2        1.132                   0.0043
-(1, 125), f(y) = y^3        1.148                   0.0065
+(a, b), f(x) of job base    Greedy-2    Greedy-2,4      Greedy-2,1.5
+(5, 25), f(y) = y           1.0707      1.0640          1.1052
+(5, 25), f(y) = y^2         1.0943      1.1104          1.1016
+(5, 25), f(y) = y^3         1.1000      1.1300          1.1020
+(5, 25), f(y) = y+y^2+y^3   1.1094      1.1385          1.1080
+(5, 25), f(y) = y+2y^2+3y^3 1.1000      1.1292          1.1040
+(5, 25), f(y) = e^y         1.0234      1.0768          1.0234
+(4, 100), f(y) = y          1.0926      1.1023          1.1270
+(4, 100), f(y) = y^2        1.1237      1.1482          1.1239
+(4, 100), f(y) = y^3        1.1388      1.1701          1.1290
+(1, 125), f(y) = y          1.1033      1.1134          1.1352
+(1, 125), f(y) = y^2        1.1335      1.1570          1.1324
+(1, 125), f(y) = y^3        1.1503      1.1817          1.1363
 
-By observation, we can see as the difference between lengths of jobs increases, expectation of 
-competitive ratio and variation increase;
-Also, as the degree of polynomial increases, expectation of competitive ratio and variation increase

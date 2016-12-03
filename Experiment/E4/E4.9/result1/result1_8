@@ -1,0 +1,1002 @@
+-----------------------------------------------------
+Result of experiment 1:
+Machine 0 earned 11711420
+Totally, we earned 11711420
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11711420
+The optimal reward that can be obtained for this job sequence is  12528669.0
+The competitive ratio is  1.06978222965
+****************************************************
+-----------------------------------------------------
+Result of experiment 2:
+Machine 0 earned 10692467
+Totally, we earned 10692467
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10692467
+The optimal reward that can be obtained for this job sequence is  10905092.0
+The competitive ratio is  1.01988549509
+****************************************************
+-----------------------------------------------------
+Result of experiment 3:
+Machine 0 earned 9910502
+Totally, we earned 9910502
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9910502
+The optimal reward that can be obtained for this job sequence is  12172068.0
+The competitive ratio is  1.22819893483
+****************************************************
+-----------------------------------------------------
+Result of experiment 4:
+Machine 0 earned 8541043
+Totally, we earned 8541043
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8541043
+The optimal reward that can be obtained for this job sequence is  10929716.0
+The competitive ratio is  1.27966994195
+****************************************************
+-----------------------------------------------------
+Result of experiment 5:
+Machine 0 earned 11619863
+Totally, we earned 11619863
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11619863
+The optimal reward that can be obtained for this job sequence is  11819728.0
+The competitive ratio is  1.01720028885
+****************************************************
+-----------------------------------------------------
+Result of experiment 6:
+Machine 0 earned 9113429
+Totally, we earned 9113429
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9113429
+The optimal reward that can be obtained for this job sequence is  11192844.0
+The competitive ratio is  1.2281704285
+****************************************************
+-----------------------------------------------------
+Result of experiment 7:
+Machine 0 earned 9755811
+Totally, we earned 9755811
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9755811
+The optimal reward that can be obtained for this job sequence is  11844750.0
+The competitive ratio is  1.21412253681
+****************************************************
+-----------------------------------------------------
+Result of experiment 8:
+Machine 0 earned 10365153
+Totally, we earned 10365153
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10365153
+The optimal reward that can be obtained for this job sequence is  11727171.0
+The competitive ratio is  1.1314035596
+****************************************************
+-----------------------------------------------------
+Result of experiment 9:
+Machine 0 earned 9849928
+Totally, we earned 9849928
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9849928
+The optimal reward that can be obtained for this job sequence is  11160770.0
+The competitive ratio is  1.13308137887
+****************************************************
+-----------------------------------------------------
+Result of experiment 10:
+Machine 0 earned 8471608
+Totally, we earned 8471608
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8471608
+The optimal reward that can be obtained for this job sequence is  10289937.0
+The competitive ratio is  1.21463800025
+****************************************************
+-----------------------------------------------------
+Result of experiment 11:
+Machine 0 earned 9740698
+Totally, we earned 9740698
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9740698
+The optimal reward that can be obtained for this job sequence is  11647420.0
+The competitive ratio is  1.19574798438
+****************************************************
+-----------------------------------------------------
+Result of experiment 12:
+Machine 0 earned 10943442
+Totally, we earned 10943442
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10943442
+The optimal reward that can be obtained for this job sequence is  11790709.0
+The competitive ratio is  1.0774223503
+****************************************************
+-----------------------------------------------------
+Result of experiment 13:
+Machine 0 earned 9113770
+Totally, we earned 9113770
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9113770
+The optimal reward that can be obtained for this job sequence is  11201994.0
+The competitive ratio is  1.22912845069
+****************************************************
+-----------------------------------------------------
+Result of experiment 14:
+Machine 0 earned 9059571
+Totally, we earned 9059571
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9059571
+The optimal reward that can be obtained for this job sequence is  11495970.0
+The competitive ratio is  1.26893094607
+****************************************************
+-----------------------------------------------------
+Result of experiment 15:
+Machine 0 earned 8806502
+Totally, we earned 8806502
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8806502
+The optimal reward that can be obtained for this job sequence is  11189322.0
+The competitive ratio is  1.27057508191
+****************************************************
+-----------------------------------------------------
+Result of experiment 16:
+Machine 0 earned 10021165
+Totally, we earned 10021165
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10021165
+The optimal reward that can be obtained for this job sequence is  11024260.0
+The competitive ratio is  1.10009764334
+****************************************************
+-----------------------------------------------------
+Result of experiment 17:
+Machine 0 earned 10478858
+Totally, we earned 10478858
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10478858
+The optimal reward that can be obtained for this job sequence is  11357649.0
+The competitive ratio is  1.08386324159
+****************************************************
+-----------------------------------------------------
+Result of experiment 18:
+Machine 0 earned 9443492
+Totally, we earned 9443492
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9443492
+The optimal reward that can be obtained for this job sequence is  11360587.0
+The competitive ratio is  1.20300700207
+****************************************************
+-----------------------------------------------------
+Result of experiment 19:
+Machine 0 earned 10693467
+Totally, we earned 10693467
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10693467
+The optimal reward that can be obtained for this job sequence is  11695243.0
+The competitive ratio is  1.09368112325
+****************************************************
+-----------------------------------------------------
+Result of experiment 20:
+Machine 0 earned 10177193
+Totally, we earned 10177193
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10177193
+The optimal reward that can be obtained for this job sequence is  11181474.0
+The competitive ratio is  1.09867956715
+****************************************************
+-----------------------------------------------------
+Result of experiment 21:
+Machine 0 earned 10024930
+Totally, we earned 10024930
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10024930
+The optimal reward that can be obtained for this job sequence is  11354974.0
+The competitive ratio is  1.1326736446
+****************************************************
+-----------------------------------------------------
+Result of experiment 22:
+Machine 0 earned 10425648
+Totally, we earned 10425648
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10425648
+The optimal reward that can be obtained for this job sequence is  11252435.0
+The competitive ratio is  1.07930317617
+****************************************************
+-----------------------------------------------------
+Result of experiment 23:
+Machine 0 earned 9636414
+Totally, we earned 9636414
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9636414
+The optimal reward that can be obtained for this job sequence is  10582932.0
+The competitive ratio is  1.09822305268
+****************************************************
+-----------------------------------------------------
+Result of experiment 24:
+Machine 0 earned 10438959
+Totally, we earned 10438959
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10438959
+The optimal reward that can be obtained for this job sequence is  10902686.0
+The competitive ratio is  1.04442272453
+****************************************************
+-----------------------------------------------------
+Result of experiment 25:
+Machine 0 earned 9766015
+Totally, we earned 9766015
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9766015
+The optimal reward that can be obtained for this job sequence is  10971809.0
+The competitive ratio is  1.12346837477
+****************************************************
+-----------------------------------------------------
+Result of experiment 26:
+Machine 0 earned 8408631
+Totally, we earned 8408631
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8408631
+The optimal reward that can be obtained for this job sequence is  11004112.0
+The competitive ratio is  1.30866867627
+****************************************************
+-----------------------------------------------------
+Result of experiment 27:
+Machine 0 earned 9043432
+Totally, we earned 9043432
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9043432
+The optimal reward that can be obtained for this job sequence is  10589238.0
+The competitive ratio is  1.17093134553
+****************************************************
+-----------------------------------------------------
+Result of experiment 28:
+Machine 0 earned 11122587
+Totally, we earned 11122587
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11122587
+The optimal reward that can be obtained for this job sequence is  12623176.0
+The competitive ratio is  1.13491366712
+****************************************************
+-----------------------------------------------------
+Result of experiment 29:
+Machine 0 earned 10590199
+Totally, we earned 10590199
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10590199
+The optimal reward that can be obtained for this job sequence is  11425670.0
+The competitive ratio is  1.07889096324
+****************************************************
+-----------------------------------------------------
+Result of experiment 30:
+Machine 0 earned 10936465
+Totally, we earned 10936465
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10936465
+The optimal reward that can be obtained for this job sequence is  11546776.0
+The competitive ratio is  1.05580514362
+****************************************************
+-----------------------------------------------------
+Result of experiment 31:
+Machine 0 earned 10200916
+Totally, we earned 10200916
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10200916
+The optimal reward that can be obtained for this job sequence is  10629575.0
+The competitive ratio is  1.04202161845
+****************************************************
+-----------------------------------------------------
+Result of experiment 32:
+Machine 0 earned 9954562
+Totally, we earned 9954562
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9954562
+The optimal reward that can be obtained for this job sequence is  10736447.0
+The competitive ratio is  1.07854539456
+****************************************************
+-----------------------------------------------------
+Result of experiment 33:
+Machine 0 earned 9762892
+Totally, we earned 9762892
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9762892
+The optimal reward that can be obtained for this job sequence is  10520217.0
+The competitive ratio is  1.07757178918
+****************************************************
+-----------------------------------------------------
+Result of experiment 34:
+Machine 0 earned 10077095
+Totally, we earned 10077095
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10077095
+The optimal reward that can be obtained for this job sequence is  11730582.0
+The competitive ratio is  1.16408369674
+****************************************************
+-----------------------------------------------------
+Result of experiment 35:
+Machine 0 earned 11516824
+Totally, we earned 11516824
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11516824
+The optimal reward that can be obtained for this job sequence is  11516824.0
+The competitive ratio is  1.0
+****************************************************
+-----------------------------------------------------
+Result of experiment 36:
+Machine 0 earned 9420229
+Totally, we earned 9420229
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9420229
+The optimal reward that can be obtained for this job sequence is  10893196.0
+The competitive ratio is  1.15636212241
+****************************************************
+-----------------------------------------------------
+Result of experiment 37:
+Machine 0 earned 11498958
+Totally, we earned 11498958
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11498958
+The optimal reward that can be obtained for this job sequence is  12091564.0
+The competitive ratio is  1.0515356261
+****************************************************
+-----------------------------------------------------
+Result of experiment 38:
+Machine 0 earned 10975541
+Totally, we earned 10975541
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10975541
+The optimal reward that can be obtained for this job sequence is  11375201.0
+The competitive ratio is  1.03641369478
+****************************************************
+-----------------------------------------------------
+Result of experiment 39:
+Machine 0 earned 10357515
+Totally, we earned 10357515
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10357515
+The optimal reward that can be obtained for this job sequence is  11391797.0
+The competitive ratio is  1.09985812234
+****************************************************
+-----------------------------------------------------
+Result of experiment 40:
+Machine 0 earned 9270933
+Totally, we earned 9270933
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9270933
+The optimal reward that can be obtained for this job sequence is  11062549.0
+The competitive ratio is  1.19325088424
+****************************************************
+-----------------------------------------------------
+Result of experiment 41:
+Machine 0 earned 9868528
+Totally, we earned 9868528
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9868528
+The optimal reward that can be obtained for this job sequence is  10821322.0
+The competitive ratio is  1.09654874567
+****************************************************
+-----------------------------------------------------
+Result of experiment 42:
+Machine 0 earned 9930581
+Totally, we earned 9930581
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9930581
+The optimal reward that can be obtained for this job sequence is  11860357.0
+The competitive ratio is  1.1943265958
+****************************************************
+-----------------------------------------------------
+Result of experiment 43:
+Machine 0 earned 8798678
+Totally, we earned 8798678
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8798678
+The optimal reward that can be obtained for this job sequence is  11016790.0
+The competitive ratio is  1.25209605352
+****************************************************
+-----------------------------------------------------
+Result of experiment 44:
+Machine 0 earned 10489277
+Totally, we earned 10489277
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10489277
+The optimal reward that can be obtained for this job sequence is  11304750.0
+The competitive ratio is  1.07774348985
+****************************************************
+-----------------------------------------------------
+Result of experiment 45:
+Machine 0 earned 10716492
+Totally, we earned 10716492
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10716492
+The optimal reward that can be obtained for this job sequence is  11618094.0
+The competitive ratio is  1.0841321955
+****************************************************
+-----------------------------------------------------
+Result of experiment 46:
+Machine 0 earned 10329913
+Totally, we earned 10329913
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10329913
+The optimal reward that can be obtained for this job sequence is  11018862.0
+The competitive ratio is  1.06669455977
+****************************************************
+-----------------------------------------------------
+Result of experiment 47:
+Machine 0 earned 8675003
+Totally, we earned 8675003
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8675003
+The optimal reward that can be obtained for this job sequence is  10973684.0
+The competitive ratio is  1.26497754525
+****************************************************
+-----------------------------------------------------
+Result of experiment 48:
+Machine 0 earned 10756220
+Totally, we earned 10756220
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10756220
+The optimal reward that can be obtained for this job sequence is  11561143.0
+The competitive ratio is  1.07483325927
+****************************************************
+-----------------------------------------------------
+Result of experiment 49:
+Machine 0 earned 9114481
+Totally, we earned 9114481
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9114481
+The optimal reward that can be obtained for this job sequence is  10372970.0
+The competitive ratio is  1.13807577195
+****************************************************
+-----------------------------------------------------
+Result of experiment 50:
+Machine 0 earned 9513557
+Totally, we earned 9513557
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9513557
+The optimal reward that can be obtained for this job sequence is  11437276.0
+The competitive ratio is  1.20220817513
+****************************************************
+-----------------------------------------------------
+Result of experiment 51:
+Machine 0 earned 10144863
+Totally, we earned 10144863
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10144863
+The optimal reward that can be obtained for this job sequence is  11779056.0
+The competitive ratio is  1.16108576331
+****************************************************
+-----------------------------------------------------
+Result of experiment 52:
+Machine 0 earned 9976058
+Totally, we earned 9976058
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9976058
+The optimal reward that can be obtained for this job sequence is  11000267.0
+The competitive ratio is  1.10266670462
+****************************************************
+-----------------------------------------------------
+Result of experiment 53:
+Machine 0 earned 9693396
+Totally, we earned 9693396
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9693396
+The optimal reward that can be obtained for this job sequence is  11221946.0
+The competitive ratio is  1.15768983337
+****************************************************
+-----------------------------------------------------
+Result of experiment 54:
+Machine 0 earned 10228212
+Totally, we earned 10228212
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10228212
+The optimal reward that can be obtained for this job sequence is  10866976.0
+The competitive ratio is  1.06245118893
+****************************************************
+-----------------------------------------------------
+Result of experiment 55:
+Machine 0 earned 9289005
+Totally, we earned 9289005
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9289005
+The optimal reward that can be obtained for this job sequence is  11225488.0
+The competitive ratio is  1.20847044436
+****************************************************
+-----------------------------------------------------
+Result of experiment 56:
+Machine 0 earned 10763432
+Totally, we earned 10763432
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10763432
+The optimal reward that can be obtained for this job sequence is  10976321.0
+The competitive ratio is  1.01977891438
+****************************************************
+-----------------------------------------------------
+Result of experiment 57:
+Machine 0 earned 9325199
+Totally, we earned 9325199
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9325199
+The optimal reward that can be obtained for this job sequence is  11003085.0
+The competitive ratio is  1.1799303157
+****************************************************
+-----------------------------------------------------
+Result of experiment 58:
+Machine 0 earned 11510414
+Totally, we earned 11510414
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11510414
+The optimal reward that can be obtained for this job sequence is  12191995.0
+The competitive ratio is  1.05921429064
+****************************************************
+-----------------------------------------------------
+Result of experiment 59:
+Machine 0 earned 9612045
+Totally, we earned 9612045
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9612045
+The optimal reward that can be obtained for this job sequence is  10973276.0
+The competitive ratio is  1.14161721049
+****************************************************
+-----------------------------------------------------
+Result of experiment 60:
+Machine 0 earned 10712493
+Totally, we earned 10712493
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10712493
+The optimal reward that can be obtained for this job sequence is  12134689.0
+The competitive ratio is  1.13276050682
+****************************************************
+-----------------------------------------------------
+Result of experiment 61:
+Machine 0 earned 10607176
+Totally, we earned 10607176
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10607176
+The optimal reward that can be obtained for this job sequence is  11733008.0
+The competitive ratio is  1.10613871213
+****************************************************
+-----------------------------------------------------
+Result of experiment 62:
+Machine 0 earned 9679537
+Totally, we earned 9679537
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9679537
+The optimal reward that can be obtained for this job sequence is  10937990.0
+The competitive ratio is  1.13001169374
+****************************************************
+-----------------------------------------------------
+Result of experiment 63:
+Machine 0 earned 10550962
+Totally, we earned 10550962
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10550962
+The optimal reward that can be obtained for this job sequence is  12010249.0
+The competitive ratio is  1.13830843102
+****************************************************
+-----------------------------------------------------
+Result of experiment 64:
+Machine 0 earned 9181043
+Totally, we earned 9181043
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9181043
+The optimal reward that can be obtained for this job sequence is  10784990.0
+The competitive ratio is  1.17470204638
+****************************************************
+-----------------------------------------------------
+Result of experiment 65:
+Machine 0 earned 10799319
+Totally, we earned 10799319
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10799319
+The optimal reward that can be obtained for this job sequence is  12107302.0
+The competitive ratio is  1.12111717415
+****************************************************
+-----------------------------------------------------
+Result of experiment 66:
+Machine 0 earned 11079539
+Totally, we earned 11079539
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11079539
+The optimal reward that can be obtained for this job sequence is  11500371.0
+The competitive ratio is  1.03798280777
+****************************************************
+-----------------------------------------------------
+Result of experiment 67:
+Machine 0 earned 9577151
+Totally, we earned 9577151
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9577151
+The optimal reward that can be obtained for this job sequence is  11257731.0
+The competitive ratio is  1.17547807276
+****************************************************
+-----------------------------------------------------
+Result of experiment 68:
+Machine 0 earned 10776743
+Totally, we earned 10776743
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10776743
+The optimal reward that can be obtained for this job sequence is  11468468.0
+The competitive ratio is  1.0641868327
+****************************************************
+-----------------------------------------------------
+Result of experiment 69:
+Machine 0 earned 9397272
+Totally, we earned 9397272
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9397272
+The optimal reward that can be obtained for this job sequence is  10820355.0
+The competitive ratio is  1.1514357571
+****************************************************
+-----------------------------------------------------
+Result of experiment 70:
+Machine 0 earned 8961475
+Totally, we earned 8961475
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8961475
+The optimal reward that can be obtained for this job sequence is  10929500.0
+The competitive ratio is  1.21960949509
+****************************************************
+-----------------------------------------------------
+Result of experiment 71:
+Machine 0 earned 10016828
+Totally, we earned 10016828
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10016828
+The optimal reward that can be obtained for this job sequence is  11077694.0
+The competitive ratio is  1.10590837738
+****************************************************
+-----------------------------------------------------
+Result of experiment 72:
+Machine 0 earned 9066655
+Totally, we earned 9066655
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9066655
+The optimal reward that can be obtained for this job sequence is  11127665.0
+The competitive ratio is  1.22731757192
+****************************************************
+-----------------------------------------------------
+Result of experiment 73:
+Machine 0 earned 7777027
+Totally, we earned 7777027
+-----------------------------------------------------
+****************************************************
+Expected payoff: 7777027
+The optimal reward that can be obtained for this job sequence is  11104959.0
+The competitive ratio is  1.42791827777
+****************************************************
+-----------------------------------------------------
+Result of experiment 74:
+Machine 0 earned 10824980
+Totally, we earned 10824980
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10824980
+The optimal reward that can be obtained for this job sequence is  11819188.0
+The competitive ratio is  1.09184386484
+****************************************************
+-----------------------------------------------------
+Result of experiment 75:
+Machine 0 earned 10313564
+Totally, we earned 10313564
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10313564
+The optimal reward that can be obtained for this job sequence is  11412795.0
+The competitive ratio is  1.10658110038
+****************************************************
+-----------------------------------------------------
+Result of experiment 76:
+Machine 0 earned 10849243
+Totally, we earned 10849243
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10849243
+The optimal reward that can be obtained for this job sequence is  11591301.0
+The competitive ratio is  1.06839721444
+****************************************************
+-----------------------------------------------------
+Result of experiment 77:
+Machine 0 earned 9667088
+Totally, we earned 9667088
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9667088
+The optimal reward that can be obtained for this job sequence is  11252529.0
+The competitive ratio is  1.16400398962
+****************************************************
+-----------------------------------------------------
+Result of experiment 78:
+Machine 0 earned 10446735
+Totally, we earned 10446735
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10446735
+The optimal reward that can be obtained for this job sequence is  10764186.0
+The competitive ratio is  1.03038758043
+****************************************************
+-----------------------------------------------------
+Result of experiment 79:
+Machine 0 earned 12012933
+Totally, we earned 12012933
+-----------------------------------------------------
+****************************************************
+Expected payoff: 12012933
+The optimal reward that can be obtained for this job sequence is  12439742.0
+The competitive ratio is  1.03552912515
+****************************************************
+-----------------------------------------------------
+Result of experiment 80:
+Machine 0 earned 9518355
+Totally, we earned 9518355
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9518355
+The optimal reward that can be obtained for this job sequence is  10622711.0
+The competitive ratio is  1.11602382975
+****************************************************
+-----------------------------------------------------
+Result of experiment 81:
+Machine 0 earned 10275525
+Totally, we earned 10275525
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10275525
+The optimal reward that can be obtained for this job sequence is  10606896.0
+The competitive ratio is  1.03224857124
+****************************************************
+-----------------------------------------------------
+Result of experiment 82:
+Machine 0 earned 9820099
+Totally, we earned 9820099
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9820099
+The optimal reward that can be obtained for this job sequence is  11801977.0
+The competitive ratio is  1.20181853564
+****************************************************
+-----------------------------------------------------
+Result of experiment 83:
+Machine 0 earned 10487251
+Totally, we earned 10487251
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10487251
+The optimal reward that can be obtained for this job sequence is  11387955.0
+The competitive ratio is  1.08588561483
+****************************************************
+-----------------------------------------------------
+Result of experiment 84:
+Machine 0 earned 10074665
+Totally, we earned 10074665
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10074665
+The optimal reward that can be obtained for this job sequence is  11245579.0
+The competitive ratio is  1.11622361637
+****************************************************
+-----------------------------------------------------
+Result of experiment 85:
+Machine 0 earned 9662426
+Totally, we earned 9662426
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9662426
+The optimal reward that can be obtained for this job sequence is  11352646.0
+The competitive ratio is  1.17492708353
+****************************************************
+-----------------------------------------------------
+Result of experiment 86:
+Machine 0 earned 10012438
+Totally, we earned 10012438
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10012438
+The optimal reward that can be obtained for this job sequence is  11149821.0
+The competitive ratio is  1.11359700804
+****************************************************
+-----------------------------------------------------
+Result of experiment 87:
+Machine 0 earned 9670544
+Totally, we earned 9670544
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9670544
+The optimal reward that can be obtained for this job sequence is  12467380.0
+The competitive ratio is  1.2892118582
+****************************************************
+-----------------------------------------------------
+Result of experiment 88:
+Machine 0 earned 10874170
+Totally, we earned 10874170
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10874170
+The optimal reward that can be obtained for this job sequence is  11818727.0
+The competitive ratio is  1.08686244559
+****************************************************
+-----------------------------------------------------
+Result of experiment 89:
+Machine 0 earned 11481301
+Totally, we earned 11481301
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11481301
+The optimal reward that can be obtained for this job sequence is  12096858.0
+The competitive ratio is  1.05361387181
+****************************************************
+-----------------------------------------------------
+Result of experiment 90:
+Machine 0 earned 9081927
+Totally, we earned 9081927
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9081927
+The optimal reward that can be obtained for this job sequence is  10367277.0
+The competitive ratio is  1.14152833424
+****************************************************
+-----------------------------------------------------
+Result of experiment 91:
+Machine 0 earned 11109779
+Totally, we earned 11109779
+-----------------------------------------------------
+****************************************************
+Expected payoff: 11109779
+The optimal reward that can be obtained for this job sequence is  12064009.0
+The competitive ratio is  1.08589099747
+****************************************************
+-----------------------------------------------------
+Result of experiment 92:
+Machine 0 earned 10368417
+Totally, we earned 10368417
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10368417
+The optimal reward that can be obtained for this job sequence is  11185020.0
+The competitive ratio is  1.07875869576
+****************************************************
+-----------------------------------------------------
+Result of experiment 93:
+Machine 0 earned 9445071
+Totally, we earned 9445071
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9445071
+The optimal reward that can be obtained for this job sequence is  11522170.0
+The competitive ratio is  1.21991354009
+****************************************************
+-----------------------------------------------------
+Result of experiment 94:
+Machine 0 earned 10189127
+Totally, we earned 10189127
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10189127
+The optimal reward that can be obtained for this job sequence is  11824926.0
+The competitive ratio is  1.1605435873
+****************************************************
+-----------------------------------------------------
+Result of experiment 95:
+Machine 0 earned 10658997
+Totally, we earned 10658997
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10658997
+The optimal reward that can be obtained for this job sequence is  10917767.0
+The competitive ratio is  1.02427714352
+****************************************************
+-----------------------------------------------------
+Result of experiment 96:
+Machine 0 earned 8951703
+Totally, we earned 8951703
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8951703
+The optimal reward that can be obtained for this job sequence is  11214940.0
+The competitive ratio is  1.2528275346
+****************************************************
+-----------------------------------------------------
+Result of experiment 97:
+Machine 0 earned 10369994
+Totally, we earned 10369994
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10369994
+The optimal reward that can be obtained for this job sequence is  11660141.0
+The competitive ratio is  1.12441154739
+****************************************************
+-----------------------------------------------------
+Result of experiment 98:
+Machine 0 earned 9401872
+Totally, we earned 9401872
+-----------------------------------------------------
+****************************************************
+Expected payoff: 9401872
+The optimal reward that can be obtained for this job sequence is  11179046.0
+The competitive ratio is  1.18902342002
+****************************************************
+-----------------------------------------------------
+Result of experiment 99:
+Machine 0 earned 8873315
+Totally, we earned 8873315
+-----------------------------------------------------
+****************************************************
+Expected payoff: 8873315
+The optimal reward that can be obtained for this job sequence is  10860228.0
+The competitive ratio is  1.2239200344
+****************************************************
+-----------------------------------------------------
+Result of experiment 100:
+Machine 0 earned 10715742
+Totally, we earned 10715742
+-----------------------------------------------------
+****************************************************
+Expected payoff: 10715742
+The optimal reward that can be obtained for this job sequence is  11598474.0
+The competitive ratio is  1.0823771233
+****************************************************
+Expectation of competitive ratios over the job base:  1.13392273985
+Variance of competitive ratios over the job base:  0.00600098900424

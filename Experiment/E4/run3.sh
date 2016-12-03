@@ -1,8 +1,7 @@
 # This script should be executed under an experiment. E.g. Experiment/E4
-
 a=5
 b=25
-c=2
+c=12
 cp clip.py E4.$c
 cd E4.$c
 mkdir input
@@ -14,7 +13,7 @@ do
     echo "$k" >> E4.$c/input/$i.txt
     echo "$a" >> E4.$c/input/$i.txt
     echo "$b" >> E4.$c/input/$i.txt
-    echo "lambda y:y * y" >> E4.$c/input/$i.txt
+    echo "lambda y:np.exp(y)" >> E4.$c/input/$i.txt
     echo "100" >> E4.$c/input/$i.txt
     echo "Y" >> E4.$c/input/$i.txt
 done
