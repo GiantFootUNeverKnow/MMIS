@@ -29,4 +29,8 @@ for i in range(1,4):
     print variances
     
     # Uncomment this line in Canopy
-    #plt.plot(expectations)
+    #plt.plot(expectations, label = 'algorithm' + str(i))
+
+# Uncomment this line in Canopy
+#plt.legend()
+#plt.show()
