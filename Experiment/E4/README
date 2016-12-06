@@ -4,15 +4,15 @@ Objectives
 
 This experiment is to extend the previous experiment E2: we will conduct the same experiment but use "Greedy-2,4" and "Greedy-2,1.5" algorithms. More context is provided in E2/README
 
-In addition, we want to schedule job sequences with these benevolent functions: 1. combinations of elementary polynomial; 2. exponential function 
+In addition, we want to schedule job sequences with these benevolent functions: 1. combinations of elementary polynomial; 2. exponential function
 -----------------------------------------------------------------------------------------
 Procedures
------------------------------------------------------------------------------------------  
+-----------------------------------------------------------------------------------------
 
 Create folders E4.1, E4.2, E4.3, E4.4, E4.5, E4.6, E4.7, E4.8, E4.9, E4.10, E4.11, E4.12
 
-Use different combinations of (a, b) and benevolent functions to do the experiment. We can copy and paste E2.x to be E4.x since they E4 is 
-an extension of E2 
+Use different combinations of (a, b) and benevolent functions to do the experiment. We can copy and paste E2.x to be E4.x since they E4 is
+an extension of E2
 
 Use input files to reduce time of typing parameters since most input parameters will be the same input files and job file
 
@@ -29,58 +29,58 @@ Furthremore, generating input files has also been automated. We used a bash file
 These are parameters used to generate the job bases, update run3.sh with these parameters whenver it will be executed
 
 E4.1:
-    a = 5 
-    b = 25   
+    a = 5
+    b = 25
     f = y
 E4.2:
     a = 5
-    b = 25   
+    b = 25
     f = y^2
 E4.3:
     a = 5
-    b = 25   
+    b = 25
     f = y^3
 E4.4:
     a = 4
-    b = 100   
+    b = 100
     f = y
 E4.5:
     a = 4
-    b = 100   
+    b = 100
     f = y^2
 E4.6:
     a = 4
-    b = 100   
+    b = 100
     f = y^3
 E4.7:
     a = 1
-    b = 125   
+    b = 125
     f = y
 E4.8:
     a = 1
-    b = 125   
+    b = 125
     f = y^2
 E4.9:
     a = 1
-    b = 125   
+    b = 125
     f = y^3
 E4.10:
     a = 5
-    b = 25   
+    b = 25
     f = y + y^2 + y^3
 E4.11:
     a = 5
-    b = 25   
+    b = 25
     f = y + 2 * y^2 + 3 * y^3
 E4.12
     a = 5
     b = 25
-    f = e ^ y    
+    f = e ^ y
 
 Few bash files that help speed up the process are placed in E2. Try to use them wisely to reduce labor.
-Ideally, most jobs for this experiment are done by modifying and running these bash files  
+Ideally, most jobs for this experiment are done by modifying and running these bash files
 
-First, we should change the file config to be config1, and the folder result to be result1; 
+First, we should change the file config to be config1, and the folder result to be result1;
 Then we should create config2 as well as config3 to represent "Greedy-2,4" and "Greedy-2,1.5"
 
 config1:
@@ -101,20 +101,20 @@ config3:
 Change run1.sh, run2.sh run3.sh and clip.py:
 1. Change directory from E2 to be E4
 2. In run2, replace config by config1, result by result2
-3. In run2, add two more experiment commands, using config2 and config3 respectively 
-4. Update clip.py to accommodate more than one result directory 
+3. In run2, add two more experiment commands, using config2 and config3 respectively
+4. Update clip.py to accommodate more than one result directory
 
 Steps to take for each sub-experiment:
 1. update run1.sh, run2.sh and run3.sh
 2. run run3.sh, run1.sh, run2.sh in this order in their appropriate directory
-4. go to directory E4.x and run clip.py to see the result 
+3. go to directory E4.x and run clip.py to see the result
+3*. uncomment plotting codes in clip.py, run clip.py in Canopy or other capable IDE to render figures
 
 ---------------------------------------------------------------------------------------
 Result
 ---------------------------------------------------------------------------------------
 
-The vaiarion over p and variation over job base are tempoarily ignored and we focus on how competitive ratio
-varies and comparison of competitive ratios across 3 algorithms we have  
+Comparison of competitive ratios across 3 algorithms are summerized below
 
 (a, b), f(x) of job base    Greedy-2    Greedy-2,4      Greedy-2,1.5
 (5, 25), f(y) = y           1.0707      1.0640          1.1052
@@ -130,3 +130,15 @@ varies and comparison of competitive ratios across 3 algorithms we have
 (1, 125), f(y) = y^2        1.1335      1.1570          1.1324
 (1, 125), f(y) = y^3        1.1503      1.1817          1.1363
 
+From the curves drawn by clip.py, we see that p does not matter competitive ratio.
+
+Because exponential function is a benevolent function with infinite degree,
+we also disputed the hypothesis made in E2 -- competitive ratio grows by increasing
+the degree of polynomial.
+
+It is also interesting to see performance on f(y) = y + 2y^2 + 3y^3 is slightly
+better than performance on f(y) = y + y^2 + y^3
+
+Besides, there is a clear pattern that for all nonlinear benevolent functions,
+Greedy-2,4 performs worse than the other 2. For linear function, Greedy-2,1.5 is the
+algorithm with the largest competitive ratio.
