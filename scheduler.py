@@ -57,7 +57,7 @@ class Machine(object):
 
 # TIME_INCREMENT should be greater than EPSILON
 EPSILON = 0.000001
-NUM_MECHANISMS = 10
+NUM_MECHANISMS = 11
 NUM_RANDOMIZED_DECIDER_MECHANISMS = 6
 NUM_DETERMINISTIC_MECHANISMS = 3
 
@@ -75,6 +75,7 @@ class Scheduler(object):
     8. Mechanism 2 OR randomized dicider says YES
     9. Mechanism 3 OR randomized dicider says YES
     10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine 
+    11. (Single Machine) Randomly decide whether we abort
     '''
 
     def __init__(self):
@@ -116,6 +117,7 @@ class Scheduler(object):
         print "8. Mechanism 2 OR randomized dicider says YES"
         print "9. Mechanism 3 OR randomized dicider says YES"
         print "10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine"  
+        print "11. (Single Machine) Randomly decide whether to abort"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         while (n <= 0 or n > NUM_MECHANISMS):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
@@ -258,6 +260,15 @@ class Scheduler(object):
         if (job.value >= machine.current_job_value * alpha):
             machine.start_job(job)
 
+    def heuristic11(self, job):
+        # This mechanism is only allowed to run on single machine now, running heuristic11 on multiple machines does not make sense yet
+        assert len(self.machines) == 1
+        log.debug( "heuristic11 has %d at time %d" % (job.name, self.time ))
+        machine = self.machines[0]
+        is_start = np.random.randint(2)
+        if (is_start):
+            machine.start_job(job)
+    
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
         eval(function_name)(job)
