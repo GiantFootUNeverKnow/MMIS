@@ -70,7 +70,7 @@ class JobsGenerationScheme(object):
 class SchemeGeometricSets(JobsGenerationScheme):
 
     def get_helpinfo(self):
-        return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job become c*l, where l is the length of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is not uneffective to use --jl to specify the length of jobs, and there is no default for that."
+        return "In Scheme Geometric Sets, a set of conflicting jobs is generated in a way that each job is just covering the end point of its previous job, i.e. the conflicting interval should be of length 1. We let value of a job be equal to the length of the job in this scheme, and let length of a job become c*l, where l is the length of its previous job. Besides, a set of companion jobs will be generated in the same fashion but they are not conflicting with each other. Due to the exponential growth of job length, it is not allowed to have too many jobs. Thus, it is uneffective to use --jl to specify the length of jobs, and there is no default for that."
 
     def __init__(self):
         self.name = "GeometricSets"
@@ -81,7 +81,7 @@ class SchemeGeometricSets(JobsGenerationScheme):
         # Geometric Set
         jobs = [Job(0, 1000, 1000, 0)] 
         for i in range(1, self.N):
-            job = Job(jobs[i-1].arrival + jobs[i-1].duration - 1, jobs[i-1].duration * self.c, jobs[i-1].value * self.c, i)
+            job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - 1, jobs[i - 1].duration * self.c, jobs[i - 1].value * self.c, i)
             job.floor()
             jobs.append(job)
 
@@ -115,7 +115,7 @@ class SchemePUS(JobsGenerationScheme):
         return x * x
 
     def get_helpinfo(self):
-        return "In PUS scheme, the arriving time is determined by Poisson process; the length of a job follows a uniform distribution; f(x) = x^2 is the benevoent function. A parameter p is needed for the Poisson process and a range [a, b) is needed for the uniform distribution"
+        return "In PUS scheme, the arriving time is determined by Poisson process; the length of a job follows a uniform distribution; f(x) = x^2 is the default benevoent function. A parameter p is needed for the Poisson process and a range [a, b) is needed for the uniform distribution"
 
     def __init__(self):
         self.name = "PUS"
@@ -149,6 +149,47 @@ class SchemePUS(JobsGenerationScheme):
 
         return jobs
 
+
+class SchemePPS(JobsGenerationScheme):
+
+    # let f be input variable user can control and make y = x^2 a default choice
+    def f(self, x):
+        return x * x
+
+    def get_helpinfo(self):
+        return "In PPS scheme, the arriving time is determined by Poisson process; the length of a job follows Poisson distribution; f(x) = x^2 is the default benevoent function. A parameter p is needed for the Poisson process and a parameter lambda is needed for the Poisson distribution"
+
+    def __init__(self):
+        self.name = "PPS"
+
+    def set_parameter(self):
+        self.p = float(raw_input("Please enter p as a positive real number between 0 and 1:"))
+        self.lam = float(raw_input("Please enter lambda as a nonnegative real number:"))
+        print "Please input benevonent function in the format \"lambda y: <function expression with respect to y>\", by default the function is set to f(y) = y * y"
+        function_input = raw_input("Function:") 
+        if (function_input is not None and len(function_input) != 0):
+            self.f = eval(function_input)
+        if (self.p <= 0 or self.p > 1 or self.lam < 0):
+            print "Invalid parameter, please enter them again"
+            self.set_parameter()
+
+    def generate(self):
+        print "Generating jobs using PPS scheme"
+        
+        arrivals = []
+        time = 0
+        while len(arrivals) < JOBS_AMOUNT:
+            if (np.random.randint(2)):
+                arrivals.append(time)
+            time += 1
+        self.n = len(arrivals)
+        durations = np.random.poisson(lam = self.lam, size = self.n)
+        values = self.f(durations) 
+        
+        jobs = [Job(arrivals[i], durations[i], values[i], i) for i in range(self.n)]
+
+        return jobs
+
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
 JOBS_AMOUNT = args.jl 
@@ -166,8 +207,10 @@ def select_scheme():
 def init_generator():
     PUS = SchemePUS()
     SGS = SchemeGeometricSets()
+    PPS = SchemePPS()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
+    SCHEMES.append(PPS)
 
 def main():
     init_generator()
