@@ -1,0 +1,58 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is close to previous experiment E1. We will explore how the competitive ratio of "Greedy-2" algorithm with one machine applied on PPS job senquences changes for varying p: 
+
+"Greedy-2" scheduling algorithm is simply aborting the current job if the coming job has as twice value as the current job on the machine has.
+
+p is a parameter of PPS Scheme that controls how dense(length of interval between arrivals of consecutive jobs) a job sequence is. With a greater p, there is higher probability that a denser job sequence would be generated.  
+
+We are interested in seeing how competitive ratio would change as p varies.
+Specifically, the experiment would calculate the expectations and variances of competitive ratio of "Greedy-2" algorithm over job sequences produced by PPS Scheme with different p, and we will produce a graph describing the function of expectation and variance in terms of p.  
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+First, we generate PPS sequences for different p. 
+To facilitate the procedure, we will use run1.sh, run2.sh and run3.sh to complete the generation. These scirpts can be obtained by modifying E4/run1.sh, E2/run2.sh and E4/run3.sh
+
+Run3.sh is used to generate so-called input files that would be input for run1.sh, which then would produce job sequences for this experiment. 
+
+Since we only want p to be varied, texts in most input files should be the same. In our case, only the second line would be changed to different chosen p. For this experiment, we want p = 0.05 * k, k = 1,2,...,19 
+ 
+Example input file:
+3
+0.25
+20
+lambda y: y*y
+100
+Y
+
+Example execution of jobs_generator.py (the execution would be automated by run1.sh):
+Run ./jobs_generator.py --batch --redir PPS[k] --jl 400
+    Choose PPS Scheme
+    Enter p
+    For lambda, enter 20
+    For benevolent function, enter "lambda y: y * y" (without quotes), if this function is still set as default, dont input anything
+    For the number of job sequences, enter 100
+
+The result of generations would be in Experiments/E6/jobs
+
+Create a configuration file called config under this directory. This file will be used to set up machine we will use.
+Copy and paste the following lines into config:
+
+1
+2 2
+1
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult MMIS/ConfigFileFormat to understand how it works
+
+Change directory to MMIS, run run2.sh to do the simulation.
+Run clip.py to collect the result in E6. Plotting the result in Canopy is a more intuitive way to understand the result, though we need to uncomment some codes of clip.py
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
