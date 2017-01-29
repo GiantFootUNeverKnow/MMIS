@@ -9,7 +9,7 @@ This experiment is close to previous experiment E1. We will explore how the comp
 p is a parameter of PPS Scheme that controls how dense(length of interval between arrivals of consecutive jobs) a job sequence is. With a greater p, there is higher probability that a denser job sequence would be generated.  
 
 We are interested in seeing how competitive ratio would change as p varies.
-Specifically, the experiment would calculate the expectations and variances of competitive ratio of "Greedy-2" algorithm over job sequences produced by PPS Scheme with different p, and we will produce a graph describing the function of expectation and variance in terms of p.  
+Specifically, the experiment would calculate the expectations and variances of competitive ratio of "Greedy-2" algorithm over job sequences produced by PPS Scheme with different p, and if necessary we will produce a graph describing the function of expectation and variance in terms of p.  
 
 -----------------------------------------------------------------------------------------
 Procedures
@@ -50,9 +50,12 @@ Copy and paste the following lines into config:
 If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
 Consult MMIS/ConfigFileFormat to understand how it works
 
-Change directory to MMIS, run run2.sh to do the simulation.
+Change directory to MMIS, run run2.sh to launch the simulation.
 Run clip.py to collect the result in E6. Plotting the result in Canopy is a more intuitive way to understand the result, though we need to uncomment some codes of clip.py
 
 ---------------------------------------------------------------------------------------
 Result
 ---------------------------------------------------------------------------------------
+
+The result is not unexpected. On average, the competitive ratio for Greedy-2 algorithm remains 1.1 for all density we chose. Also, variance of the comietitive ratio is less than 0.01. Therefore, we can conclude that the density of a PPS job sequence does not affect the performance of Greedy-2 algorithm.
+
