@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is a continuation of previous experiment E5. From E5, we discovered that Greedy-2 && RD could be a nice algorithm because it has excellent performance on all Geometric Sets sequences in that experiment. Hence, we want to let Greedy-2 && RD be a candidate algorithm that we could work on deriving a proof of its efficiency. 
+
+To strengthen our belief, we want to repeat experiment E5, but against more different Geometric Set job sequences. Also, we would increase the times of repetition to have a more accurate result. 
+ 
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Generate Geometric Set job sequences with alpha 1.618, 3.1415, and 3 respectively. Name the job sequences accordingly. For example, 1.618.txt would contain the Geometric Set with alpha = 1.618.
+
+For the convenience, keep a similar order of total workload across 3 different Geometric Sets
+Let N = 15 if alpha = 3
+    N = 14 if alpha = 3.1415
+    N = 25 if alpha = 1.618
+
+Store the generating jobs in folder E7/jobs. In addition, copy and paste all jobs in E5/jobs into E7/jobs.
+
+Copy and paste all config files from E5 to E7. For instance, E5/config1 -> E7/config1
+ 
+Change directory to MMIS
+
+Run ./main.py --experiment Experiment/E7/config1 --jb Experiment/E7/jobs > Experiment/E7/result1 
+Run ./main.py --experiment Experiment/E7/config2 --jb Experiment/E7/jobs > Experiment/E7/result2 
+Run ./main.py --experiment Experiment/E7/config3 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result3 
+Run ./main.py --experiment Experiment/E7/config4 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result4 
+Run ./main.py --experiment Experiment/E7/config5 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result5 
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 8 algorithms running on 3 sequences is obtained as below:
+
+                1.5-Geometric       2-Geometric         4-Geometric
+Greedy-2        1                   3.99999             1.33333
+Greedy-2,4      1                   1.53604             2.42424 
+Greedy-2,1.5    1.32477             2.77777             1.33333
+Greedy-4        1                   1                   5.33333        
+Greedy-1.5      4.49988             1.99999             1.33333 
+Greedy-2 && RD  1                   1.40833             1.29367
+Greedy-2 || RD  1.22731             2.24719             1.25786
+Pure Random     1.95256             1.85903             1.89408
+
