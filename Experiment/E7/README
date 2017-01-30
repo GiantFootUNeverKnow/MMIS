@@ -15,11 +15,13 @@ Generate Geometric Set job sequences with alpha 1.618, 3.1415, and 3 respectivel
 For the convenience, keep a similar order of total workload across 3 different Geometric Sets
 Let N = 15 if alpha = 3
     N = 14 if alpha = 3.1415
-    N = 25 if alpha = 1.618
+    N = 24 if alpha = 1.618
 
 Store the generating jobs in folder E7/jobs. In addition, copy and paste all jobs in E5/jobs into E7/jobs.
 
+We will use configuration files to specify the scheduling algorithms and machines to use. We could reuse these files from previous experiments.
 Copy and paste all config files from E5 to E7. For instance, E5/config1 -> E7/config1
+Copy and paste all config files from E3 to E7. Rename these files properly. 
  
 Change directory to MMIS
 
@@ -28,21 +30,25 @@ Run ./main.py --experiment Experiment/E7/config2 --jb Experiment/E7/jobs > Exper
 Run ./main.py --experiment Experiment/E7/config3 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result3 
 Run ./main.py --experiment Experiment/E7/config4 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result4 
 Run ./main.py --experiment Experiment/E7/config5 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result5 
+Run ./main.py --experiment Experiment/E7/config6 --jb Experiment/E7/jobs > Experiment/E7/result6 
+Run ./main.py --experiment Experiment/E7/config7 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result7 
+Run ./main.py --experiment Experiment/E7/config8 --jb Experiment/E7/jobs --repeat 10000 > Experiment/E7/result8 
+
 Result[x] records how algorithm used in config[x] performs.
 
 ---------------------------------------------------------------------------------------
 Result
 ---------------------------------------------------------------------------------------
 
-A table describing the competitve ratio of 8 algorithms running on 3 sequences is obtained as below:
+A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
 
-                1.5-Geometric       2-Geometric         4-Geometric
-Greedy-2        1                   3.99999             1.33333
-Greedy-2,4      1                   1.53604             2.42424 
-Greedy-2,1.5    1.32477             2.77777             1.33333
-Greedy-4        1                   1                   5.33333        
-Greedy-1.5      4.49988             1.99999             1.33333 
-Greedy-2 && RD  1                   1.40833             1.29367
-Greedy-2 || RD  1.22731             2.24719             1.25786
-Pure Random     1.95256             1.85903             1.89408
+                1.5-Geometric       1.618-Geometric     2-Geometric     3-Geometric     3.1415-Geometric    4-Geometric         
+Greedy-2        1                   1                   3.99999         1.4999          1.4670              1.33333
+Greedy-2,4      1                   1                   1.60214         1.3764          1.3894              2.13744 
+Greedy-2,1.5    1.31592             1.51610             2.65745         1.4999          1.4670              1.33333
+Greedy-4        1                   1                   1               1               1                   5.33333        
+Greedy-1.5      4.49988             2.6181              1.99999         1.4670          1.4999              1.33333 
+Greedy-2 && RD  1                   1                   1.45890         1.4529          1.4619              1.42502
+Greedy-2 || RD  1.29037             1.30917             2.23227         1.3569          1.3862              1.25505
+Pure Random     2.12009             2.09084             1.98535         1.9754          1.9457              1.95826
 
