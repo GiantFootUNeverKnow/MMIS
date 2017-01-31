@@ -82,19 +82,15 @@ class SchemeGeometricSets(JobsGenerationScheme):
         jobs = [Job(0, 1000, 1000, 0)] 
         for i in range(1, self.N):
             job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - 1, jobs[i - 1].duration * self.c, jobs[i - 1].value * self.c, i)
-            job.floor()
             jobs.append(job)
 
         # Main Set
         for i in range(self.N - 1):
             job = Job(jobs[i].arrival + 1, jobs[i].duration - 1, jobs[i].value - 1, self.N + i)
-            job.floor()
             jobs.append(job)
         job_n = Job(jobs[self.N - 1].arrival + 1, jobs[self.N - 1].duration - 2, jobs[self.N - 1].value - 2, 2 * self.N - 1)
-        job_n.floor()
         jobs.append(job_n)
         job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - 1, jobs[self.N - 1].duration * self.c - 1, jobs[self.N - 1].duration * self.c - 1, 2 * self.N)
-        job_n1.floor()
         jobs.append(job_n1)
         return jobs
 
