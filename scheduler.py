@@ -43,13 +43,13 @@ class Machine(object):
     def start_job(self, job):
         if (job is not None):
             self.load_job(job)
-            log.debug( "Job " + str(self.job_name) + " is on machine " + str(self.number) )
+            log.debug( "Job " + str(self.job_name) + " is on machine " + str(self.number) + " at time " + str(self.work_start))
         else:
             raise RuntimeError("Invalid Job is given on Machine %d" % (self.number))
 
     def finish_job(self):
         if (self.current_job_value > 0):
-            log.debug( "Machine " + str(self.number) + " finished job " + str(self.job_name) )
+            log.debug( "Machine " + str(self.number) + " finished job " + str(self.job_name) + " at time " + str(self.work_end))
             self.total_value += self.current_job_value
             self.unload_job()
         else:
