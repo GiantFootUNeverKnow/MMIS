@@ -60,6 +60,29 @@ class SchedulerTester1(unittest.TestCase):
         # TODO add this test
         pass 
 
+class SchedulerTester2(unittest.TestCase):
+    '''
+    Tester2 runs against toy dataset t2.txt, and Tester_k would run
+ against dataset t_k.
+    ''' 
+    def setUp(self):
+        self.scheduler = Scheduler()        
+        self.scheduler.select_dataset_file("TestCase/t2.txt")    
+
+    def test_priority_1_5(self):
+        self.scheduler.mechanism = 1
+        machine0 = Machine(1.5, 1, 0)
+        self.scheduler.machines = [machine0]
+        self.scheduler.run_schedule()
+        self.assertEqual(np.floor(machine0.total_value), 16834112.0)
+
+    def test_priority_2(self):
+        self.scheduler.mechanism = 1
+        machine0 = Machine(2, 1, 0)
+        self.scheduler.machines = [machine0]
+        self.scheduler.run_schedule()
+        self.assertEqual(np.floor(machine0.total_value), 75751478.0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -33,6 +33,12 @@ class Machine(object):
     def is_idle(self):
         return (self.job_name == None)
 
+    def is_replaceable(self, coming_job):
+        return coming_job.value + EPSILON >= self.current_job_value * self.alpha1 
+
+    def is_replaceable_RD(self, coming_job):
+        return coming_job.yfactor * coming_job.value >= self.current_job_yfactor * self.current_job_value * self.alpha2  
+
     def unload_job(self):
         self.job_name = None
         self.current_job_value = 0
@@ -168,15 +174,14 @@ class Scheduler(object):
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            # TODO Use np.floor on every heuristic, better to encapsulate the whole boolean into a function of machine
-            if (job.value >= np.floor(machine.current_job_value * machine.alpha1)):
+            if machine.is_replaceable(job): 
                 self.machines[i].start_job(job)
                 return
 
     def heuristic2(self, job):
         log.debug( "heuristic2 has %d at time %d" % (job.name, self.time ) )
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value >= machine.current_job_value * machine.alpha1)]
+            if (machine.is_replaceable(job))]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
 
@@ -184,7 +189,7 @@ class Scheduler(object):
         log.debug( "heuristic3 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value >= machine.current_job_value * machine.alpha1):
+            if (machine.is_replaceable(job)):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -196,16 +201,16 @@ class Scheduler(object):
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            if (job.value >= machine.current_job_value * machine.alpha1
-                and job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (machine.is_replaceable(job)
+                and machine.is_replaceable_RD(job)):
                 self.machines[i].start_job(job)
                 return
  
     def heuristic5(self, job):
         log.debug( "heuristic5 has %d at time %d" % (job.name, self.time ))
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value >= machine.current_job_value * machine.alpha1)
-            and (job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+            if (machine.is_replaceable(job))
+            and (machine.is_replaceable_RD(job))]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
  
@@ -213,8 +218,8 @@ class Scheduler(object):
         log.debug( "heuristic6 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value >= machine.current_job_value * machine.alpha1
-               and job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (machine.is_replaceable(job)
+               and machine.is_replaceable_RD(job)):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -226,16 +231,16 @@ class Scheduler(object):
         # Assume priority of mahcines are ordered by their indices
         for i in range(len(self.machines)):
             machine = self.machines[i]
-            if (job.value >= machine.current_job_value * machine.alpha1
-                or job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (machine.is_replaceable(job)
+                or machine.is_replaceable_RD(job)):
                 self.machines[i].start_job(job)
                 return
   
     def heuristic8(self, job):
         log.debug( "heuristic8 has %d at time %d" % (job.name, self.time ))
         low_wage_machines = [machine for machine in self.machines 
-            if (job.value >= machine.current_job_value * machine.alpha1)
-            or (job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2)]
+            if (machine.is_replaceable(job))
+                or (machine.is_replaceable_RD(job))]
         if (low_wage_machines != []):
             return np.random.choice(low_wage_machines).start_job(job)
      
@@ -243,8 +248,8 @@ class Scheduler(object):
         log.debug( "heuristic9 has %d at time %d" % (job.name, self.time ))
         lowest_wage_machine = None
         for machine in self.machines:
-            if (job.value >= machine.current_job_value * machine.alpha1
-               or job.yfactor * job.value >= machine.current_job_yfactor * machine.current_job_value * machine.alpha2):
+            if (machine.is_replaceable(job)
+               or machine.is_replaceable_RD(job)):
                 if (lowest_wage_machine is None or 
                     lowest_wage_machine.current_job_value > machine.current_job_value):
                     lowest_wage_machine = machine
@@ -257,7 +262,7 @@ class Scheduler(object):
         log.debug( "heuristic10 has %d at time %d" % (job.name, self.time ))       
         machine = self.machines[0]
         alpha = np.random.choice([machine.alpha1, machine.alpha2])
-        if (job.value >= machine.current_job_value * alpha):
+        if (machine.is_replaceable(job)):
             machine.start_job(job)
 
     def heuristic11(self, job):
