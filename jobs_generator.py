@@ -145,7 +145,6 @@ class SchemePUS(JobsGenerationScheme):
 
         return jobs
 
-
 class SchemePPS(JobsGenerationScheme):
 
     # let f be input variable user can control and make y = x^2 a default choice
@@ -186,6 +185,47 @@ class SchemePPS(JobsGenerationScheme):
 
         return jobs
 
+
+class SchemePES(JobsGenerationScheme):
+
+    # let f be input variable user can control and make y = x^2 a default choice
+    def f(self, x):
+        return x * x
+
+    def get_helpinfo(self):
+        return "In PES scheme, the arriving time is determined by Poisson process; the length of a job follows exponential distribution; f(x) = x^2 is the default benevoent function. A parameter p is needed for the Poisson process and a parameter beta is needed for the exponential distribution"
+
+    def __init__(self):
+        self.name = "PES"
+
+    def set_parameter(self):
+        self.p = float(raw_input("Please enter p as a positive real number between 0 and 1:"))
+        self.beta = float(raw_input("Please enter beta as a positive real number:"))
+        print "Please input benevonent function in the format \"lambda y: <function expression with respect to y>\", by default the function is set to f(y) = y * y"
+        function_input = raw_input("Function:") 
+        if (function_input is not None and len(function_input) != 0):
+            self.f = eval(function_input)
+        if (self.p <= 0 or self.p > 1 or self.beta <= 0):
+            print "Invalid parameter, please enter them again"
+            self.set_parameter()
+
+    def generate(self):
+        print "Generating jobs using PES scheme"
+        
+        arrivals = []
+        time = 0
+        while len(arrivals) < JOBS_AMOUNT:
+            if (np.random.randint(2)):
+                arrivals.append(time)
+            time += 1
+        self.n = len(arrivals)
+        durations = np.ceil(np.random.exponential(scale = self.beta, size = self.n))
+        values = self.f(durations) 
+        
+        jobs = [Job(arrivals[i], durations[i], values[i], i) for i in range(self.n)]
+
+        return jobs
+
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
 JOBS_AMOUNT = args.jl 
@@ -204,9 +244,11 @@ def init_generator():
     PUS = SchemePUS()
     SGS = SchemeGeometricSets()
     PPS = SchemePPS()
+    PES = SchemePES()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
     SCHEMES.append(PPS)
+    SCHEMES.append(PES)
 
 def main():
     init_generator()
