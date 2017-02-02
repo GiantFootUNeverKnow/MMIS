@@ -262,7 +262,7 @@ class Scheduler(object):
         log.debug( "heuristic10 has %d at time %d" % (job.name, self.time ))       
         machine = self.machines[0]
         alpha = np.random.choice([machine.alpha1, machine.alpha2])
-        if (machine.is_replaceable(job)):
+        if (job.value + EPSILON >= machine.current_job_value * alpha):
             machine.start_job(job)
 
     def heuristic11(self, job):
