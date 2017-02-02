@@ -73,5 +73,5 @@ A table describing the competitve ratio of 3 algorithms running on 3 sequences i
 
                 1.5-Geometric       2-Geometric         4-Geometric
 Greedy-2        1                   3.99999             1.33333
-Greedy-2,4      1                   1.53604             2.42424 
-Greedy-2,1.5    1.32477             2.77777             1.33333
+Greedy-2,4      1                   1.60504             2.49221 
+Greedy-2,1.5    1.63295             2.70270             1.33333
