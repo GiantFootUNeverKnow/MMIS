@@ -185,7 +185,6 @@ class SchemePPS(JobsGenerationScheme):
 
         return jobs
 
-
 class SchemePES(JobsGenerationScheme):
 
     # let f be input variable user can control and make y = x^2 a default choice
@@ -226,6 +225,51 @@ class SchemePES(JobsGenerationScheme):
 
         return jobs
 
+class SchemePNS(JobsGenerationScheme):
+
+    # let f be input variable user can control and make y = x^2 a default choice
+    def f(self, x):
+        return x * x
+
+    def get_helpinfo(self):
+        return "In PNS scheme, the arriving time is determined by Poisson process; the length of a job follows normal distribution; f(x) = x^2 is the default benevoent function. A parameter p is needed for the Poisson process and parameters miu and sigma are needed for normal distribution"
+
+    def __init__(self):
+        self.name = "PNS"
+
+    def set_parameter(self):
+        self.p = float(raw_input("Please enter p as a positive real number between 0 and 1:"))
+        self.miu = float(raw_input("Please enter miu as a nonnegative real number:"))
+        self.sigma = float(raw_input("Please enter sigma as a positive real number:"))
+        print "Please input benevonent function in the format \"lambda y: <function expression with respect to y>\", by default the function is set to f(y) = y * y"
+        function_input = raw_input("Function:") 
+        if (function_input is not None and len(function_input) != 0):
+            self.f = eval(function_input)
+        if (self.p <= 0 or self.p > 1 or self.miu < 0 or self.sigma <= 0):
+            print "Invalid parameter, please enter them again"
+            self.set_parameter()
+
+    def generate(self):
+        print "Generating jobs using PNS scheme"
+        
+        arrivals = []
+        time = 0
+        while len(arrivals) < JOBS_AMOUNT:
+            if (np.random.randint(2)):
+                arrivals.append(time)
+            time += 1
+        self.n = len(arrivals)
+        durations = np.array([])
+        while len(durations) < self.n:
+            duration = np.random.normal(loc = self.miu, scale = self.sigma)
+            if duration > 0:
+                durations = np.append(durations, np.ceil(duration))
+        values = self.f(durations) 
+        
+        jobs = [Job(arrivals[i], durations[i], values[i], i) for i in range(self.n)]
+
+        return jobs
+
 #SCHEMES is a list of currently available schemes objects
 SCHEMES = []
 JOBS_AMOUNT = args.jl 
@@ -245,10 +289,12 @@ def init_generator():
     SGS = SchemeGeometricSets()
     PPS = SchemePPS()
     PES = SchemePES()
+    PNS = SchemePNS()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
     SCHEMES.append(PPS)
     SCHEMES.append(PES)
+    SCHEMES.append(PNS)
 
 def main():
     init_generator()
