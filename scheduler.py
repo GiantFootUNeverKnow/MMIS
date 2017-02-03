@@ -311,12 +311,12 @@ class Scheduler(object):
 
     def show_result_ui(self):
         print "-----------------------------------------------------"
-        print "Result of experiment %d:" % (self.experiment_counter)
+        print "Result of experiment %f:" % (self.experiment_counter)
         payoff = 0
         for machine in self.machines:
-            print "Machine %d earned %d" % (machine.number, machine.total_value)
+            print "Machine %d earned %f" % (machine.number, machine.total_value)
             payoff += machine.total_value
-        print "Totally, we earned %d" % payoff
+        print "Totally, we earned %f" % payoff
         print "-----------------------------------------------------"
 
     def schedule(self, repetition = 1):
@@ -328,7 +328,7 @@ class Scheduler(object):
             self.clear()
         expected_payoff = payoff * 1.0 / repetition
         print "****************************************************"
-        print "Expected payoff: %d" % expected_payoff 
+        print "Expected payoff: %f" % expected_payoff 
         offline_optimal = self.offline_single_machine()
         print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
         competitive_ratio = offline_optimal * 1.0 / expected_payoff
