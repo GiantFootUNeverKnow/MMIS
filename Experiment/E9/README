@@ -1,0 +1,133 @@
+----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+From the previous experiment E8, we have shown that the density of a PES job sequence does not affect the efficiency of Greedy-2 algorithm. In this experiment, we will study how our various algorithms react to changes of other parameters of PES job sequence. If there is luck, we would find out an algorithm that has excellent performance on all kinds of PES job sequence.
+
+Particularly, there are two adjustable parameters -- beta and a benevolent function f.  Beta is the scale factor of the exponential distribution that controls duration of jobs in a PES sequence. A standard definition of exponential distribution is identified with parameter lambda, and beta is inverse of lambda. 
+
+Regarding f, we consider these benevolent functions: 1. combinations of elementary polynomial; 2. exponential function
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Create folders E9.1, E9.2, E9.3, E9.4, E9.5, E9.6, E9.7, E9.8, E9.9, E9.10, E9.11, E9.12
+
+We will stick to p = 0.5 and use different combinations of beta and benevolent functions f to do the experiment. Each folber would use a distinct combination of beta and f.
+
+Use input files to reduce time of typing parameters since typing in command line is less convenient
+
+Example input file(Input of E9.3):
+4
+0.5
+10
+lambda y:y*y*y
+100
+Y
+
+Furthremore, generating job sequence should be automated. We used a bash file run1.sh to complete this process
+These are parameters used to generate the job sequences. The generated results will be stored in folder /jobs within subfolders. For example, E8.3/jobs
+
+E9.1:
+    beta = 10
+    f = y
+E9.2:
+    beta = 10
+    f = y^2
+E9.3:
+    beta = 10
+    f = y^3
+E9.4:
+    beta = 10
+    f = y^3 + y^2 + y
+E9.5:
+    beta = 25
+    f = y
+E9.6:
+    beta =25
+    f = y^2
+E9.7:
+    beta = 25
+    f = y^3
+E9.8:
+    beta = 25
+    f = y^ 3 + y^2 + y
+E9.9:
+    beta = 100
+    f = y
+E9.10:
+    beta = 100
+    f = y^2
+E9.11:
+    beta = 100
+    f = y^3
+E9.12
+    beta = 100
+    f = y^3 + y^2 + y
+
+Ideally, most labor for extending this experiment in future will be done by modifying and running bash files
+
+We will use config files to specify algorithms. Each config file stands for one algorithm. 
+
+config1:
+1
+2 2
+1
+
+config2:
+1
+2 4
+10
+
+config3:
+1
+2 1.5
+10
+
+config4:
+1
+1.5 1.5
+1
+
+config5:
+1
+4 4
+1
+
+config6:
+1
+2 2
+4
+
+config7:
+1
+2 2
+7
+
+config8:
+1
+2 2
+11
+
+Write another bash file run2.sh to automate running simulation. It is supposed to run all available algorithms on all job sequences in each job base and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E9.4/result3  
+
+Modify the script E6/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 algorithms are summerized below
+
+beta, f(x) of job base    Greedy-2    Greedy-2,4      Greedy-2,1.5      Greedy-1.5      Greedy-4    Greedy-2&&RD  Greedy-2||RD  PureRandom
+10, f(y) = y              1.101       1.078           1.133             1.162           1.049
+10, f(y) = y^2            1.086       1.114           1.084             1.082           1.148
+10, f(y) = y^3            1.056       1.084           1.052             1.047           1.113
+10, f(y) = y^3+y^2+y      1.056       1.093           1.053             1.048           1.143
+25, f(y) = y              1.157       1.138           1.198             1.232           1.094
+25, f(y) = y^2            1.121       1.160           1.128             1.133           1.198
+25, f(y) = y^3            1.096       1.148           1.084             1.075           1.206
+25, f(y) = y^3+y^2+y      1.100       1.153           1.090             1.084           1.236
+100, f(y) = y             1.324       1.332           1.375             1.437           1.370
+100, f(y) = y^2           1.220       1.268           1.191             1.190           1.405
+100, f(y) = y^3           1.152       1.215           1.145             1.144           1.361
