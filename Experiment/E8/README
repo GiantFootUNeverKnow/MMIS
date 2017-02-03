@@ -1,0 +1,53 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is close to previous experiments E1 and E6. The only difference is to study PES and PNS instead of PPS or PUS.
+
+We are interested in seeing how competitive ratio would change as p varies.
+Specifically, the experiment would calculate the expectations and variances of competitive ratio of "Greedy-2" algorithm over job sequences produced by PES Scheme and PNS Scheme with different p, and if necessary we will produce graphs describing the function of expectation and variance in terms of p.  
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+We do the experiment for PES and PNS separately, one for a time.
+First, we generate PES sequences(same for PNS) for different p. 
+To facilitate the procedure, we will use run1.sh, run2.sh and run3.sh to complete the generation. These scirpts can be obtained from E6
+
+Run3.sh is used to generate so-called input files that would be input for run1.sh, which then would produce job sequences for this experiment.Change run3.sh, run2.sh and run1.sh so that files/directories they produce/access are properly labelled for PES or PNS. 
+
+For example, we want the result of generations to be in directories Experiments/E8/jobs_PES and Experiment/E8/jobs_PNS 
+ 
+Since we only want p to be varied, texts in most input files should be the same. In our case, only the second line would be changed to different chosen p. For this experiment, we want p = 0.05 * k, k = 1,2,...,19 
+ 
+Example input file:
+4
+0.25
+10
+lambda y: y*y
+100
+Y
+
+Example execution of jobs_generator.py (the execution would be automated by run1.sh):
+Run ./jobs_generator.py --batch --redir PPS[k] --jl 400
+    Choose PPS Scheme
+    Enter p
+    For beta, enter 10
+    For benevolent function, enter "lambda y: y * y" (without quotes), if this function is still set as default, dont input anything
+    For the number of job sequences, enter 100
+
+Copy and paste the config file from E6
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult MMIS/ConfigFileFormat to understand how it works
+
+Change directory to MMIS, run run2.sh to launch the simulation.
+Run clip.py to collect the result in E6. Plotting the result in Canopy is a more intuitive way to understand the result, though we need to uncomment some codes of clip.py
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+The result is not unexpected. On average, for both generation schemes, the competitive ratio for Greedy-2 algorithm remains below 1.1 for all density we chose. Also, variance of the competitive ratio is much less than 0.01. Therefore, we can conclude that the density of a PES job sequence or a PNS job sequence does not affect the performance of Greedy-2 algorithm running on it.
+
