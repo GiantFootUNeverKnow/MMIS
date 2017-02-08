@@ -6,7 +6,7 @@ From the previous experiment E8, we have shown that the density of a PES job seq
 
 Particularly, there are two adjustable parameters -- beta and a benevolent function f.  Beta is the scale factor of the exponential distribution that controls duration of jobs in a PES sequence. A standard definition of exponential distribution is identified with parameter lambda, and beta is inverse of lambda. 
 
-Regarding f, we consider these benevolent functions: 1. combinations of elementary polynomial; 2. exponential function
+Regarding f, we consider combinations of elementary polynomial
 -----------------------------------------------------------------------------------------
 Procedures
 -----------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ lambda y:y*y*y
 Y
 
 Furthremore, generating job sequence should be automated. We used a bash file run1.sh to complete this process
-These are parameters used to generate the job sequences. The generated results will be stored in folder /jobs within subfolders. For example, E8.3/jobs
+These are parameters used to generate the job sequences. The generated results will be stored in folder /jobs within subfolders. For example, E9.3/jobs
 
 E9.1:
     beta = 10
@@ -84,7 +84,7 @@ config3:
 4 4
 1
 
-Write another bash file run2.sh to automate running simulation. It is supposed to run all available algorithms on all job sequences in each job base and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E9.4/result3  
+Write another bash file run2.sh to automate running simulation. It is supposed to run all available algorithms on all job sequences in all job bases and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E9.4/result3  
 
 Modify the script E6/clip.py to pick up results
 
@@ -95,15 +95,15 @@ Result
 Comparison of competitive ratios across 3 algorithms are summerized below
 
 beta, f(x) of job base    Greedy-2    Greedy-1.5      Greedy-4    
-10, f(y) = y              1.101       1.162           1.049
-10, f(y) = y^2            1.086       1.082           1.148
-10, f(y) = y^3            1.056       1.047           1.113
-10, f(y) = y^3+y^2+y      1.056       1.048           1.143
-25, f(y) = y              1.157       1.232           1.094
-25, f(y) = y^2            1.121       1.133           1.198
-25, f(y) = y^3            1.096       1.075           1.206
-25, f(y) = y^3+y^2+y      1.100       1.084           1.236
-100, f(y) = y             1.324       1.437           1.370
-100, f(y) = y^2           1.220       1.190           1.405
-100, f(y) = y^3           1.152       1.144           1.361
-100, f(y) = y*3+y^2+y
+10, f(y) = y              1.100       1.160           1.051
+10, f(y) = y^2            1.085       1.083           1.147
+10, f(y) = y^3            1.061       1.050           1.137
+10, f(y) = y^3+y^2+y      1.062       1.051           1.140
+25, f(y) = y              1.162       1.239           1.092
+25, f(y) = y^2            1.124       1.126           1.203
+25, f(y) = y^3            1.095       1.080           1.202
+25, f(y) = y^3+y^2+y      1.095       1.080           1.201
+100, f(y) = y             1.356       1.404           1.340
+100, f(y) = y^2           1.229       1.205           1.305
+100, f(y) = y^3           1.176       1.139           1.392
+100, f(y) = y*3+y^2+y     1.176       1.138           1.407
