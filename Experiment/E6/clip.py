@@ -18,14 +18,18 @@ for filename in os.listdir(directory):
         expectations[number - 1] = expectation
         variances[number - 1] = variance
     a.close()
-
+    
 print expectations
 print variances
 x = [x * 0.05 for x in range(1, 20)]
 plt.figure()
 plt.plot(x, expectations, label = 'Expected Competitive Ratio')
+plt.xlabel('density p')
+plt.ylabel('Expectation')
 plt.legend()
 plt.figure()
 plt.plot(x, variances, label = 'Variance of Competitive Ratio')
+plt.xlabel('density p')
+plt.ylabel('Variance')
 plt.legend()
 plt.show()
