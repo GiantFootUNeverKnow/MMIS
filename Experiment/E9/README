@@ -22,7 +22,7 @@ Example input file(Input of E9.3):
 0.5
 10
 lambda y:y*y*y
-100
+10000
 Y
 
 Furthremore, generating job sequence should be automated. We used a bash file run1.sh to complete this process
