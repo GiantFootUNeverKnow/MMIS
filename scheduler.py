@@ -74,12 +74,12 @@ class Scheduler(object):
     1. Abort according to priority
     2. Abort by chance
     3. Abort the least value job 
-    4. Mechanism 1 + randomized dicider says YES
-    5. Mechanism 2 + randomized dicider says YES
-    6. Mechanism 3 + randomized dicider says YES
-    7. Mechanism 1 OR randomized dicider says YES
-    8. Mechanism 2 OR randomized dicider says YES
-    9. Mechanism 3 OR randomized dicider says YES
+    4. Mechanism 1 + randomized decider says YES
+    5. Mechanism 2 + randomized decider says YES
+    6. Mechanism 3 + randomized decider says YES
+    7. Mechanism 1 OR randomized decider says YES
+    8. Mechanism 2 OR randomized decider says YES
+    9. Mechanism 3 OR randomized decider says YES
     10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine 
     11. (Single Machine) Randomly decide whether we abort
     '''
@@ -116,12 +116,12 @@ class Scheduler(object):
         print "1. Abort according to priority"
         print "2. Abort by chance"
         print "3. Abort the least value job"
-        print "4. Mechanism 1 + randomized dicider says YES"
-        print "5. Mechanism 2 + randomized dicider says YES"
-        print "6. Mechanism 3 + randomized dicider says YES"
-        print "7. Mechanism 1 OR randomized dicider says YES"
-        print "8. Mechanism 2 OR randomized dicider says YES"
-        print "9. Mechanism 3 OR randomized dicider says YES"
+        print "4. Mechanism 1 + randomized decider says YES"
+        print "5. Mechanism 2 + randomized decider says YES"
+        print "6. Mechanism 3 + randomized decider says YES"
+        print "7. Mechanism 1 OR randomized decider says YES"
+        print "8. Mechanism 2 OR randomized decider says YES"
+        print "9. Mechanism 3 OR randomized decider says YES"
         print "10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine"  
         print "11. (Single Machine) Randomly decide whether to abort"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
@@ -129,8 +129,8 @@ class Scheduler(object):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS 
             and self.mechanism <= NUM_DETERMINISTIC_MECHANISMS + NUM_RANDOMIZED_DECIDER_MECHANISMS):
-            print "Please input randomized dicider function in the format\"lambda y: <function expression with respect to y>\""
-            self.randomized_dicider = eval(raw_input("Function:"))
+            print "Please input randomized decider function in the format\"lambda y: <function expression with respect to y>\""
+            self.randomized_decider = eval(raw_input("Function:"))
         print "Machines finished setup"
 
         log.debug("Machines are setup")
@@ -145,9 +145,9 @@ class Scheduler(object):
                 self.machines.append(machine)
             self.mechanism = int(f.readline())
             
-            randomized_dicider_exp = f.readline()
-            if (randomized_dicider_exp != ""):
-                self.randomized_dicider = eval(randomized_dicider_exp)
+            randomized_decider_exp = f.readline()
+            if (randomized_decider_exp != ""):
+                self.randomized_decider = eval(randomized_decider_exp)
 
         log.debug("Machines are setup")
 
