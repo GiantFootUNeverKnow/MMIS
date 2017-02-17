@@ -18,6 +18,7 @@ class Machine(object):
         self.work_end = None
         self.current_job_yfactor = 0
         self.current_job_value = 0
+        self.randomized_decider = None
 
     def clear(self):
         self.total_value = 0
@@ -30,6 +31,9 @@ class Machine(object):
         self.current_job_value = job.value
         self.current_job_yfactor = job.yfactor
 
+    def set_randomized_decider(self, randomized_decider):
+        self.randomized_decider = randomized_decider
+
     def is_idle(self):
         return (self.job_name == None)
 
@@ -37,11 +41,14 @@ class Machine(object):
         return coming_job.value + EPSILON >= self.current_job_value * self.alpha1 
 
     def is_replaceable_RD(self, coming_job):
-        return coming_job.yfactor * coming_job.value >= self.current_job_yfactor * self.current_job_value * self.alpha2  
+        assert self.randomized_decider is not None
+
+        return (self.randomized_decider(coming_job.yfactor) * coming_job.value >= 
+            self.randomized_decider(self.current_job_yfactor) * self.current_job_value * self.alpha2)  
 
     def unload_job(self):
         self.job_name = None
-        self.current_job_value = 0
+       self.current_job_value = 0
         self.current_job_yfactor = 0
         self.work_start = None
         self.work_end = None
@@ -129,8 +136,9 @@ class Scheduler(object):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS 
             and self.mechanism <= NUM_DETERMINISTIC_MECHANISMS + NUM_RANDOMIZED_DECIDER_MECHANISMS):
-            print "Please input randomized decider function in the format\"lambda y: <function expression with respect to y>\""
-            self.randomized_decider = eval(raw_input("Function:"))
+            for i in range(n):
+                print "Please input randomized decider function for machine %d in the format\"lambda y: <function expression with respect to y>\"" % i
+                self.machines[i].set_randomized_decider(eval(raw_input("Function:")))
         print "Machines finished setup"
 
         log.debug("Machines are setup")
@@ -144,10 +152,11 @@ class Scheduler(object):
                 machine = Machine(alpha1, alpha2, i)
                 self.machines.append(machine)
             self.mechanism = int(f.readline())
-            
-            randomized_decider_exp = f.readline()
-            if (randomized_decider_exp != ""):
-                self.randomized_decider = eval(randomized_decider_exp)
+           
+            for i in range(n):
+                randomized_decider_exp = f.readline()
+                if (randomized_decider_exp != ""):
+                    self.machines[i].set_randomized_decider(eval(randomized_decider_exp))
 
         log.debug("Machines are setup")
 

@@ -16,8 +16,8 @@ log.propagate = False
 parser = argparse.ArgumentParser();
 parser.add_argument('--debug', action='store_const', const=True, default=False, help='Enable logging of debug message')
 parser.add_argument('--experiment', help='This argument will switch to batch experiment mode, please specify a configuration file. Also, the option --jb must be used in experiment mode')
-parser.add_argument('--jb', help='Specify the job base. This option is only effective when the program starts in batch experiment mode. It expects a name of directory, without a slash. ')
-parser.add_argument('--repeat', type=int, default= 1, help='This option would run the simulation for N times and calculate an expectation of the total payoff over results of n simulations; It is most useful to use this option for randomized algorithm')
+parser.add_argument('--jb', help='Specify the job base. This option is only effective when the program starts in batch experiment mode. It expects a name of a directory, without a slash. ')
+parser.add_argument('--repeat', type=int, default= 1, help='This option would run the simulation for N times and calculate an expectation of the total payoff over results of the repeated scheduling; It is the most useful to use this option for a randomized algorithm')
 
 args = parser.parse_args()
 if args.debug:

@@ -5,4 +5,8 @@
 2 4
 4 2
 5
-lambda y: 1 - (e ^ (-y))
+lambda y: 1 - (np.exp(-y))
+lambda y: 1 - (np.exp(-y))
+lambda y: 1 - (np.exp(-y))
+lambda y: 1 - (np.exp(-y))
+lambda y: 1 - (np.exp(-y))
