@@ -48,7 +48,7 @@ class Machine(object):
 
     def unload_job(self):
         self.job_name = None
-       self.current_job_value = 0
+        self.current_job_value = 0
         self.current_job_yfactor = 0
         self.work_start = None
         self.work_end = None
