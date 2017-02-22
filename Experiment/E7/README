@@ -20,8 +20,8 @@ Let N = 15 if alpha = 3
 Store the generating jobs in folder E7/jobs. In addition, copy and paste all jobs in E5/jobs into E7/jobs.
 
 We will use configuration files to specify the scheduling algorithms and machines to use. We could reuse these files from previous experiments.
-Copy and paste all config files from E5 to E7. For instance, E5/config1 -> E7/config1
-Copy and paste all config files from E3 to E7. Rename these files properly. 
+Copy and paste all config files from E5 to E7. For instance, E5/config1 -> E7/config1. By our new convention of writing configuration files, we have to explicitly specify a randomized decider function for machines in scheduling algorithms that is involved with the randomized decider function. Therefore, we will add description of that function into config4 and config3. 
+Copy and paste all config files from E3 to E7. Rename these files properly.    
  
 Change directory to MMIS
 
@@ -48,7 +48,10 @@ Greedy-2,4      1                   1                   1.60214         1.3764  
 Greedy-2,1.5    1.63176             1.51610             2.65745         1.4999          1.4670              1.33333
 Greedy-4        1                   1                   1               1               1                   5.33333        
 Greedy-1.5      4.49988             2.6181              1.99999         1.4999          1.4670              1.33333 
-Greedy-2 && RD  1                   1                   1.45890         1.4529          1.4619              1.42502
-Greedy-2 || RD  1.29037             1.30917             2.23227         1.3569          1.3862              1.25505
+Greedy-2 && RD* 1                   1                   1.45890         1.4529          1.4619              1.42502
+Greedy-2 || RD* 1.29037             1.30917             2.23227         1.3569          1.3862              1.25505
 Pure Random     2.12009             2.09084             1.98535         1.9754          1.9457              1.95826
+Greedy-2 && RD- 1                   1                   1.44361         1.4964          1.4745              1.42173
+Greedy-2 || RD- 1.26242             1.28286             2.29871         1.4035          1.3781              1.26936               
 
+Algorithms marked by '*' use g(y) = y as randomized decider function and algorithms marked by '-' use g(y) = 1 - e^(-y) as randomized decider function   
