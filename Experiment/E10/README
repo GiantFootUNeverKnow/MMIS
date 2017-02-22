@@ -1,0 +1,121 @@
+----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+We want to obtain a similar result for PUS as the one we have done for PPS in E9. Although in E4, we already computed a set of such experiments for PUS but those results are not accurate enough. Besides, we will use slightly different scheduling algorithms than those in E4. Because to compute expectation of a randomized algorithm could take too much time, we will only compute deterministic scheduling algorithms in this experiment.  
+
+Regarding input parameters, we stick to the setting used in E4. 
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Create folders E10.1, E10.2, E10.3, E10.4, E10.5, E10.6, E10.7, E10.8, E10.9, E10.10, E10.11, E10.12
+
+We will stick to p = 0.5 and use different combinations of distribution range (a, b) and benevolent functions f to do the experiment. Each folber would use a distinct combination of (a,b) and f. For each combination, we will generate 10000 job sequences.
+
+Use input files to reduce time of typing parameters since typing in command line is less convenient
+
+Example input file(Input of E10.3):
+1
+0.5
+5
+25
+lambda y:y*y*y
+10000
+Y
+
+Furthremore, generating job sequence should be automated. We used a bash file run1.sh to complete this process
+These are parameters used to generate the job sequences. The generated results will be stored in folder /jobs within subfolders. For example, E10.3/jobs
+
+E10.1:
+    a = 5
+    b = 25
+    f = y
+E10.2:
+    a = 5
+    b = 25
+    f = y^2
+E10.3:
+    a = 5
+    b = 25
+    f = y^3
+E10.4:
+    a = 5
+    b = 25
+    f = y^3 + y^2 + y
+E10.5:
+    a = 5
+    b = 25
+    f = 3*y^3 + 2*y^2 + y
+E10.6:
+    a = 5
+    b = 25
+    f = e^y
+E10.7:
+    a = 4
+    b = 100
+    f = y
+E10.8:
+    a = 4
+    b = 100
+    f = y^2
+E10.9:
+    a = 4
+    b = 100
+    f = y^3
+E10.10:
+    a = 1
+    b = 125
+    f = y
+E10.11:
+    a = 1
+    b = 125
+    f = y^2
+E10.12
+    a = 1
+    b = 125
+    f = y^3
+
+Ideally, most labor for extending this experiment in future will be done by modifying and running bash files
+
+We will use config files to specify algorithms. Each config file stands for one algorithm. 
+
+config1:
+1
+2 2
+1
+
+config2:
+1
+1.5 1.5
+1
+
+config3:
+1
+4 4
+1
+
+Write another bash file run2.sh to automate running simulation. It is supposed to run all available algorithms on all job sequences in all job bases and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E10.4/result3  
+
+Modify the script E6/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 algorithms are summerized below
+
+(a,b), f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    
+(5,25), f(y) = y           1.07        1.12           1.04
+(5,25), f(y) = y^2         1.09        1.10           1.13
+(5,25), f(y) = y^3         1.10        1.10           1.17
+(5,25), f(y) = y^3+y^2+y   1.11        1.10           1.18
+(5,25), f(y) = 3y^3+2y^2+y 1.10        1.10           1.16
+(5,25), f(y) = e^y         1.02        1.02           1.14
+(4,100), f(y) = y          1.09        1.12           1.07
+(4,100), f(y) = y^2        1.12        1.10           1.19
+(4,100), f(y) = y^3        1.14        1.11           1.24
+(1,125), f(y) = y          1.10        1.12           1.09
+(1,125), f(y) = y^2        1.13        1.11           1.21
+(1,125), f(y) = y*3        1.15        1.12           1.26
+
+The CPU time spent on each experiment(each figure shown on the table) was between 1 and 3 minutes.

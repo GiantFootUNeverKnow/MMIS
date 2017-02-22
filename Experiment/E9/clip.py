@@ -6,12 +6,8 @@ import matplotlib.pyplot as plt
 expectations = [0] * 12
 variances = [0] * 12
 directory = os.getcwd() + "/E9."
-# directory = os.getcwd() + '/result'
 j = 3
-# for filename in os.listdir(directory):
 for i in range(1, 13):
-    # number = int(filename[6:])
-    # a = open(directory + '/' + filename, 'rb')
     a = open(directory + str(i) + '/' + "result" + str(j))
     lines = a.readlines()
     if lines:
