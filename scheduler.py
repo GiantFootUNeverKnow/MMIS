@@ -184,7 +184,7 @@ class Scheduler(object):
         for i in range(len(self.machines)):
             machine = self.machines[i]
             if machine.is_replaceable(job): 
-                self.machines[i].start_job(job)
+                machine.start_job(job)
                 return
 
     def heuristic2(self, job):
@@ -212,7 +212,7 @@ class Scheduler(object):
             machine = self.machines[i]
             if (machine.is_replaceable(job)
                 and machine.is_replaceable_RD(job)):
-                self.machines[i].start_job(job)
+                machine.start_job(job)
                 return
  
     def heuristic5(self, job):
@@ -242,7 +242,7 @@ class Scheduler(object):
             machine = self.machines[i]
             if (machine.is_replaceable(job)
                 or machine.is_replaceable_RD(job)):
-                self.machines[i].start_job(job)
+                machine.start_job(job)
                 return
   
     def heuristic8(self, job):
