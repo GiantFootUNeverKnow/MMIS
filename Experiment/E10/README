@@ -10,7 +10,7 @@ Procedures
 
 Create folders E10.1, E10.2, E10.3, E10.4, E10.5, E10.6, E10.7, E10.8, E10.9, E10.10, E10.11, E10.12
 
-We will stick to p = 0.5 and use different combinations of distribution range (a, b) and benevolent functions f to do the experiment. Each folber would use a distinct combination of (a,b) and f. For each combination, we will generate 10000 job sequences.
+We will stick to p = 0.5 and use different combinations of distribution range (a, b) and benevolent functions f to do the experiment. Each folder would use a distinct combination of (a,b) and f. For each combination, we will generate 10000 job sequences.
 
 Use input files to reduce time of typing parameters since typing in command line is less convenient
 

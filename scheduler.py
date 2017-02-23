@@ -43,7 +43,7 @@ class Machine(object):
     def is_replaceable_RD(self, coming_job):
         assert self.randomized_decider is not None
 
-        return (self.randomized_decider(coming_job.yfactor) * coming_job.value >= 
+        return (self.randomized_decider(coming_job.yfactor) * coming_job.value + EPSILON >= 
             self.randomized_decider(self.current_job_yfactor) * self.current_job_value * self.alpha2)  
 
     def unload_job(self):
