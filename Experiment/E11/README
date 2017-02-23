@@ -1,0 +1,107 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is a continuation of previous experiment E7. From E5 and E7, we have shown that Greedy-2 && RD can have good payoff and stable performance. Hence, we want to conduct further investigation into this type of greedy && RD algorithm. 
+
+First, we will fix the randomized decider function to "g(x) = 1 - e^(-y)". Then we vary the abortion ratios. Because there are two abortion raios involved -- alpha1 and alpha2, many combinations of them are available. We will only focus on two groups of combinations for this expeirment. Case 1: alpha1 == alpha2; Case 2: alpha2 == 2.
+
+We expect to have a table of competitive ratios of our algorithm against the Geometric Sets job sequences. 
+ 
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Potentially we will add new job sequences in future, but let us first compute scheduling against our existing Geoetric Set job sequences.
+Copy and paste E7/jobs into E11/jobs
+
+We will use configuration files to specify the scheduling algorithms and machines to use. There are no existing config files we could reuse so we would create new config files for this experiment.
+
+Copy and paste the following into config1:
+1
+1.5 1.5
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config2:
+1
+3 3
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config3:
+1
+4 4
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config4:
+1
+8 8
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config5:
+1
+10 10
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config6:
+1
+1.5 2
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config7:
+1
+3 2
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config8:
+1
+4 2
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config9:
+1
+8 2
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config10:
+1
+10 2
+4
+lambda y: 1 - np.exp(-y)
+
+Use a bash file to run the simulation so that works in future will only be changing the bash file.
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E11/config1 --jb Experiment/E11/jobs --repeat 10000 > Experiment/E11/result1 
+
+Because all of algorithms used in this experiment are randomized scheduling algorithms, the simulation has to be repeated for a fair number of times, and the label --repeat should be used in the command.
+
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
+
+Alpha1, Alpha2  1.5-Geometric       1.618-Geometric     2-Geometric     3-Geometric     3.1415-Geometric    4-Geometric         
+1.5, 1.5        1.49                1.49                1.58            1.51            1.50                1.41   
+3, 3            1                   1                   1               1.48            1.39                1.42    
+4, 4            1                   1                   1               1               1                   1.52   
+8, 8            1                   1                   1               1               1                   1              
+10, 10          1                   1                   1               1               1                   1       
+1.5, 2          1.29                1.30                1.40            1.48            1.48                1.43   
+3, 2            1                   1                   1               2.04            1.48                1.43   
+4, 2            1                   1                   1               1               1                   2.60   
+8, 2            1                   1                   1               1               1                   1      
+10, 2           1                   1                   1               1               1                   1                     
+
+CPU time spent on computing results for each algorithm is less than one minute.

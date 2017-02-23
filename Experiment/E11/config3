@@ -1,0 +1,4 @@
+1
+4 4
+4
+lambda y: 1 - np.exp(-y)
