@@ -318,6 +318,9 @@ class Scheduler(object):
             opt[i] = max([reordered_jobs[i].value + opt[prev[i]], opt[i-1]]) 
         return opt[n-1]
 
+    def offline_double_machine(self):
+        return -1
+
     def show_result_ui(self):
         print "-----------------------------------------------------"
         print "Result of experiment %f:" % (self.experiment_counter)

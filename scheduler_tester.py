@@ -53,8 +53,11 @@ class SchedulerTester1(unittest.TestCase):
         self.assertEqual(machine0.total_value, 98.0)
         self.assertEqual(machine1.total_value, 42.0)
 
-    def test_offline_optimal(self):
+    def test_offline_optimal1(self):
         self.assertEqual(self.scheduler.offline_single_machine(), 98.0)
+
+    def test_offline_optimal2(self):
+        self.assertEqual(self.scheduler.offline_double_machine(), 149.0)
 
     def test_competitive_ratio(self):
         # TODO add this test
@@ -83,6 +86,51 @@ class SchedulerTester2(unittest.TestCase):
         self.scheduler.run_schedule()
         self.assertEqual(np.floor(machine0.total_value), 75751478.0)
 
+
+class SchedulerTester3(unittest.TestCase):
+    '''
+    Tester3 runs against toy dataset t3.txt, and Tester_k would run 
+    against dataset t_k
+    '''
+    def setUp(self):
+        self.scheduler = Scheduler()
+        self.scheduler.select_dataset_file("TestCase/t3.txt")
+
+    def test_offline_optimal1(self):
+        self.assertEqual(self.scheduler.offline_single_machine(), 6.0)
+
+    def test_offline_optimal2(self):
+        self.assertEqual(self.scheduler.offline_double_machine(), 11.0)
+
+class SchedulerTester4(unittest.TestCase):
+    '''
+    Tester4 runs against toy dataset t4.txt, and Tester_k would run 
+    against dataset t_k
+    '''
+    def setUp(self):
+        self.scheduler = Scheduler()
+        self.scheduler.select_dataset_file("TestCase/t4.txt")
+
+    def test_offline_optimal1(self):
+        self.assertEqual(self.scheduler.offline_single_machine(), 6.0)
+
+    def test_offline_optimal2(self):
+        self.assertEqual(self.scheduler.offline_double_machine(), 10.0)
+
+class SchedulerTester5(unittest.TestCase):
+    '''
+    Tester5 runs against toy dataset t5.txt, and Tester_k would run 
+    against dataset t_k
+    '''
+    def setUp(self):
+        self.scheduler = Scheduler()
+        self.scheduler.select_dataset_file("TestCase/t5.txt")
+
+    def test_offline_optimal1(self):
+        self.assertEqual(self.scheduler.offline_single_machine(), 13.0)
+
+    def test_offline_optimal2(self):
+        self.assertEqual(self.scheduler.offline_double_machine(), 25.0)
 
 if __name__ == '__main__':
     unittest.main()
