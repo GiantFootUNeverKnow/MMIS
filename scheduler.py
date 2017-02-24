@@ -189,10 +189,10 @@ class Scheduler(object):
 
     def heuristic2(self, job):
         log.debug( "heuristic2 has %d at time %d" % (job.name, self.time ) )
-        low_wage_machines = [machine for machine in self.machines 
+        candidates = [machine for machine in self.machines 
             if (machine.is_replaceable(job))]
-        if (low_wage_machines != []):
-            return np.random.choice(low_wage_machines).start_job(job)
+        if (candidates != []):
+            return np.random.choice(candidates).start_job(job)
 
     def heuristic3(self, job):
         log.debug( "heuristic3 has %d at time %d" % (job.name, self.time ))
@@ -217,11 +217,11 @@ class Scheduler(object):
  
     def heuristic5(self, job):
         log.debug( "heuristic5 has %d at time %d" % (job.name, self.time ))
-        low_wage_machines = [machine for machine in self.machines 
+        candidates = [machine for machine in self.machines 
             if (machine.is_replaceable(job))
             and (machine.is_replaceable_RD(job))]
-        if (low_wage_machines != []):
-            return np.random.choice(low_wage_machines).start_job(job)
+        if (candidates != []):
+            return np.random.choice(candidates).start_job(job)
  
     def heuristic6(self, job):
         log.debug( "heuristic6 has %d at time %d" % (job.name, self.time ))
@@ -247,11 +247,11 @@ class Scheduler(object):
   
     def heuristic8(self, job):
         log.debug( "heuristic8 has %d at time %d" % (job.name, self.time ))
-        low_wage_machines = [machine for machine in self.machines 
+        candidates = [machine for machine in self.machines 
             if (machine.is_replaceable(job))
                 or (machine.is_replaceable_RD(job))]
-        if (low_wage_machines != []):
-            return np.random.choice(low_wage_machines).start_job(job)
+        if (candidates != []):
+            return np.random.choice(candidates).start_job(job)
      
     def heuristic9(self, job):
         log.debug( "heuristic9 has %d at time %d" % (job.name, self.time ))
@@ -357,7 +357,7 @@ class Scheduler(object):
         elif (n == 2):
             return self.offline_double_machine()
         else:
-            return general_offline_optimal()
+            return self.general_offline_optimal()
 
     def show_result_ui(self):
         print "-----------------------------------------------------"
@@ -379,7 +379,7 @@ class Scheduler(object):
         expected_payoff = payoff * 1.0 / repetition
         print "****************************************************"
         print "Expected payoff: %f" % expected_payoff 
-        offline_optimal = self.offline_single_machine()
+        offline_optimal = self.calc_offline_optimal()
         print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
         competitive_ratio = offline_optimal * 1.0 / expected_payoff
         print "The competitive ratio is ", competitive_ratio
