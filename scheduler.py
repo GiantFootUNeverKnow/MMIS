@@ -305,21 +305,59 @@ class Scheduler(object):
         
     def get_result(self):
         return sum([machine.total_value for machine in self.machines])
+    
+    def _order_job_by_finishing_time(self, jobs):
+        return sorted(self.jobs, key = lambda x: (x.arrival + x.duration))
+
+    def _calc_latest_previous_job(self, jobs):
+        n = len(self.jobs)
+        prev = {-1: -1}
+        reordered_jobs = self._order_job_by_finishing_time(jobs)
+        finishing_times = [job.arrival + job.duration for job in reordered_jobs]
+        for i in range(n):
+            prev[i] = bisect.bisect_right(finishing_times, reordered_jobs[i].arrival) - 1
+        return prev
 
     def offline_single_machine(self):
         opt = {-1: 0}
-        prev = {-1: -1}
         n = len(self.jobs)
-        reordered_jobs = sorted(self.jobs, key = lambda x: (x.arrival + x.duration))
-        finishing_times = [job.arrival + job.duration for job in reordered_jobs]
-        for i in range(n): 
-            prev[i] = bisect.bisect_right(finishing_times, reordered_jobs[i].arrival) - 1
+        prev = self._calc_latest_previous_job(self.jobs)
+        reordered_jobs = self._order_job_by_finishing_time(self.jobs)
         for i in range(n):
             opt[i] = max([reordered_jobs[i].value + opt[prev[i]], opt[i-1]]) 
         return opt[n-1]
 
     def offline_double_machine(self):
-        return -1
+        n = len(self.jobs)
+        opt = np.zeros((n+1, n+1))
+        prev = self._calc_latest_previous_job(self.jobs)
+        reordered_jobs = self._order_job_by_finishing_time(self.jobs)
+        for i in range(1, n+1):
+            opt[i, 0] = opt[0, i] = max([reordered_jobs[i - 1].value + opt[prev[i - 1] + 1, 0], opt[i - 1, 0]])
+        for i in range(1, n+1):
+            for j in range(1, n+1):
+                if i > j:
+                    opt[i, j] = max([opt[i-1, j], opt[prev[i - 1] + 1, j] + reordered_jobs[i - 1].value])
+                elif i < j:
+                    opt[i, j] = max([opt[i, j-1], opt[i, prev[j - 1] + 1] + reordered_jobs[j - 1].value])
+                else:
+                    opt[i, j] = max([opt[i-1, j-1], 
+                                     opt[i - 1, prev[j - 1] + 1] + reordered_jobs[j - 1].value,
+                                     opt[prev[i - 1] + 1, j - 1] + reordered_jobs[i - 1].value
+                                    ])
+        return opt[n, n] 
+
+    def general_offline_optimal(self):
+        raise NotImplementedError
+
+    def calc_offline_optimal(self):
+        n = len(self.machines);
+        if (n == 1):
+            return self.offline_single_machine()
+        elif (n == 2):
+            return self.offline_double_machine()
+        else:
+            return general_offline_optimal()
 
     def show_result_ui(self):
         print "-----------------------------------------------------"
