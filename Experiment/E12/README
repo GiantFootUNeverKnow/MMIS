@@ -2,17 +2,17 @@
 Objectives
 -----------------------------------------------------------------------------------------
 
-E12 is the first experiment for scheduling with multiple machines. Our first goal is to assure that our multiple machine algorithms can run successfully(efficient and correct). Second, we will compare the quality of our first three basic algorithms and observe differernt abortion ratios for the machines.  
+E12 is the first experiment for scheduling with multiple machines. Our first goal is to assure that our multiple machine algorithms can run successfully(efficiently and correctly). Second, we will compare the quality of our first three basic algorithms and observe differernt abortion ratios for the machines.  
 
-The job sequences to consider are PUS. We plan to use the sequences that showed up in previous experiments. Our basic multiple machine algorithms are fixed priority, abort by chance and least value first. For each algorithm, we would use three groups of abortion ratios: (2, 2), (1.5, 4), (4, 1.5). A pair of abortion ratios (a1, a2) means that alpha1 of the first machine is a1 and alpha1 of the second one is a2. Totally, we should have nine results of performance. 
+The job sequences to consider are PUS. We plan to use the sequences that showed up in previous experiments. Our basic multiple machine algorithms are Fixed Priority, Abort By Chance and Least Value First. For each algorithms, we would use three groups of abortion ratios: (2, 2), (1.5, 4), (4, 1.5). A pair of abortion ratios (a1, a2) means that alpha1 of the first machine is a1 and alpha1 of the second one is a2. Totally, we should have nine results of performance. 
 
 -----------------------------------------------------------------------------------------
 Procedures
 -----------------------------------------------------------------------------------------  
 
-Copy and paste run1.sh, run2.sh of E10 and all its subdirectories that contain an input file. Modify run1.sh to generate all PUS job sequences. Notice that due to concerns about efficiency, the job sequence to generate is of length 100, rather than 400
+Copy and paste run1.sh, run2.sh from E10 and all its subdirectories that contain an input file. Modify run1.sh to generate all PUS job sequences. Notice that due to concerns about efficiency, the job sequence to generate is of length 100, rather than 400
 
-We will use configuration files to specify the scheduling algorithms and machines to use. There are no existing config files we could reuse so we would create new config files for this experiment.
+We will use configuration files to specify the scheduling algorithms and machines to use. There are no existing config files we could reuse so we create new config files for this experiment.
 
 Copy and paste the following into config1:
 2
@@ -68,16 +68,16 @@ Copy and paste the following into config9:
 1.5 2
 3
 
-Use a bash file to run the simulation so that our work in future will only be changing the bash file.
+Use a bash file to run the simulation so that our work in future will be just changing the bash file.
 It would be easier to modify the bash file in E10
 
 An example of execution command is like  
  
 Run ./main.py --experiment Experiment/E12/config1 --jb Experiment/E12/E12.2/jobs > Experiment/E12.2/result1 
 
-Due to concerns about efficiency, we want to measure the time to and progress of simulations. Print running time and index of experiments in a readable format.
+We want to keep track of the running time and current progress of simulations. Print running time and index of experiments in a readable format.
 
-Since the second algorithm ABC is a randomized algorithm, we would not use --repeat for its execution.
+Although the second algorithm ABC is a randomized algorithm, due to the efficiency concern, we would not use --repeat for its execution.
 
 Result[x] records how algorithm used in config[x] performs.
 
@@ -85,7 +85,20 @@ Result[x] records how algorithm used in config[x] performs.
 Result
 ---------------------------------------------------------------------------------------
 
-A table describing the competitve ratio of 9 algorithms running on 6 sequences is obtained as below:
+A table describing the competitve ratio of 9 algorithms running on 12 kinds of sequences is obtained as below:
 
+(a,b), f(x) of job base     FP(2, 2) FP(1.5, 4) FP(4, 1.5) ABC(2, 2) ABC(1.5, 4) ABC(4, 1.5) LVF(2, 2) LVF(1.5, 4) LVF(4, 1.5)
+(5, 25), f(y) = y           1.08     1.10       1.09       1.08      1.09        1.09        1.08      1.09        1.08 
+(5, 25), f(y) = y^2         1.10     1.13       1.10       1.09      1.11        1.11        1.09      1.11        1.10
+(5, 25), f(y) = y^3         1.10     1.15       1.11       1.10      1.13        1.13        1.09      1.11        1.11 
+(5, 25), f(y) = y^3+y^2+y   1.10     1.15       1.11       1.10      1.13        1.13        1.09      1.12        1.12
+(5, 25), f(y) = 3y^3+2y^2+y 1.10     1.14       1.11       1.10      1.13        1.12        1.09      1.11        1.11
+(5, 25), f(y) = e^y         1.05     1.10       1.04       1.04      1.06        1.06        1.01      1.04        1.04
+(4, 100), f(y) = y          1.19     1.19       1.19       1.19      1.19        1.19        1.19      1.20        1.19
+(4, 100), f(y) = y^2        1.17     1.22       1.21       1.17      1.21        1.21        1.17      1.21        1.21
+(4, 100), f(y) = y^3        1.17     1.22       1.20       1.17      1.20        1.21        1.17      1.20        1.20
+(1, 125), f(y) = y          1.25     1.27       1.27       1.25      1.27        1.27        1.25      1.27        1.27
+(1, 125), f(y) = y^2        1.24     1.24       1.22       1.24      1.23        1.23        1.23      1.23        1.22
+(1, 125), f(y) = y^3        1.20     1.24       1.22       1.20      1.22        1.22        1.20      1.22        1.22
 
-CPU time spent on computing a result for each algorithm is about an hour
+CPU time spent on computing a single result is about 5 minutes

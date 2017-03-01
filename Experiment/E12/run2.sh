@@ -1,6 +1,6 @@
 # This script should be run under the experiment directory. For example Experiment/E9/
 cd ../..
-for i in {1..3}
+for i in {4..9}
 do
     for j in {1..12}
     do
