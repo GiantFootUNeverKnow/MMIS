@@ -40,6 +40,12 @@ class Machine(object):
     def is_replaceable(self, coming_job):
         return coming_job.value + EPSILON >= self.current_job_value * self.alpha1 
 
+    def is_replaceable_SRD(self, coming_job):
+        assert self.randomized_decider is not None
+        
+        return (self.randomized_decider(coming_job.yfactor) + EPSILON >= 
+               self.randomized_decider(self.current_job_yfactor))
+
     def is_replaceable_RD(self, coming_job):
         assert self.randomized_decider is not None
 
@@ -70,8 +76,8 @@ class Machine(object):
 
 # TIME_INCREMENT should be greater than EPSILON
 EPSILON = 0.000001
-NUM_MECHANISMS = 11
-MECHANISMS_WITH_RD = [4, 5, 6, 7, 8, 9] 
+NUM_MECHANISMS = 12
+MECHANISMS_WITH_RD = [4, 5, 6, 7, 8, 9, 12] 
 
 class Scheduler(object):
     '''
@@ -88,6 +94,7 @@ class Scheduler(object):
     9. Mechanism 3 OR randomized decider says YES
     10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine 
     11. (Single Machine) Randomly decide whether we abort
+    12. Mechanism 1 + simplified randomized decider says YES 
     '''
 
     def __init__(self):
@@ -130,6 +137,7 @@ class Scheduler(object):
         print "9. Mechanism 3 OR randomized decider says YES"
         print "10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine"  
         print "11. (Single Machine) Randomly decide whether to abort"
+        print "12. Mechanism 1 + simplified randomized decider says YES" 
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         while (n <= 0 or n > NUM_MECHANISMS):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
@@ -281,6 +289,16 @@ class Scheduler(object):
         if (is_start):
             machine.start_job(job)
     
+    def heuristic12(self, job):
+        log.debug( "heuristic12 has %d at time %d" % (job.name, self.time ))
+        # Assume priority of mahcines are ordered by their indices
+        for i in range(len(self.machines)):
+            machine = self.machines[i]
+            if (machine.is_replaceable(job)
+                and machine.is_replaceable_SRD(job)):
+                machine.start_job(job)
+                return
+
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
         eval(function_name)(job)
