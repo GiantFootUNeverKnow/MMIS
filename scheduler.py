@@ -71,8 +71,7 @@ class Machine(object):
 # TIME_INCREMENT should be greater than EPSILON
 EPSILON = 0.000001
 NUM_MECHANISMS = 11
-NUM_RANDOMIZED_DECIDER_MECHANISMS = 6
-NUM_DETERMINISTIC_MECHANISMS = 3
+MECHANISMS_WITH_RD = [4, 5, 6, 7, 8, 9] 
 
 class Scheduler(object):
     '''
@@ -134,8 +133,7 @@ class Scheduler(object):
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         while (n <= 0 or n > NUM_MECHANISMS):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
-        if (self.mechanism > NUM_DETERMINISTIC_MECHANISMS 
-            and self.mechanism <= NUM_DETERMINISTIC_MECHANISMS + NUM_RANDOMIZED_DECIDER_MECHANISMS):
+        if (self.mechanism in MECHANISMS_WITH_RD):
             for i in range(n):
                 print "Please input randomized decider function for machine %d in the format\"lambda y: <function expression with respect to y>\"" % i
                 self.machines[i].set_randomized_decider(eval(raw_input("Function:")))

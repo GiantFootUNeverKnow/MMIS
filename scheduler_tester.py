@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import scheduler
 from scheduler import Scheduler, Machine
 import unittest
 import numpy as np
@@ -33,16 +34,27 @@ class SchedulerTester1(unittest.TestCase):
         self.assertEqual(machine2.total_value, 25.0)
        
     def test_random_2(self):
-        '''
         self.scheduler.mechanism = 2
-        machine0 = Machine(2, 0)
-        machine1 = Machine(2, 1)
+        machine0 = Machine(2, 0, 0)
+        machine1 = Machine(2, 1, 1)
         self.scheduler.machines = [machine0, machine1]
         self.scheduler.run_schedule()
-        self.assertEqual(machine0.total_value, 98.0)
-        self.assertEqual(machine1.total_value, 42.0)
-        '''
-        pass #Due to the random nature of this heuristic, it is hard to test
+        # self.assertEqual(machine0.total_value, 98.0)
+        # self.assertEqual(machine1.total_value, 42.0)
+        # Due to the random nature of this heuristic, it is hard to test on the result
+
+    def test_randomized_decider_3(self):
+        # Again, it is hard to test on the result of these algorithms, so we just test the execution
+        machine0 = Machine(2, 4, 0)
+        machine1 = Machine(3, 3, 1)
+        machine2 = Machine(4, 2, 2)
+        machine0.set_randomized_decider(lambda y: y)
+        machine1.set_randomized_decider(lambda y: np.exp(-y))
+        machine2.set_randomized_decider(lambda y: 1 - np.exp(-y))
+        self.scheduler.machines = [machine0, machine1, machine2]
+        for mechanism in scheduler.MECHANISMS_WITH_RD:
+            self.scheduler.mechanism = mechanism
+            self.scheduler.run_schedule()
 
     def test_low_wage_2(self):
         self.scheduler.mechanism = 3
