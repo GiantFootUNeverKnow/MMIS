@@ -1,0 +1,80 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+We observed that Greedy-x and RD had a good performance on Geometric Sets in previous experiment E7, E11. However, GeometricSets might be not the worst case instance. As we want to make it even worse, we propose another generation scheme Double Geometric Sets that is expected to resist against the performance boost obtained from randomized decider.
+
+In fact, we will introduce a simplified version of randomized decider that is easier to be analyzed. The randomized decider would not have the abortion ratio nor information about job value. We will run simulations on both simplified RD and the original RD to make comparison. 
+
+If result on Scheme Double Geometric Sets is a significant different than that on Scheme Geometric Sets, we are more assured that the worst case instance can be built even worse by replicating the geometric set.       
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Generating Double Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5).
+
+Also generate a group of Geometric Sets job sequence or use the ones in E11 directly. We will run simulation on both groups to see the difference
+
+We will use configuration files to specify the scheduling algorithms and machines to use. There are no existing config files we could reuse so we would create new config files for this experiment.
+
+Copy and paste the following into config1:
+1
+2 2
+4
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config2:
+1
+2 2
+4
+lambda y: y
+
+Copy and paste the following into config3:
+1
+2 2
+12
+lambda y: 1 - np.exp(-y)
+
+Copy and paste the following into config4:
+1
+2 2
+12
+lambda y: y
+
+Copy and paste the following into config5:
+1
+2 2
+1
+
+Use a bash file to run the simulation so that works in future will only be changing the bash file.
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E13/config1 --jb Experiment/E13/jobs --repeat 10000 > Experiment/E13/result1 
+
+Because all of algorithms used in this experiment are randomized scheduling algorithms, the simulation has to be repeated for a fair number of times, and the label --repeat should be used in the command.
+
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
+
+Algorithms       1.5-DGS       1.618-DGS     2-DGS     3-DGS     3.1415-DGS    4-DGS        
+Greedy2 && RD+   1.33          1.32          1.85      1.49      1.48          1.43
+Greedy2 && RD-   1.34          1.33          1.85      1.47      1.47          1.43
+Greedy2 && SRD+  1.99          1.94          1.86      1.37      1.36          1.37
+Greedy2 && SRD-  1.97          1.93          1.87      1.36      1.36          1.36
+Greedy2          1.33          1.33          4.00      1.50      1.47          1.33 
+
+
+Algorithms       1.5-GS        1.618-GS      2-GS      3-GS      3.1415-GS     4-GS        
+Greedy2 && RD+   1             1             1.46      1.48      1.48          1.42
+Greedy2 && RD-   1             1             1.47      1.46      1.46          1.44
+Greedy2 && SRD+  1             1             1.46      1.36      1.38          1.37
+Greedy2 && SRD-  1             1             1.45      1.36      1.37          1.38
+Greedy2          1             1             4.00      1.50      1.47          1.33 
+
+RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
+CPU time spent on computing results for each algorithm is around two minute.
