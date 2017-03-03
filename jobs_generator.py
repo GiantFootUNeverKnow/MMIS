@@ -104,6 +104,56 @@ class SchemeGeometricSets(JobsGenerationScheme):
             print "Invalid growth rate"
             return self.set_parameter()
 
+class SchemeDoubleGeometricSets(JobsGenerationScheme):
+
+    def get_helpinfo(self):
+        return "Scheme Double Geometric Sets is a strengthened version of Scheme Geoemetric Sets in sense that there are two sets of conflicting jobs with job length growing geometrically. One of them is exactly the conflicting set in a Geometric Set: jobs except the last one always have a following job that overlaps themselves at the very end. The other set is delibrately constructed such that its jobs lie between the first conflicting set and the its accompanied optimal choices of jobs, under conditions that given the running scheduler uses Greedy-x algorithm, the execution of jobs in this conflicting set should not be interfered by jobs from the first Geometric Sets, and vice versa."
+    
+    def __init__(self):
+        self.name = "DoubleGeometricSets"
+
+    def generate(self):
+        print "Generate jobs using Scheme Double Geometric Sets" 
+       
+        eps = 1.0
+
+        # Geometric Set 1
+        jobs = [Job(0, 1000, 1000, 0)] 
+        for i in range(1, self.N):
+            job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - eps, jobs[i - 1].duration * self.c, jobs[i - 1].value * self.c, i)
+            jobs.append(job)
+
+        # Main Set
+        for i in range(self.N - 1):
+            job = Job(jobs[i].arrival + eps, jobs[i].duration - eps, jobs[i].value - eps, self.N + i)
+            jobs.append(job)
+        job_n = Job(jobs[self.N - 1].arrival + eps, jobs[self.N - 1].duration - 2 * eps, jobs[self.N - 1].value - 2 * eps, 2 * self.N - 1)
+        jobs.append(job_n)
+        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - eps, jobs[self.N - 1].duration * self.c - eps, jobs[self.N - 1].value * self.c - eps, 2 * self.N)
+        jobs.append(job_n1)
+
+        # Geometric Set 2
+        val = jobs[1].value + eps
+        job1 = Job(jobs[1].arrival + eps/2, jobs[1].duration, val, 2 * self.N + 1)
+        jobs.append(job1)
+        for i in range(2, self.N):
+            val = val * 2 + eps
+            job = Job(jobs[i].arrival + eps/2, jobs[i].duration, val, 2 * self.N + i)
+            jobs.append(job)
+
+        return jobs
+
+    def set_parameter(self):
+        self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Double Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
+        if (self.N < 10 or self.N > 30):
+            print "Invalid Stage"
+            return self.set_parameter()
+        self.c = float(raw_input("Floating number c is the growth rate of length of jobs: in the set of conflicting jobs, if length of a job is l, its following job would be of length c * l. Currently we limit the choice of c in range (1.1, 4]. Please enter c : "))
+        if (self.c <= 1.1 or self.c > 4):
+            print "Invalid growth rate"
+            return self.set_parameter()
+
+
 class SchemePUS(JobsGenerationScheme):
 
     # let f be input variable user can control and make y = x^2 a default choice
@@ -290,11 +340,13 @@ def init_generator():
     PPS = SchemePPS()
     PES = SchemePES()
     PNS = SchemePNS()
+    DSG = SchemeDoubleGeometricSets()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
     SCHEMES.append(PPS)
     SCHEMES.append(PES)
     SCHEMES.append(PNS)
+    SCHEMES.append(DSG)
 
 def main():
     init_generator()
