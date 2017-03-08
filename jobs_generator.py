@@ -104,10 +104,10 @@ class SchemeGeometricSets(JobsGenerationScheme):
             print "Invalid growth rate"
             return self.set_parameter()
 
-class SchemeDoubleGeometricSets(JobsGenerationScheme):
+class SchemeMultipleGeometricSets(JobsGenerationScheme):
 
     def get_helpinfo(self):
-        return "Scheme Double Geometric Sets is a strengthened version of Scheme Geoemetric Sets in sense that there are two sets of conflicting jobs with job length growing geometrically. One of them is exactly the conflicting set in a Geometric Set: jobs except the last one always have a following job that overlaps themselves at the very end. The other set is delibrately constructed such that its jobs lie between the first conflicting set and the its accompanied optimal choices of jobs, under conditions that given the running scheduler uses Greedy-x algorithm, the execution of jobs in this conflicting set should not be interfered by jobs from the first Geometric Sets, and vice versa."
+        return "Scheme Multiple Geometric Sets is a strengthened version of Scheme Geoemetric Sets in sense that there are more than one sets of conflicting jobs with job length growing geometrically. One of them is exactly the conflicting set in a Geometric Set: jobs except the last one always have a following job that overlaps themselves at the very end. The other sets are delibrately constructed such that its jobs lie between the first conflicting set and the its accompanied optimal choices of jobs, under conditions that given the running scheduler uses Greedy-x algorithm, the execution of jobs in this conflicting set should not be interfered by jobs from the first Geometric Sets, and vice versa."
     
     def __init__(self):
         self.name = "DoubleGeometricSets"
@@ -132,14 +132,16 @@ class SchemeDoubleGeometricSets(JobsGenerationScheme):
         job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - eps, jobs[self.N - 1].duration * self.c - eps, jobs[self.N - 1].value * self.c - eps, 2 * self.N)
         jobs.append(job_n1)
 
-        # Geometric Set 2
-        val = jobs[1].value + eps
-        job1 = Job(jobs[1].arrival + eps/2, jobs[1].duration, val, 2 * self.N + 1)
-        jobs.append(job1)
-        for i in range(2, self.N):
-            val = val * 2 + eps
-            job = Job(jobs[i].arrival + eps/2, jobs[i].duration, val, 2 * self.N + i)
-            jobs.append(job)
+        # Geometric Set 2 - m
+        eps_over_m = eps / self.m
+        for j in range(1, self.m):
+            val = jobs[1].value + eps
+            job1 = Job(jobs[1].arrival + eps_over_m * j, val, val, 2 * self.N + 1 + (j - 1) * (self.N - 1))
+            jobs.append(job1)
+            for i in range(2, self.N):
+                val = val * 2 + eps
+                job = Job(jobs[i].arrival + eps_over_m * j, val, val, 2 * self.N + i + (j - 1) * (self.N - 1))
+                jobs.append(job)
 
         return jobs
 
@@ -150,9 +152,12 @@ class SchemeDoubleGeometricSets(JobsGenerationScheme):
             return self.set_parameter()
         self.c = float(raw_input("Floating number c is the growth rate of length of jobs: in the set of conflicting jobs, if length of a job is l, its following job would be of length c * l. Currently we limit the choice of c in range (1.1, 4]. Please enter c : "))
         if (self.c <= 1.1 or self.c > 4):
-            print "Invalid growth rate"
+            print "Invalid growth generate"
             return self.set_parameter()
-
+        self.m = int(raw_input("Intensity m of a job sequence is the number of used conflicting sets. Please enter m as an integer in the range [2, 30]: "))
+        if (self.m < 2 or self.m > 30):
+            print "Invalid intensity"
+            return self.set_parameter()
 
 class SchemePUS(JobsGenerationScheme):
 
@@ -340,13 +345,13 @@ def init_generator():
     PPS = SchemePPS()
     PES = SchemePES()
     PNS = SchemePNS()
-    DSG = SchemeDoubleGeometricSets()
+    MSG = SchemeMultipleGeometricSets()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
     SCHEMES.append(PPS)
     SCHEMES.append(PES)
     SCHEMES.append(PNS)
-    SCHEMES.append(DSG)
+    SCHEMES.append(MSG)
 
 def main():
     init_generator()
