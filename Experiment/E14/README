@@ -1,0 +1,49 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+E14 is the second experiment for scheduling with multiple machines. This experiment would be really close to E12   
+
+The job sequences to consider are PES. We plan to use the sequences that showed up in previous experiments E9. Our basic multiple machine algorithms are Fixed Priority, Abort By Chance and Least Value First. For each algorithms, we would use three groups of abortion ratios: (2, 2), (1.5, 4), (4, 1.5). A pair of abortion ratios (a1, a2) means that alpha1 of the first machine is a1 and alpha1 of the second one is a2. Totally, we should have nine results of performance. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Copy and paste run1.sh, run2.sh and all config files from E12. Modify run1.sh to fit in E14. We will use keep using --jb 100 to generate job sequence with length 100. All config files should be the same as ones in E12.
+
+Copy and paste input files and the directory containing them from E9. Modify names of those directories to fit in E14.
+
+Modify run1.sh and run2.sh properly. Run run1.sh to generate job sequences, and run run2.sh to initiate the simulations.   
+
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E14/config1 --jb Experiment/E14/E14.2/jobs > Experiment/E14.2/result1 
+
+Although the second algorithm ABC is a randomized algorithm, due to the efficiency concern, we would not use --repeat for its execution.
+
+Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 9 algorithms running on 12 kinds of sequences is obtained as below:
+
+beta, f(x) of job base   FP(2, 2) FP(1.5, 4) FP(4, 1.5) ABC(2, 2) ABC(1.5, 4) ABC(4, 1.5) LVF(2, 2) LVF(1.5, 4) LVF(4, 1.5)
+10, f(y) = y             1.11     1.12       1.10       1.10      1.11        1.11        1.09      1.10        1.09 
+10, f(y) = y^2           1.09     1.14       1.07       1.08      1.10        1.10        1.06      1.07        1.07
+10, f(y) = y^3           1.07     1.13       1.05       1.06      1.08        1.08        1.04      1.05        1.05
+10, f(y) = y^3+y^2+y     1.07     1.13       1.05       1.06      1.08        1.08        1.04      1.05        1.05
+25, f(y) = y             1.21     1.22       1.21       1.21      1.22        1.22        1.20      1.21        1.21
+25, f(y) = y^2           1.13     1.19       1.13       1.13      1.15        1.15        1.11      1.13        1.13
+25, f(y) = y^3           1.10     1.16       1.09       1.09      1.12        1.11        1.07      1.09        1.09
+25, f(y) = y^3+y^2+y     1.10     1.17       1.09       1.09      1.12        1.12        1.07      1.09        1.09
+100, f(y) = y            1.45     1.44       1.42       1.45      1.43        1.43        1.45      1.42        1.42
+100, f(y) = y^2          1.17     1.26       1.20       1.16      1.22        1.22        1.16      1.20        1.20
+100, f(y) = y^3          1.10     1.19       1.11       1.09      1.14        1.14        1.09      1.12        1.12
+100, f(y) = y^3+y^2+y    1.10     1.18       1.11       1.09      1.14        1.14        1.09      1.12        1.12
+
+CPU time spent on computing a single result is about 4 minutes
+
+Some results match our intuition. Results of ABC(1.5, 4) and ABC(4, 1.5) should be and are almost the same. Because order of machine does not matter in ABC algorithm, it should not have difference between ABC(1.5, 4) and ABC(4, 1.5). The same idea works for LVF(1.5, 4) and LVF(4, 1.5) 
