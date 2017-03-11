@@ -1,0 +1,52 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+Experiment E13 confirmed our geuss that Double Geometric Sets is a worse generation scheme than Geometric Sets in terms of performance of randomized decider algorithm. However, the performance is still not as bad as our estimation in theory. For that purpose, we will increase the layers of geometric sets in the expeirment.
+
+We generalized the idea of Double Geometric Sets to become Multiple Geometric Sets. There could be more than two layers of geometrically growing conflicting sets in the job sequence. We expect that randomized decider algorithm would perform even worse on this type of sequence.  
+
+Also, perfomance of SRD differs from that of RD for some cases in previous experiment E13. We will simulate both algorithms and try to observe if the tendency continues.
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Generating Multiple Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5). Let the layers of MGS be 3, 5, 10, 20, 50 respectively.
+
+Since there would be a lot of repetitive input jobs, we should use a bash file to handle the generations. Name the folders of MGS-x to be jobs_x. For example, job sequences with 5 layers would be put into folder jobs_5
+
+Use config files from experiment E13 since they will not change
+
+Use the bash file from E13 to run the simulations. Modify the codes to run simulations for all job sequences.
+
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E15/config1 --jb Experiment/E15/jobs_5 --repeat 10000 > Experiment/E15/result5_1 
+
+Because all of algorithms used in this experiment are randomized scheduling algorithms, the simulation has to be repeated for a fair number of times, and the label --repeat should be used in the command.
+
+Result[y]_[x] records how algorithm used in config[x] performs on MGS job sequence with y layers.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
+
+Algorithms       1.5-DGS       1.618-DGS     2-DGS     3-DGS     3.1415-DGS    4-DGS        
+Greedy2 && RD+   1.33          1.32          1.85      1.49      1.48          1.43
+Greedy2 && RD-   1.34          1.33          1.85      1.47      1.47          1.43
+Greedy2 && SRD+  1.99          1.94          1.86      1.37      1.36          1.37
+Greedy2 && SRD-  1.97          1.93          1.87      1.36      1.36          1.36
+Greedy2          1.33          1.33          4.00      1.50      1.47          1.33 
+
+
+Algorithms       1.5-GS        1.618-GS      2-GS      3-GS      3.1415-GS     4-GS        
+Greedy2 && RD+   1             1             1.46      1.48      1.48          1.42
+Greedy2 && RD-   1             1             1.47      1.46      1.46          1.44
+Greedy2 && SRD+  1             1             1.46      1.36      1.38          1.37
+Greedy2 && SRD-  1             1             1.45      1.36      1.37          1.38
+Greedy2          1             1             4.00      1.50      1.47          1.33 
+
+RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
+CPU time spent on computing results for each algorithm is around two minute.
