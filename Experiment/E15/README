@@ -11,9 +11,9 @@ Also, perfomance of SRD differs from that of RD for some cases in previous exper
 Procedures
 -----------------------------------------------------------------------------------------  
 
-Generating Multiple Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5). Let the layers of MGS be 3, 5, 10, 20, 50 respectively.
+Generating Multiple Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5). Let the layers of MGS be 3, 5, 10, 20 respectively.
 
-Since there would be a lot of repetitive input jobs, we should use a bash file to handle the generations. Name the folders of MGS-x to be jobs_x. For example, job sequences with 5 layers would be put into folder jobs_5
+Since there would be a lot of repetitive input jobs, we should use a bash file gen1.sh to handle the generations. Name the folders of MGS-x to be jobs_x. For example, job sequences with 5 layers would be put into folder jobs_5
 
 Use config files from experiment E13 since they will not change
 
