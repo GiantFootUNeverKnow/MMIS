@@ -59,6 +59,8 @@ Result[x] records how algorithm used in config[x] performs.
 Result
 ---------------------------------------------------------------------------------------
 
+WE DISCOVERED A BUG IN OUR GENERATION CODES WHICH CAUSES AN ERROR IN THIS EXPERIMENT. PLEASE ABANDON THE RESULT FROM THIS EXPERIMENT AND REDO THIS PART OF EXPERIMENT IN E15
+
 A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
 
 Algorithms       1.5-DGS       1.618-DGS     2-DGS     3-DGS     3.1415-DGS    4-DGS        
@@ -78,3 +80,5 @@ Greedy2          1             1             4.00      1.50      1.47          1
 
 RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
 CPU time spent on computing results for each algorithm is around two minute.
+
+WE DISCOVERED A BUG IN OUR GENERATION CODES WHICH CAUSES AN ERROR IN THIS EXPERIMENT. PLEASE ABANDON THE RESULT FROM THIS EXPERIMENT AND REDO THIS PART OF EXPERIMENT IN E15

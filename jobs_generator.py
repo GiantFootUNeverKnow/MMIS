@@ -139,7 +139,7 @@ class SchemeMultipleGeometricSets(JobsGenerationScheme):
             job1 = Job(jobs[1].arrival + eps_over_m * j, val, val, 2 * self.N + 1 + (j - 1) * (self.N - 1))
             jobs.append(job1)
             for i in range(2, self.N):
-                val = val * 2 + eps
+                val = val * self.c + eps
                 job = Job(jobs[i].arrival + eps_over_m * j, val, val, 2 * self.N + i + (j - 1) * (self.N - 1))
                 jobs.append(job)
 
