@@ -1,8 +1,8 @@
 # This script should be executed under an experiment. For example Experiment/E15
 cd ../..
-C=(15 14 24 20 10 25)
-L=(3.0 3.1415 1.618 2.0 4.0 1.5)
-for i in 3 5 10 20
+C=(25 24 20 15 14 10)
+L=(1.5 1.618 2.0 3.0 3.1415 4.0)
+for i in 2 3 5 10 20
 do
     for j in {0..5}
     do

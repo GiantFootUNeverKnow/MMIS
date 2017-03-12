@@ -2,5 +2,9 @@
 cd ../..
 for i in {1..5}
 do
-        time ./main.py --experiment Experiment/E13/config$i --jb Experiment/E13/jobs2 --repeat 10000 > Experiment/E13/result2_$i        
+    for j in 3 5 10 20
+    do
+        time ./main.py --experiment Experiment/E15/config$i --jb Experiment/E15/jobs_$j --repeat 10000 > Experiment/E15/result${j}_${i}       
+    done
 done
+

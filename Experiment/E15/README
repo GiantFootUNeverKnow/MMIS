@@ -2,7 +2,7 @@
 Objectives
 -----------------------------------------------------------------------------------------
 
-Experiment E13 confirmed our geuss that Double Geometric Sets is a worse generation scheme than Geometric Sets in terms of performance of randomized decider algorithm. However, the performance is still not as bad as our estimation in theory. For that purpose, we will increase the layers of geometric sets in the expeirment.
+Experiment E13(Actually the result of E13 is partially invalid and we need to redo it altogether but the statement here is valid) confirmed our geuss that Double Geometric Sets is a worse generation scheme than Geometric Sets in terms of performance of randomized decider algorithm. However, the performance is still not as bad as our estimation in theory. For that purpose, we will increase the layers of geometric sets in the expeirment.
 
 We generalized the idea of Double Geometric Sets to become Multiple Geometric Sets. There could be more than two layers of geometrically growing conflicting sets in the job sequence. We expect that randomized decider algorithm would perform even worse on this type of sequence.  
 
@@ -11,7 +11,7 @@ Also, perfomance of SRD differs from that of RD for some cases in previous exper
 Procedures
 -----------------------------------------------------------------------------------------  
 
-Generating Multiple Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5). Let the layers of MGS be 3, 5, 10, 20 respectively.
+Generating Multiple Geometric Sets job sequences with input parameters used in E11. To summerize, we employ six pairs of (N, alpha): (15, 3), (14, 3.1415), (24, 1.618), (20, 2), (10, 4), (25, 1.5). Let the layers of MGS be 2, 3, 5, 10, 20 respectively.
 
 Since there would be a lot of repetitive input jobs, we should use a bash file gen1.sh to handle the generations. Name the folders of MGS-x to be jobs_x. For example, job sequences with 5 layers would be put into folder jobs_5
 
@@ -27,19 +27,11 @@ Because all of algorithms used in this experiment are randomized scheduling algo
 
 Result[y]_[x] records how algorithm used in config[x] performs on MGS job sequence with y layers.
 
----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 Result
 ---------------------------------------------------------------------------------------
 
 A table describing the competitve ratio of 8 algorithms running on 6 sequences is obtained as below:
-
-Algorithms       1.5-DGS       1.618-DGS     2-DGS     3-DGS     3.1415-DGS    4-DGS        
-Greedy2 && RD+   1.33          1.32          1.85      1.49      1.48          1.43
-Greedy2 && RD-   1.34          1.33          1.85      1.47      1.47          1.43
-Greedy2 && SRD+  1.99          1.94          1.86      1.37      1.36          1.37
-Greedy2 && SRD-  1.97          1.93          1.87      1.36      1.36          1.36
-Greedy2          1.33          1.33          4.00      1.50      1.47          1.33 
-
 
 Algorithms       1.5-GS        1.618-GS      2-GS      3-GS      3.1415-GS     4-GS        
 Greedy2 && RD+   1             1             1.46      1.48      1.48          1.42
@@ -48,5 +40,44 @@ Greedy2 && SRD+  1             1             1.46      1.36      1.38          1
 Greedy2 && SRD-  1             1             1.45      1.36      1.37          1.38
 Greedy2          1             1             4.00      1.50      1.47          1.33 
 
+Algorithms       1.5-DGS       1.618-DGS     2-DGS     3-DGS     3.1415-DGS    4-DGS        
+Greedy2 && RD+   1             1             1.86      1.77      1.74          1.58
+Greedy2 && RD-   1             1             1.86      1.76      1.76          1.63
+Greedy2 && SRD+  1             1             1.86      1.62      1.62          1.60
+Greedy2 && SRD-  1             1             1.87      1.62      1.62          1.60
+Greedy2          1             1             4.00      1.50      1.47          1.33 
+
+Algorithms       1.5-MGS3      1.618-MGS3    2-MGS3    3-MGS3    3.1415-MGS3   4-MGS3        
+Greedy2 && RD+   1             1             2.10      1.91      1.87          1.62
+Greedy2 && RD-   1             1             2.09      1.94      1.94          1.70
+Greedy2 && SRD+  1             1             2.08      1.77      1.76          1.77
+Greedy2 && SRD-  1             1             2.10      1.79      1.77          1.76
+Greedy2          1             1             4.00      1.50      1.47          1.33
+
+Algorithms       1.5-MGS5      1.618-MGS5    2-MGS5    3-MGS5    3.1415-MGS5   4-MGS5        
+Greedy2 && RD+   1             1             2.36      2.02      1.95          1.66 
+Greedy2 && RD-   1             1             2.36      2.12      2.07          1.76
+Greedy2 && SRD+  1             1             2.35      1.94      1.94          1.94
+Greedy2 && SRD-  1             1             2.35      1.96      1.93          1.94
+Greedy2          1             1             4.00      1.50      1.47          1.33 
+
+Algorithms       1.5-MGS10     1.618-MGS10   2-MGS10   3-MGS10   3.1415-MGS10  4-MGS10        
+Greedy2 && RD+   1             1             2.63      2.05      1.98          1.67 
+Greedy2 && RD-   1             1             2.59      2.24      2.14          1.78 
+Greedy2 && SRD+  1             1             2.61      2.16      2.16          2.16
+Greedy2 && SRD-  1             1             2.62      2.16      2.16          2.18
+Greedy2          1             1             4.00      1.50      1.47          1.33 
+
+Algorithms       1.5-MGS3      1.618-MGS3    2-MGS3    3-MGS3    3.1415-MGS3   4-MGS3        
+Greedy2 && RD+   1             1             2.82      2.05      1.97          1.66 
+Greedy2 && RD-   1             1             2.81      2.25      2.16          1.77
+Greedy2 && SRD+  1             1             2.79      2.34      2.37          2.40
+Greedy2 && SRD-  1             1             2.80      2.34      2.36          2.37
+Greedy2          1             1             4.00      1.50      1.47          1.33
+
 RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
-CPU time spent on computing results for each algorithm is around two minute.
+CPU time spent on computing results for each algorithm is positively related to the number of geometric sets in a sequence. The most time-consuming job sequence can take 8-9 minutes while the shortest job sequence will only needs two minutes. 
+
+We can observe an obvious growth of competitive ratio as the layers of conflicting sets increase. However, this is not as bas as it seems because the growing rate is not faster than logarithmic. We might be able to produce an upper bound of the competitive ratio that is lower than 4.
+
+We have some other interesting results as well. On one hand, performance of all algorithms running on job sequence with alpha < 2 keeps the same. On the other hand, performance of RD algorithms running on job sequence with alpha > 2 differs greatly from SRD algorithms running on these sequences. 
