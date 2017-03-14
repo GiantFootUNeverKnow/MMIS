@@ -68,7 +68,7 @@ Greedy2 && SRD+  1             1             2.61      2.16      2.16          2
 Greedy2 && SRD-  1             1             2.62      2.16      2.16          2.18
 Greedy2          1             1             4.00      1.50      1.47          1.33 
 
-Algorithms       1.5-MGS20     1.618-MGS20   2-MGS20   3-MGS20    3.1415-MGS20  4-MGS20        
+Algorithms       1.5-MGS20     1.618-MGS20   2-MGS20   3-MGS20   3.1415-MGS20  4-MGS20        
 Greedy2 && RD+   1             1             2.82      2.05      1.97          1.66 
 Greedy2 && RD-   1             1             2.81      2.25      2.16          1.77
 Greedy2 && SRD+  1             1             2.79      2.34      2.37          2.40
