@@ -68,7 +68,7 @@ Greedy2 && SRD+  1             1             2.61      2.16      2.16          2
 Greedy2 && SRD-  1             1             2.62      2.16      2.16          2.18
 Greedy2          1             1             4.00      1.50      1.47          1.33 
 
-Algorithms       1.5-MGS3      1.618-MGS3    2-MGS3    3-MGS3    3.1415-MGS3   4-MGS3        
+Algorithms       1.5-MGS20     1.618-MGS20   2-MGS20   3-MGS20    3.1415-MGS20  4-MGS20        
 Greedy2 && RD+   1             1             2.82      2.05      1.97          1.66 
 Greedy2 && RD-   1             1             2.81      2.25      2.16          1.77
 Greedy2 && SRD+  1             1             2.79      2.34      2.37          2.40
@@ -78,6 +78,6 @@ Greedy2          1             1             4.00      1.50      1.47          1
 RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
 CPU time spent on computing results for each algorithm is positively related to the number of geometric sets in a sequence. The most time-consuming job sequence can take 8-9 minutes while the shortest job sequence will only needs two minutes. 
 
-We can observe an obvious growth of competitive ratio as the layers of conflicting sets increase. However, this is not as bas as it seems because the growing rate is not faster than logarithmic. We might be able to produce an upper bound of the competitive ratio that is lower than 4.
+We can observe an obvious growth of competitive ratio as the layers of conflicting sets increases. However, this is not as bas as it seems because the growing rate is not faster than logarithmic. We still might have chance to produce an upper bound of the competitive ratio that is lower than 4.
 
 We have some other interesting results as well. On one hand, performance of all algorithms running on job sequence with alpha < 2 keeps the same. On the other hand, performance of RD algorithms running on job sequence with alpha > 2 differs greatly from SRD algorithms running on these sequences. 
