@@ -1,0 +1,87 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+According to our previous study on PES sequences in experiment E9 and E14, now we have a rough guess of how to manipulate the input parameters so that our algorithms might perform worse than they were. 
+
+Performance of our algorithms on PES sequences with beta = 100, f(y) = y is substantially worse than performance on the other PES sequences, regardless of number of machines we used. 100 is the maximum value of beta we have used, so we think performance of our algorithms could be even worsened by increasing beta beyond 100. Thus, we will generate some new PES sequences with f(y) = y but larger values of beta to see how the competitive ratio changes. 
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Create folders E17.1, E17.2, E17.3 Copy and paste run1.sh and run2.sh from E16
+
+We will stick to p = 0.5, f(y) = y and use different values of beta. For each job base, we will generate 10000 job sequences and each job sequence contains 100 jobs.
+
+Like usual, use input files to reduce time of typing parameters since typing in command line is less convenient. After writing input files, place them in their according subdirectories and rename them as input. For exmaple, E17.2/input
+
+Example input file(Input of E17.3):
+4
+0.5
+1
+100000
+lambda y:y
+10000
+Y
+
+E17.1:
+    a = 1
+    b = 1000
+    f = y
+E17.2:
+    a = 1
+    b = 10000
+    f = y
+E17.3:
+    a = 1
+    b = 100000
+    f = y
+E17.4:
+    a = 1
+    b = 100
+    f = y
+
+Modify run1.sh to launch automatical job generation.
+
+We will reuse the config files from E16. Copy and paste all config files from E16
+
+Modify bash file run2.sh to automate running simulation. It is supposed to run all algorithms on job sequences in job bases 1-3, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E17.4/result3  
+
+We only run single-machine algorithms on job sequences in job base 4.
+
+After the results showed out, we decided to redo a part of the experiment. Specifically, we will adjust the job length to 400 and redo the experiment for single-machine algorithms. Since we want to distinct and preserve both times of experimental results, result files of the redoed part are marked with an extra '+' symbol. For example, E17.2/result2+ 
+
+Modify the script E16/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 single-machine algorithms are summerized below
+
+beta of job base    Greedy-2    Greedy-1.5     Greedy-4   
+100                 1.56        1.36           1.84 
+1000                1.31        1.13           1.97 
+10000               1.29        1.12           1.94
+100000              1.29        1.12           1.94
+
+Notice that f(y) = y. The CPU time spent on each experiment(each figure shown on the table) was about 1 minute.
+
+We found these results are not consistent with those in E9, so we compared two experiments. The reason of difference is a bit surprising. Different job lengths(number of jobs in a sequence) lead to astoundingly different competitive ratios. In E9, job length is 400 but in this experiment the job length is 100. If we reset the job length to 400 and redo the experiment, the results will be the following 
+
+beta of job base    Greedy-2    Greedy-1.5      Greedy-4
+100                 1.35        1.40            1.34    
+1000                1.41        1.21            2.11    
+10000               1.33        1.14            1.99
+100000              1.32        1.13            1.98
+
+Comparison of competitive ratios across 9 two-machine algorithms are summerized below
+
+beta of job base   FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
+1000               1.21    1.31      1.28      1.21     1.29       1.29       1.21     1.27       1.28 
+10000              1.19    1.29      1.26      1.19     1.28       1.27       1.19     1.27       1.26
+100000             1.19    1.30      1.26      1.19     1.27       1.28       1.19     1.26       1.26
+
+Note that f(y) = y. The CPU time spent on each experiment(each figure shown on the table) was between 5 and 6 minute.
+
+When we take all experimental results into account, the function of competitive ratio over beta seems to have a "peak", and that "peak" could occur at different beta, which depends on the algorithm we choose, "job length" of sequences, and perhaps the benevolent function f. Fortunately, even at the "peak", the competitive ratio is still low enough to be meaningful. Hopefully, that function has only one "peak".   
+
