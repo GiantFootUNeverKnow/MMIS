@@ -1,0 +1,72 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+E18 is a continuation of Experiment E15. E15 showed that the competitive ratio of Randomized Decider algorithms would be raised when the number of conflicting sets becomes more. We want to keep increasing the layers of conflicting set until the competitive ratio reaches an upper bound, or it goes beyond 4. 
+
+To facilitate our experiment, we will simplify parts of computation that we have almost known the results.
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Copy and paste gen1.sh and run1.sh from E15.
+
+Emulating E15, employ gen1.sh to generate Multiple Geometric Sets job sequences. We only consider four pairs of (N, alpha): (20, 2), (15, 3), (14, 3.1415), (10, 4), and the sequences are indexed in this order. Let the layers of MGS be 50, 100, 200, 400 respectively.
+
+Name the folders of MGS-x to be jobs_x. For example, job sequences with 50 layers would be put into folder jobs_50, in which the third job sequence would be stored in jobs_50/3.txt
+
+Use config files from experiment E13 since they will not change. Delete config5 as we have been so familiar with consequence of Greedy-2 algorithm
+
+Modify run1.sh to launch the simulation
+
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E18/config1 --jb Experiment/E18/jobs_5 --repeat 10000 > Experiment/E18/result5_1 
+
+Result[y]_[x] records how algorithm used in config[x] performs on MGS job sequence with y layers.
+
+--------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+A table describing the competitve ratio of 4 algorithms running on 4 sequences is obtained as below:
+
+50 layers MGS:
+
+Algorithms          c=2         c=3         c=3.1415    c=4  
+Greedy2 && RD+      2.97        2.05        1.95        1.65
+Greedy2 && RD-      2.97        2.23        2.15        1.78
+Greedy2 && SRD+     2.97        2.57        2.54        2.62
+Greedy2 && SRD-     2.98        2.56        2.54        2.62 
+
+100 layers MGS:
+
+Algorithms          c=2         c=3         c=3.1415    c=4  
+Greedy2 && RD+      3.06        2.07        1.97        1.66  
+Greedy2 && RD-      3.08        2.25        2.15        1.78
+Greedy2 && SRD+     3.08        2.68        2.68        2.75
+Greedy2 && SRD-     3.06        2.67        2.69        2.77
+
+200 layers MGS:
+
+Algorithms          c=2         c=3         c=3.1415    c=4  
+Greedy2 && RD+      3.16        2.06        1.98        1.65 
+Greedy2 && RD-      3.17        2.23        2.14        1.78
+Greedy2 && SRD+     3.14        2.77        2.83        2.81
+Greedy2 && SRD-     3.14        2.76        2.85        2.84
+
+400 layers MGS:
+
+Algorithms          c=2         c=3         c=3.1415    c=4  
+Greedy2 && RD+      3.18        2.06        1.98        1.65 
+Greedy2 && RD-      3.20        2.25        2.15        1.78
+Greedy2 && SRD+     3.20        2.90        2.96        2.83
+Greedy2 && SRD-     3.19        2.92        2.93        2.87
+
+RD+ stands for g(y) = 1 - e^(-y) and RD- stands for g(y) = y
+CPU time spent on computing results for each algorithm is positively related to the number of geometric sets in a sequence. Time for computing one table could take 2~4 hours
+
+We can still observe an obvious near-logarithmic growth of competitive ratio as the layers of conflicting sets increases. Unfortunately, right now it seems pretty likely this trend can keep approaching 4. Other features mentioned in E15 are also confirmed again. 
+
+Noticeably, Greed2 && RD algorithms have a stable performance on MGS sequences with growing rate greater than 2, while Greed2 && SRD does not have such stability. We could claim that Greedy2 && RD outshines Greed2 && SRC in this regard. 
