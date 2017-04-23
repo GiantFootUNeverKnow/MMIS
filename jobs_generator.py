@@ -110,10 +110,10 @@ class SchemeMultipleGeometricSets(JobsGenerationScheme):
         return "Scheme Multiple Geometric Sets is a strengthened version of Scheme Geoemetric Sets in sense that there are more than one sets of conflicting jobs with job length growing geometrically. One of them is exactly the conflicting set in a Geometric Set: jobs except the last one always have a following job that overlaps themselves at the very end. The other sets are delibrately constructed such that its jobs lie between the first conflicting set and the its accompanied optimal choices of jobs, under conditions that given the running scheduler uses Greedy-x algorithm, the execution of jobs in this conflicting set should not be interfered by jobs from the first Geometric Sets, and vice versa."
     
     def __init__(self):
-        self.name = "DoubleGeometricSets"
+        self.name = "MultipleGeometricSets"
 
     def generate(self):
-        print "Generate jobs using Scheme Double Geometric Sets" 
+        print "Generate jobs using Scheme Multiple Geometric Sets" 
        
         eps = 1.0
 
@@ -146,16 +146,16 @@ class SchemeMultipleGeometricSets(JobsGenerationScheme):
         return jobs
 
     def set_parameter(self):
-        self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Double Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
+        self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Multiple Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
         if (self.N < 10 or self.N > 30):
             print "Invalid Stage"
             return self.set_parameter()
         self.c = float(raw_input("Floating number c is the growth rate of length of jobs: in the set of conflicting jobs, if length of a job is l, its following job would be of length c * l. Currently we limit the choice of c in range (1.1, 4]. Please enter c : "))
         if (self.c <= 1.1 or self.c > 4):
-            print "Invalid growth generate"
+            print "Invalid growth rate"
             return self.set_parameter()
         self.m = int(raw_input("Intensity m of a job sequence is the number of used conflicting sets. Please enter m as an integer in the range [2, 30]: "))
-        if (self.m < 2 or self.m > 30):
+        if (self.m < 2):
             print "Invalid intensity"
             return self.set_parameter()
 
