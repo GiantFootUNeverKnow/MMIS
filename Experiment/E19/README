@@ -1,0 +1,65 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+
+For a job sequence, the competitive ratio we have worked with was the ratio between optimal reward and algorithm reward. We then naturally calculated expected competitive ratio for a job base by taking average of competitive ratio for all job sequences in the job base. 
+
+We now redefine competitive ratio for a job base and evaluate the difference through computation in this experiment. Competitive ratio for a job base is defined to be the ratio between average optimal reward and average algorithm reward in the job base. When there is only a single job, these two definitions are obviously equal. However, regarding non-trivial cases, there may be some subtle difference. We will see if the difference matters for our subject by having both concepts calculated. 
+
+Since we always calculated expected competitive ratio for stochastic arrival job sequences, there are multiple places where we can compare these two definitions. Overall, we will redo computation in experiments E9, E10, E12 and E14. As usual, we seperate the computation by category such that experiment about PUS and experiment about PES would not mixed together.     
+
+This experiment E19 will only concern PUS job base and leave study on PES for later. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Borrow input files from E12 and E10. It is easier to copy and paste all subdirectories of E12 and erase their result files. Use a bash file to rename the subdirectories. 
+
+Copy and paste config files, run1.sh and run2.sh from E16. 
+
+Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation.
+
+It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E16.4/result3  
+
+Modify the script E16/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 single-machine algorithms are summerized below
+
+(a,b),f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    
+(5,25),y                  1.09        1.13           1.06     
+(5,25),y^2                1.10        1.11           1.14   
+(5,25),y^3                1.10        1.10           1.18
+(5,25),y^3+y^2+y          1.11        1.10           1.18
+(5,25),3y^3+2y^2+y        1.10        1.10           1.17
+(5,25),e^y                1.02        1.02           1.14
+(4,100),y                 1.20        1.19           1.20
+(4,100),y^2               1.18        1.18           1.27
+(4,100),y^3               1.18        1.17           1.28
+(1,125),y                 1.25        1.30           1.25
+(1,125),y^2               1.24        1.18           1.30
+(1,125),y^3               1.22        1.13           1.36
+
+The CPU time spent on each experiment(each figure shown on the table) was about 1 minute.
+
+Comparison of competitive ratios across 9 two-machine algorithms are summerized below
+
+(a,b) of job base   FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
+(5,25),y            1.08    1.09      1.08      1.08     1.09       1.09       1.08     1.09       1.08
+(5,25),y^2          1.09    1.12      1.10      1.09     1.11       1.11       1.09     1.10       1.10
+(5,25),y^3          1.10    1.14      1.11      1.09     1.12       1.12       1.08     1.11       1.11
+(5,25),y^3+y^2+y    1.10    1.15      1.11      1.10     1.13       1.13       1.09     1.12       1.11
+(5,25),3y^3+2y^2+y  1.10    1.14      1.11      1.09     1.12       1.12       1.08     1.11       1.11
+(5,25),e^y          1.05    1.09      1.04      1.04     1.05       1.06       1.01     1.04       1.04
+(4,100),y           1.19    1.18      1.18      1.19     1.18       1.18       1.19     1.19       1.18
+(4,100),y^2         1.16    1.20      1.20      1.16     1.20       1.20       1.16     1.20       1.20
+(4,100),y^3         1.16    1.21      1.19      1.16     1.19       1.19       1.16     1.19       1.19
+(1,125),y           1.24    1.26      1.25      1.24     1.26       1.26       1.24     1.26       1.25
+(1,125),y^2         1.22    1.22      1.21      1.22     1.21       1.21       1.22     1.21       1.21
+(1,125),y^3         1.19    1.22      1.20      1.19     1.21       1.21       1.19     1.21       1.20
+
+The CPU time spent on each experiment(each figure shown on the table) was between 4 and 5 minute.
