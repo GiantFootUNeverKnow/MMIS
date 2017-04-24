@@ -32,12 +32,21 @@ def main():
             raise NameError("Please use --jb to specify the job job_base")
         scheduler.setup_machines_file(config)
         competitive_ratios = []
+        optimal_payoffs = []
+        algorithm_payoffs = []
         for jobfile in os.listdir(job_base):
             scheduler.select_dataset_file(job_base + '/' + jobfile)
-            _, competitive_ratio = scheduler.schedule(repetition = args.repeat)
+            algorithm_payoff, competitive_ratio, optimal_payoff = scheduler.schedule(repetition = args.repeat)
+            algorithm_payoffs.append(algorithm_payoff)
             competitive_ratios.append(competitive_ratio)
+            optimal_payoffs.append(optimal_payoff)
         job_base_competitive_ratio_expectation = np.average(competitive_ratios)
         job_base_competitive_ratio_variance = np.var(competitive_ratios)
+        job_base_average_algorithm_payoff = np.average(algorithm_payoffs)
+        job_base_average_optimal_payoff = np.average(optimal_payoffs)
+        print "On average, the algorithm payoff: ", job_base_average_algorithm_payoff
+        print "On average, the optimal payoff: ", job_base_average_optimal_payoff
+        print "Ratio of these two payoff: ", job_base_average_optimal_payoff * 1.0 / job_base_average_algorithm_payoff
         print "Expectation of competitive ratios over the job base: ", job_base_competitive_ratio_expectation
         print "Variance of competitive ratios over the job base: ", job_base_competitive_ratio_variance
     else:

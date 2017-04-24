@@ -400,6 +400,6 @@ class Scheduler(object):
         competitive_ratio = offline_optimal * 1.0 / expected_payoff
         print "The competitive ratio is ", competitive_ratio
         print "****************************************************"
-        return (expected_payoff, competitive_ratio)
+        return (expected_payoff, competitive_ratio, offline_optimal)
 
     # TODO: add an accumulator to record the worst case
