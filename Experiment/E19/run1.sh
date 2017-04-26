@@ -8,7 +8,7 @@ done
 cd ../..
 for i in {1..12}
 do
-    ./jobs_generator.py --batch --redir E19 --jl 100 < Experiment/E19/E19.$i/input 
+    ./jobs_generator.py --batch --redir E19 --jl 400 < Experiment/E19/E19.$i/input 
     cd job_base/E19
     mv * ../../Experiment/E19/E19.$i/jobs
     cd ../..

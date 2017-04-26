@@ -2,13 +2,13 @@
 Objectives
 -----------------------------------------------------------------------------------------
 
-For a job sequence, the competitive ratio we have worked with was the ratio between optimal reward and algorithm reward. We then naturally calculated expected competitive ratio for a job base by taking average of competitive ratio for all job sequences in the job base. 
+For scheduling algorithm running on a job sequence, the competitive ratio we have worked with is the ratio between optimal reward and algorithm reward. We then naturally calculated expected competitive ratio for running on a job base by taking average of competitive ratio for all job sequences in the job base. 
 
-We now redefine competitive ratio for a job base and evaluate the difference through computation in this experiment. Competitive ratio for a job base is defined to be the ratio between average optimal reward and average algorithm reward in the job base. When there is only a single job, these two definitions are obviously equal. However, regarding non-trivial cases, there may be some subtle difference. We will see if the difference matters for our subject by having both concepts calculated. 
+We now redefine competitive ratio for running an algorithm on a job base and we will evaluate the difference of two definitions through computation in this experiment. In the context, competitive ratio is defined to be the ratio between average optimal reward and average algorithm reward in the job base. When there is only one single job, these two definitions are obviously equal. However, regarding non-trivial cases, there may be some subtle difference to investigate. We will see if the difference matters for our subject by having both concepts calculated. 
 
-Since we always calculated expected competitive ratio for stochastic arrival job sequences, there are multiple places where we can compare these two definitions. Overall, we will redo computation in experiments E9, E10, E12 and E14. As usual, we seperate the computation by category such that experiment about PUS and experiment about PES would not mixed together.     
+Since we always calculated expected competitive ratio for stochastic arrival job sequences, there are multiple existing results for expected competitive ratio: E9, E10, E12, E14. Then, we will employ the new definition to redo computation for experiments E9, E10, E12 and E14. As usual, we seperate the computation by category such that experiments about PUS and experiments about PES would not mixed together.     
 
-This experiment E19 will only concern PUS job base and leave study on PES for later. 
+This experiment E19 will only concern PUS job bases and leave the study on PES for later. 
 
 -----------------------------------------------------------------------------------------
 Procedures
@@ -18,7 +18,7 @@ Borrow input files from E12 and E10. It is easier to copy and paste all subdirec
 
 Copy and paste config files, run1.sh and run2.sh from E16. 
 
-Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation.
+Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation. Since we would like to compare the competitive ratio against its old defintion, we will set job length to be the same as the past. The job length of job sequences in the first three job bases is 400 and the job length for the rest are just 100.
 
 It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E16.4/result3  
 
@@ -31,24 +31,24 @@ Result
 Comparison of competitive ratios across 3 single-machine algorithms are summerized below
 
 (a,b),f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    
-(5,25),y                  1.09        1.13           1.06     
-(5,25),y^2                1.10        1.11           1.14   
-(5,25),y^3                1.10        1.10           1.18
-(5,25),y^3+y^2+y          1.11        1.10           1.18
-(5,25),3y^3+2y^2+y        1.10        1.10           1.17
+(5,25),y                  1.07        1.12           1.04     
+(5,25),y^2                1.09        1.10           1.13   
+(5,25),y^3                1.10        1.10           1.17
+(5,25),y^3+y^2+y          1.10        1.10           1.17
+(5,25),3y^3+2y^2+y        1.10        1.10           1.16
 (5,25),e^y                1.02        1.02           1.14
-(4,100),y                 1.20        1.19           1.20
-(4,100),y^2               1.18        1.18           1.27
-(4,100),y^3               1.18        1.17           1.28
-(1,125),y                 1.25        1.30           1.25
-(1,125),y^2               1.24        1.18           1.30
-(1,125),y^3               1.22        1.13           1.36
+(4,100),y                 1.09        1.12           1.07
+(4,100),y^2               1.12        1.11           1.19 
+(4,100),y^3               1.13        1.11           1.23
+(1,125),y                 1.10        1.12           1.09
+(1,125),y^2               1.13        1.11           1.20
+(1,125),y^3               1.14        1.11           1.25
 
-The CPU time spent on each experiment(each figure shown on the table) was about 1 minute.
+The CPU time spent on each experiment(each figure shown on the table) was about 3 minute.
 
 Comparison of competitive ratios across 9 two-machine algorithms are summerized below
 
-(a,b) of job base   FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
+(a,b),f of job base FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
 (5,25),y            1.08    1.09      1.08      1.08     1.09       1.09       1.08     1.09       1.08
 (5,25),y^2          1.09    1.12      1.10      1.09     1.11       1.11       1.09     1.10       1.10
 (5,25),y^3          1.10    1.14      1.11      1.09     1.12       1.12       1.08     1.11       1.11
@@ -63,3 +63,7 @@ Comparison of competitive ratios across 9 two-machine algorithms are summerized 
 (1,125),y^3         1.19    1.22      1.20      1.19     1.21       1.21       1.19     1.21       1.20
 
 The CPU time spent on each experiment(each figure shown on the table) was between 4 and 5 minute.
+
+In general, the redefined competitive ratio is slightly lower than the expected competitive ratio calculated in E10 and E12. We might be able to mathematically explain why it is. Nevertheless, this difference is just about 1 percent so it is possibly not that critical to differentiate them, in case of PUS sequences. 
+
+It is worth mentioning that competitive ratios for single machine algorithms rise soon for some job bases when the job length was set to be 100. 

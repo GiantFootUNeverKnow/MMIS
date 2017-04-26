@@ -7,7 +7,7 @@ ratios_reward = [0] * 12
 expectations = [0] * 12
 variances = [0] * 12
 directory = os.getcwd() + "/E19."
-j = 12
+j = 3
 for i in range(1, 13):
     a = open(directory + str(i) + '/' + "result" + str(j))
     lines = a.readlines()
