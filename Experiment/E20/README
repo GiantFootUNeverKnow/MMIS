@@ -1,0 +1,67 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is a continuation of E19. For more information, please read the detailed description in Experiment E19. Simply speaking, we will compute a redefined competitive ratio for running algorithms on PES job bases.
+
+We will calculate the redefined competitive ratio for the same algorithms and same job bases as those in E9 and E14. After the computation, we the results will be compared against the expected competitive ratio computed in E9 and E14. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Borrow input files from E14 and E9. It is easier to copy and paste all subdirectories of E14 and erase their result files. Use a bash file run3.sh to rename the subdirectories. 
+
+Copy and paste config files from E17, run1.sh and run2.sh from E19. 
+
+Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation. Since we would like to compare the competitive ratio against its old defintion, we will set job length to be the same as the past. 
+
+Since job length is 400 in E9 and 100 in E14, we will generate every job base twice. We simulate single machine algorithms on the one with job length 100 and simulate two-machine algorithms on the other one. 
+
+It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E20.4/result3  
+
+Modify the script E19/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 single-machine algorithms are summerized below
+
+beta,f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    
+10,y                     1.10        1.16           1.05  
+10,y^2                   1.08        1.08           1.14
+10,y^3                   1.06        1.05           1.12
+10,y^3+y^2+y             1.06        1.05           1.12
+25,y                     1.16        1.23           1.09
+25,y^2                   1.12        1.12           1.19
+25,y^3                   1.08        1.07           1.16
+25,y^3+y^2+y             1.08        1.07           1.16
+100,y                    1.33        1.35           1.31
+100,y^2                  1.18        1.17           1.31
+100,y^3                  1.13        1.10           1.24
+100,y^3+y^2+y            1.12        1.10           1.24
+
+The CPU time spent on each experiment(each figure shown on the table) was about 3 minute.
+
+Comparison of competitive ratios across 9 two-machine algorithms are summerized below
+
+beta,f of job base FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
+10,y               1.10    1.12      1.10      1.10     1.10       1.10       1.08     1.09       1.09    
+10,y^2             1.08    1.13      1.07      1.08     1.09       1.09       1.05     1.07       1.07
+10,y^3             1.07    1.11      1.05      1.06     1.07       1.07       1.03     1.04       1.04
+10,y^3+y^2+y       1.07    1.11      1.05      1.06     1.07       1.07       1.03     1.04       1.04
+25,y               1.20    1.21      1.20      1.20     1.21       1.20       1.19     1.20       1.20  
+25,y^2             1.12    1.18      1.12      1.12     1.14       1.14       1.10     1.12       1.12
+25,y^3             1.09    1.14      1.07      1.08     1.09       1.09       1.06     1.07       1.07
+25,y^3+y^2+y       1.09    1.14      1.07      1.08     1.10       1.09       1.06     1.07       1.07
+100,y              1.40    1.40      1.38      1.41     1.39       1.39       1.40     1.38       1.38
+100,y^2            1.13    1.21      1.15      1.13     1.17       1.17       1.12     1.15       1.16
+100,y^3            1.07    1.14      1.07      1.06     1.09       1.09       1.06     1.08       1.07
+100,y^3+y^2+y      1.07    1.14      1.07      1.06     1.09       1.09       1.06     1.08       1.08
+
+The CPU time spent on each experiment(each figure shown on the table) was between 4 and 6 minute.
+
+In general, the redefined competitive ratio is slightly lower than the expected competitive ratio calculated in E9 and E14. We might be able to mathematically explain why it is. Nevertheless, this difference is just about 1-4 percent so it is possibly not that critical to differentiate them, in case of PUS sequences. 
+
+It is worth mentioning that competitive ratios for single machine algorithms rise soon for some job bases when the job length was set to be 100. 
