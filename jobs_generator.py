@@ -77,20 +77,22 @@ class SchemeGeometricSets(JobsGenerationScheme):
 
     def generate(self):
         print "Generate jobs using Scheme Geometric Sets" 
-        
+
+        eps = 1.0
+
         # Geometric Set
         jobs = [Job(0, 1000, 1000, 0)] 
         for i in range(1, self.N):
-            job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - 1, jobs[i - 1].duration * self.c, jobs[i - 1].value * self.c, i)
+            job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - eps, jobs[i - 1].duration * self.c, jobs[i - 1].value * self.c, i)
             jobs.append(job)
 
         # Main Set
         for i in range(self.N - 1):
-            job = Job(jobs[i].arrival + 1, jobs[i].duration - 1, jobs[i].value - 1, self.N + i)
+            job = Job(jobs[i].arrival + eps, jobs[i].duration - eps, jobs[i].value - eps, self.N + i)
             jobs.append(job)
-        job_n = Job(jobs[self.N - 1].arrival + 1, jobs[self.N - 1].duration - 2, jobs[self.N - 1].value - 2, 2 * self.N - 1)
+        job_n = Job(jobs[self.N - 1].arrival + eps, jobs[self.N - 1].duration - 2 * eps, jobs[self.N - 1].value - 2 * eps, 2 * self.N - 1)
         jobs.append(job_n)
-        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - 1, jobs[self.N - 1].duration * self.c - 1, jobs[self.N - 1].duration * self.c - 1, 2 * self.N)
+        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - eps, jobs[self.N - 1].duration * self.c - eps, jobs[self.N - 1].duration * self.c - eps, 2 * self.N)
         jobs.append(job_n1)
         return jobs
 
@@ -103,6 +105,56 @@ class SchemeGeometricSets(JobsGenerationScheme):
         if (self.c <= 1.1 or self.c > 4):
             print "Invalid growth rate"
             return self.set_parameter()
+
+
+class SchemeAlternatingGeometricSets(JobsGenerationScheme):
+
+    def get_helpinfo(self):
+        return "Scheme Alternating Geometric Sets is a variant of Scheme Geometric Sets. Rather than a constant c, the growing rate would be a discrete uniform random variable such that random choices of growing rate are made for every pair of successive jobs during construction of the geometric set. Meanwhile, the accompanied main set would use the same choice of growing rate to catch up with the geometric set"
+
+    def __init__(self):
+        self.name = "AlternatingGeometricSets"
+
+    def generate(self):
+        print "Generate jobs using Scheme Alternating Geometric Sets" 
+    
+        eps = 1.0
+
+        # Geometric Set
+        jobs = [Job(0, 1000, 1000, 0)] 
+        for i in range(1, self.N):
+            rate = np.random.choice(self.c)
+            job = Job(jobs[i - 1].arrival + jobs[i - 1].duration - eps, jobs[i - 1].duration * rate, jobs[i - 1].value * rate, i)
+            jobs.append(job)
+
+        # Main Set
+        for i in range(self.N - 1):
+            job = Job(jobs[i].arrival + eps, jobs[i].duration - eps, jobs[i].value - eps, self.N + i)
+            jobs.append(job)
+        job_n = Job(jobs[self.N - 1].arrival + eps, jobs[self.N - 1].duration - 2 * eps, jobs[self.N - 1].value - 2 * eps, 2 * self.N - 1)
+        jobs.append(job_n)
+        last_rate = np.random.choice(self.c)
+        job_n1 = Job(jobs[self.N - 1].arrival + jobs[self.N - 1].duration - eps, jobs[self.N - 1].duration * last_rate - eps, jobs[self.N - 1].duration * last_rate - eps, 2 * self.N)
+        jobs.append(job_n1)
+        return jobs
+
+
+    def set_parameter(self):
+        self.N = int(raw_input("Value of JOBS_AMOUNT would not be used for generating Alternating Geometric Sets, please enter the stage (size of geometric set) which will be a number between 10 and 30: "))
+        if (self.N < 10 or self.N > 30):
+            print "Invalid Stage"
+            return self.set_parameter()
+        num_of_choices = int(raw_input("Floating number c is the growth rate of length of jobs: in the set of conflicting jobs, if length of a job is l, its following job would be of length c * l. Please enter the number of choices of c: "))
+        if (num_of_choices < 1):
+            print "Invalid number of choices"
+            return self.set_parameter()
+        self.c = []
+        for i in range(num_of_choices):
+            ci = float(raw_input("Currently we limit the choice of c in range (1.1, 4]. Please enter a choice of c: "))
+            if (ci <= 1.1 or ci > 4):
+                print "Invalid growth rate"
+                return self.set_parameter()
+            self.c.append(ci)
 
 class SchemeMultipleGeometricSets(JobsGenerationScheme):
 
@@ -340,18 +392,23 @@ def select_scheme():
     return SCHEMES[scheme_index]
 
 def init_generator():
+    '''
+    Don't modify this list without permission. Since other scripts would use the index to refer to a scheme, it is important we fix the order.
+    '''
     PUS = SchemePUS()
     SGS = SchemeGeometricSets()
     PPS = SchemePPS()
     PES = SchemePES()
     PNS = SchemePNS()
     MSG = SchemeMultipleGeometricSets()
+    ASG = SchemeAlternatingGeometricSets()
     SCHEMES.append(PUS)
     SCHEMES.append(SGS)
     SCHEMES.append(PPS)
     SCHEMES.append(PES)
     SCHEMES.append(PNS)
     SCHEMES.append(MSG)
+    SCHEMES.append(ASG)
 
 def main():
     init_generator()
