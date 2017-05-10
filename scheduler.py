@@ -376,14 +376,13 @@ class Scheduler(object):
             return self.general_offline_optimal()
 
     def log_result(self):
-        log.info("-----------------------------------------------------")
-        log.info("Result of experiment %f:", self.experiment_counter)
-        payoff = 0
+        formatted_result = "Result of experiment " + str(self.experiment_counter) + ":\n"
         for machine in self.machines:
-            log.info("Machine %d earned %f", machine.number, machine.total_value)
-            payoff += machine.total_value
-        log.info("Totally, we earned %f" , payoff)
-        log.info("-----------------------------------------------------")
+            formatted_result = formatted_result + "Machine " + str(machine.number) \
+                + " earned " + str(machine.total_value) + "\n" 
+        formatted_result = formatted_result + "Totally, we earned " + str(self.get_result()) \
+                + "\n" + "-----------------------------------------------------" 
+        log.info(formatted_result)
 
     def schedule(self, repetition = 1, print_result = True):
         payoff = 0
@@ -394,19 +393,18 @@ class Scheduler(object):
             self.clear()
         expected_payoff = payoff * 1.0 / repetition
         offline_optimal = self.calc_offline_optimal() 
-        competitive_ratio = offline_optimal * 1.0 / expected_payoff 
+        competitive_ratio = offline_optimal * 1.0 / expected_payoff
+
+        formatted_result = "Expected payoff: " + str(expected_payoff) \
+            + "\n" + "The optimal reward that can be obtained for this job sequence is " + str(offline_optimal) \
+            + "\n" + "The competitive ratio is " + str(competitive_ratio) \
+            + "\n" + "****************************************************" 
         if (print_result):
-            print "****************************************************"
-            print "Expected payoff: %f" % expected_payoff 
-            print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
-            print "The competitive ratio is ", competitive_ratio
-            print "****************************************************"
+            formatted_result = "****************************************************" + "\n" + formatted_result
+            print formatted_result
         else:
-            log.info("****************************************************")
-            log.info("Expected payoff: %f", expected_payoff) 
-            log.info("The optimal reward that can be obtained for this job sequence is %f", offline_optimal)
-            log.info("The competitive ratio is %f", competitive_ratio)
-            log.info("****************************************************")
+            log.info(formatted_result) 
+        
         return (expected_payoff, competitive_ratio, offline_optimal)
 
 
