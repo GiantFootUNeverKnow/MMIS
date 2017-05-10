@@ -375,31 +375,39 @@ class Scheduler(object):
         else:
             return self.general_offline_optimal()
 
-    def show_result_ui(self):
-        print "-----------------------------------------------------"
-        print "Result of experiment %f:" % (self.experiment_counter)
+    def log_result(self):
+        log.info("-----------------------------------------------------")
+        log.info("Result of experiment %f:", self.experiment_counter)
         payoff = 0
         for machine in self.machines:
-            print "Machine %d earned %f" % (machine.number, machine.total_value)
+            log.info("Machine %d earned %f", machine.number, machine.total_value)
             payoff += machine.total_value
-        print "Totally, we earned %f" % payoff
-        print "-----------------------------------------------------"
+        log.info("Totally, we earned %f" , payoff)
+        log.info("-----------------------------------------------------")
 
-    def schedule(self, repetition = 1):
+    def schedule(self, repetition = 1, print_result = True):
         payoff = 0
         for i in range(repetition):
             self.run_schedule()
-            self.show_result_ui()
+            self.log_result()
             payoff += self.get_result()
             self.clear()
         expected_payoff = payoff * 1.0 / repetition
-        print "****************************************************"
-        print "Expected payoff: %f" % expected_payoff 
-        offline_optimal = self.calc_offline_optimal()
-        print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
-        competitive_ratio = offline_optimal * 1.0 / expected_payoff
-        print "The competitive ratio is ", competitive_ratio
-        print "****************************************************"
+        offline_optimal = self.calc_offline_optimal() 
+        competitive_ratio = offline_optimal * 1.0 / expected_payoff 
+        if (print_result):
+            print "****************************************************"
+            print "Expected payoff: %f" % expected_payoff 
+            print "The optimal reward that can be obtained for this job sequence is ", offline_optimal
+            print "The competitive ratio is ", competitive_ratio
+            print "****************************************************"
+        else:
+            log.info("****************************************************")
+            log.info("Expected payoff: %f", expected_payoff) 
+            log.info("The optimal reward that can be obtained for this job sequence is %f", offline_optimal)
+            log.info("The competitive ratio is %f", competitive_ratio)
+            log.info("****************************************************")
         return (expected_payoff, competitive_ratio, offline_optimal)
+
 
     # TODO: add an accumulator to record the worst case

@@ -10,11 +10,12 @@ log = logging.getLogger("MMISLogger")
 out_hdlr = logging.StreamHandler(sys.stderr)
 out_hdlr.setFormatter(logging.Formatter('%(asctime)s %(message)s'))
 log.addHandler(out_hdlr)
-log.setLevel(logging.INFO)
+log.setLevel(logging.NOTSET)
 log.propagate = False
 
 parser = argparse.ArgumentParser();
 parser.add_argument('--debug', action='store_const', const=True, default=False, help='Enable logging of debug message')
+parser.add_argument('--info', action='store_const', const=True, default=False, help='Log result infomation for experiment on every single job sequence. Be careful for experiment on large job bases')
 parser.add_argument('--experiment', help='This argument will switch to batch experiment mode, please specify a configuration file. Also, the option --jb must be used in experiment mode')
 parser.add_argument('--jb', help='Specify the job base. This option is only effective when the program starts in batch experiment mode. It expects a name of a directory, without a slash. ')
 parser.add_argument('--repeat', type=int, default= 1, help='This option would run the simulation for N times and calculate an expectation of the total payoff over results of the repeated scheduling; It is the most useful to use this option for a randomized algorithm')
@@ -22,6 +23,8 @@ parser.add_argument('--repeat', type=int, default= 1, help='This option would ru
 args = parser.parse_args()
 if args.debug:
     log.setLevel(logging.DEBUG)
+elif args.info:
+    log.setLevel(logging.INFO)
 
 def main():
     scheduler = Scheduler()
@@ -36,7 +39,7 @@ def main():
         algorithm_payoffs = []
         for jobfile in os.listdir(job_base):
             scheduler.select_dataset_file(job_base + '/' + jobfile)
-            algorithm_payoff, competitive_ratio, optimal_payoff = scheduler.schedule(repetition = args.repeat)
+            algorithm_payoff, competitive_ratio, optimal_payoff = scheduler.schedule(repetition = args.repeat, print_result = False)
             algorithm_payoffs.append(algorithm_payoff)
             competitive_ratios.append(competitive_ratio)
             optimal_payoffs.append(optimal_payoff)
@@ -52,7 +55,8 @@ def main():
     else:
         scheduler.setup_machines_ui()
         scheduler.select_dataset_ui()
-        scheduler.schedule(repetition = args.repeat)
+        scheduler.schedule(repetition = args.repeat, print_result = True)
+        
 
 if __name__ == "__main__":
     main();
