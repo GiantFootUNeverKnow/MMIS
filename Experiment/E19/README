@@ -18,7 +18,7 @@ Borrow input files from E12 and E10. It is easier to copy and paste all subdirec
 
 Copy and paste config files, run1.sh and run2.sh from E16. 
 
-Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation. Since we would like to compare the competitive ratio against its old defintion, we will set job length to be the same as the past. The job length of job sequences in the first three job bases is 400 and the job length for the rest are just 100.
+Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation. Since we would like to compare the competitive ratio against its old defintion, we will set job length to be the same as the past. The job length of job sequences for running single machine algorithms is 400 and the job length for running two-machine algorithms is just 100.
 
 It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E19.4/result3  
 
