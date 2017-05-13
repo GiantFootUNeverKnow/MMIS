@@ -1,0 +1,75 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+We observed that Greedy-x,y had a better-than-4 performance on Geometric Sets in previous experiments E7, E11. However, GeometricSets might be less hedious than the "hypothetical" actual worst case instance for Greedy-x,y algorithms. As we want to make it even worse, we propose another generation scheme Alternating Geometric Sets that is expected to resist against the performance boost obtained from randomization .
+
+If result on Scheme Alternating Geometric Sets is significantly different from that on Scheme Geometric Sets, we are more assured that a job sequence can be built even worse by randomization.       
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+Copy and paste gen1.sh and run1.sh from E18
+Generating Alternating Geometric Sets job sequences massively. Each job base has 10000 job sequnces. We specify the input pararmeters used to generate the three job base
+
+Base1:
+N = 15
+c = 2,4
+
+Base2:
+N = 22
+c = 2,1.5
+
+Base3:
+N = 18
+c = 4,1.5 
+
+We will use configuration files to specify the scheduling algorithms and machines to use. Borrow config1, config2, config6-8 from E7 and rename them properly. Add another config file config6
+
+Copy and paste the following into config6:
+1
+4 1.5
+10
+
+Use a bash file to run the simulation so that works in future will only be changing the bash file. It is possible to modify the bash file in E18
+An example of execution command is like  
+ 
+Run ./main.py --experiment Experiment/E21/config4 --jb Experiment/E21/jobs --repeat 10000 > Experiment/E21/result1 
+
+Because some algorithms used in this experiment are randomized scheduling algorithms, the simulation has to be repeated for a fair number of times, and the label --repeat should be used in the command. We suggest that 10000 repetitions would be necessary for maintaining the accuracy
+
+Consequently, a list of result files would be generated, and Result[x] records how algorithm used in config[x] performs.
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Two definitions of competitive ratios are both calculated.  Part of results from E7 are imported to make comparison
+
+Expected competitive ratio
+
+Algorithms      AGS-2,4     AGS-2,1.5       AGS-4,1.5   GS-2    GS-4    GS-1.5
+Greedy4         2.56        1               2.36        1       5.33    1    
+Greedy1.5       1.59        3.06            2.41        2.00    1.33    4.50
+Greedy2         2.47        2.00            1.50        4.00    1.33    1
+Greedy-2,4      2.10        1.27            1.69        1.60    2.14    1
+Greedy-2,1.5    1.88        2.24            1.75        2.66    1.33    1.63
+Greedy-4,1.5    1.80        1.54            1.99
+
+Competitive ratio of expected performance
+
+Algorithms      AGS-2,4     AGS-2,1.5       AGS-4,1.5
+Greedy4         2.01        1               2.16
+Greedy1.5       1.50        2.74            1.72    
+Greedy2         1.78        1.69            1.38
+Greedy-2,4      2.00        1.26            1.69
+Greedy-2,1.5    1.63        2.15            1.53
+Greedy-4,1.5    1.83        1.53            2.00
+
+Computation time is on the scale of 1000 minutes
+
+We can see every Greedy-x,y algorithm has a job base that raises its worst-case competitive ratio beyond 2.
+In addtition, two definitions of competitive ratio are quite diverging. Their difference is no longer negligible
+
+By comparison with results from E7, it matches our intuition to see that the efficiency of an algorithm running on AGS-x,y is always between 
+its efficiency on GS-x and its efficiency on GS-y.
