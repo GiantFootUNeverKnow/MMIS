@@ -1,0 +1,127 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+
+We suspect that Greedy-1 algorithm could achieve a "near-1" competitive ratio on Poisson arrival sequences. To examine this claim, we will simulate Greedy-1 algorithm and its extension for 2 machines against PUS/PES sequences that are used in E19/E20. 
+
+Notice that the competitive ratio used in this experiment is the competitive ratio of a job base, as defined in recent experiments.
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Borrow input files from E19 and E20. It is easier to copy and paste all subdirectories of E19 and E20 and erase their result files. Use a bash file E20/run3.sh to rename the subdirectories. Move E19 job bases first and then E20 job bases, so E22.1~E22.12 would be PUS job bases and E22.13~E22.24 would be PES job bases. 
+
+Copy and paste run1.sh and run2.sh from E20. 
+
+We will only use these four config files
+
+config1:
+1
+1 1
+1
+
+config2:
+2
+1 1
+1 1
+1
+
+config3:
+2
+1 1
+1 1
+2
+
+config4:
+2
+1 1
+1 1
+3
+
+For two-machine algorithms we will set alpha1 = alpha2 = 1. 
+
+Modify run1.sh and run2.sh. Run them. They are automation of job generation and scheduling simulation respectively. Since we would like to compare the competitive ratio against the old experiments, we will set job length to be the same as the past. 
+
+For that purpose, we will generate every job base twice. We simulate single machine algorithms on the job bases with job length 400 and simulate two-machine algorithms on the other job bases with job length 100. 
+
+It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E22.4/result3. There are supposed to be four result files for each job base.  
+
+Modify the script E22/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Redefined competitive ratios of greedy-1 algorithm, along with results in previous experiment (E19, E20)
+
+On PUS job sequences:
+(a,b),f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4   Greedy-1    
+(5,25),y                  1.07        1.12           1.04       1.84 
+(5,25),y^2                1.09        1.10           1.13       1.59
+(5,25),y^3                1.10        1.10           1.17       1.49
+(5,25),y^3+y^2+y          1.10        1.10           1.17       1.49
+(5,25),3y^3+2y^2+y        1.10        1.10           1.16       1.49
+(5,25),e^y                1.02        1.02           1.14       1.19
+(4,100),y                 1.09        1.12           1.07       1.90
+(4,100),y^2               1.12        1.11           1.19       1.69
+(4,100),y^3               1.13        1.11           1.23       1.60
+(1,125),y                 1.10        1.12           1.09       1.88    
+(1,125),y^2               1.13        1.11           1.20       1.68
+(1,125),y^3               1.14        1.11           1.25       1.61
+
+On PES job sequences:
+beta,f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    Greedy-1
+10,y                     1.10        1.16           1.05        1.40
+10,y^2                   1.08        1.08           1.14        1.14
+10,y^3                   1.06        1.05           1.12        1.07
+10,y^3+y^2+y             1.06        1.05           1.12        1.07
+25,y                     1.16        1.23           1.09        1.54
+25,y^2                   1.12        1.12           1.19        1.21
+25,y^3                   1.08        1.07           1.16        1.10
+25,y^3+y^2+y             1.08        1.07           1.16        1.11
+100,y                    1.33        1.35           1.31        1.61
+100,y^2                  1.18        1.17           1.31        1.23    
+100,y^3                  1.13        1.10           1.24        1.12
+100,y^3+y^2+y            1.12        1.10           1.24        1.12
+
+
+Comparison of competitive ratios across 3 two-machine algorithms are summerized below
+
+On PUS job sequences:
+(a,b),f(x) of job base  FP(1,1)     ABC(1,1)    LVF(1,1)    
+(5,25),y                1.73        1.64        1.46
+(5,25),y^2              1.54        1.44        1.27
+(5,25),y^3              1.49        1.37        1.21
+(5,25),y^3+y^2+y        1.49        1.38        1.21
+(5,25),3y^3+2y^2+y      1.49        1.38        1.21
+(5,25),e^y              1.49        1.22        1.03
+(4,100),y               1.82        1.72        1.62
+(4,100),y^2             1.60        1.50        1.41
+(4,100),y^3             1.50        1.41        1.31
+(1,125),y               1.83        1.72        1.63
+(1,125),y^2             1.58        1.48        1.40
+(1,125),y^3             1.49        1.40        1.32
+
+On PES job sequences:
+beta,f(x) of job base   FP(1,1)     ABC(1,1)    LVF(1,1)    
+10,y                    1.38        1.33        1.25 
+10,y^2                  1.22        1.16        1.08    
+10,y^3                  1.15        1.10        1.04
+10,y^3+y^2+y            1.16        1.10        1.04
+25,y                    1.56        1.49        1.42
+25,y^2                  1.27        1.20        1.14
+25,y^3                  1.18        1.12        1.06
+25,y^3+y^2+y            1.18        1.12        1.06
+100,y                   1.26        1.24        1.22
+100,y^2                 1.10        1.06        1.04
+100,y^3                 1.08        1.04        1.01
+100,y^3+y^2+y           1.08        1.04        1.01
+
+The CPU time spent on each experiment(each figure shown on the table) was between 2 and 3 minute.
+
+Unlike our estimation, Greedy-1 algorithm in fact has unsatisfactory performance, especially on PUS sequences. 
+Besides, performance of Greedy-1 on PUS sequences with linear benevolent function is worse than the other benevolent functions, 
+which is not consistent with results for other Greedy-x algorithms in general. 
+However, performance of our two-machine algorithms shows the same pattern as before: PUS/PES sequence with linear benevolent 
+function is always the worst instance.
