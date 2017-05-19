@@ -1,0 +1,67 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+We have to redo experiment E16 because of a major mistake. 
+
+In E16, we claim that "The change of performance of single-machine algorithms with respect to benevolent functions is different from that of two-machine algorithms. Single-machine algorithms tend to have the worst performance when the degree of polynomial is high; on the contrary, two-machine algorithms show the worst performance on the PUS sequences with linear benevolent function. " Logically we would run single-machine algorithms on PUS sequences with nonlinear benevolent functions, and run two-machine algorithms on PUS sequences with linear benevolent functions.
+
+However, the experiment was operated in the opposite way: Single machine algorithms ran against PUS sequences generated with linear benevolent function whereas two-machine algorithms ran against the one with nonlinear benevolent functions. Although we still managed to obtained interesting results in E16, here we will perform the originally planned experiment.    
+
+Concerning the definition of competitive ratio, this experiment would focus only on the updated version. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Copy run1.sh, run2,sh and run3.sh from E22. Modify run3.sh to rename directories. Regarding the job generation, we can directly generate jobs using run1.sh since input files are almost ready. Like E16, E23.1~E23.9 are job sequences with linear benevolent functions while E23.10~23.18 are job sequences with nonlinear benevolent functions.
+
+Be careful for the job length parameter. Generate E23.1~E23.9 with job length 100, and generate E23.10~E23.18 with job length 400
+
+We will reuse the config files from E16.
+
+Modify bash file run2.sh to automate running simulation. It is supposed to run algorithms 4-12 on job sequences in job bases 1-9, run algorithms 1-3 on job sequences in job bases 10-18, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E23.4/result3  
+
+Modify the script E22/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Comparison of competitive ratios across 3 single-machine algorithms are summerized below
+
+(a,b) of job base    Greedy-2    Greedy-1.5     Greedy-4    
+(1,1000)             1.62        1.52           1.56 
+(1,10000)            1.27        1.16           1.55
+(1,100000)           1.27        1.16           1.55
+(100,1000)           1.63        1.53           1.57
+(100,10000)          1.27        1.16           1.55
+(100,100000)         1.27        1.15           1.55
+(1000,10000)         1.27        1.15           1.54
+(1000,100000)        1.27        1.15           1.55
+(10000,100000)       1.27        1.15           1.54
+
+Notice that f(y) = y^3. The CPU time spent on each experiment(each figure shown on the table) was about 2 minute.
+
+Comparison of competitive ratios across 9 two-machine algorithms are summerized below
+
+(a,b) of job base   FP(2,2) FP(1.5,4) FP(4,1.5) ABC(2,2) ABC(1.5,4) ABC(4,1.5) LVF(2,2) LVF(1.5,4) LVF(4,1.5) 
+(1,1000)            1.39    1.46      1.43      1.38     1.43       1.44       1.38     1.43       1.43   
+(1,10000)           1.26    1.32      1.30      1.25     1.30       1.30       1.25     1.30       1.29
+(1,100000)          1.26    1.32      1.30      1.26     1.30       1.30       1.25     1.30       1.30
+(100,1000)          1.36    1.42      1.40      1.36     1.40       1.40       1.35     1.40       1.40
+(100,10000)         1.26    1.32      1.30      1.25     1.30       1.30       1.25     1.30       1.30
+(100,100000)        1.26    1.32      1.29      1.26     1.30       1.30       1.25     1.30       1.29
+(1000,10000)        1.26    1.32      1.30      1.26     1.30       1.30       1.25     1.30       1.30
+(1000,100000)       1.26    1.32      1.30      1.26     1.31       1.30       1.25     1.30       1.30
+(10000,100000)      1.26    1.32      1.30      1.26     1.30       1.30       1.25     1.30       1.30
+
+Note that f(y) = y. The CPU time spent on each experiment(each figure shown on the table) was about 1.5 minute.
+
+Although the numbers changed a lot, the conclusion we drew in E16 should still hold true, which I quoted as below. 
+
+"From simple observation of the results, our hypothesis that competitive ratio of our proposed algorithms is positively related to the width of distribution range (a, b) is basically invalidated. There is no clear relation between competitive ratio and (a, b). 
+
+Also, this experiment confirms the stability of our algorithms with respect to change of PUS input parameters. It offers extra confidence to the performance of our algorithms."
+
+Besides, all algorithms have the highest competitive ratio when (a, b) is (1, 1000) or (100, 1000). When (a, b) is larger than (100, 1000), the competitive ratio goes down and its variation with respect to change of (a, b) becomes really small. When (a, b) is less than (1, 1000), the competitive ratio keeps increasing as (a, b) increases. Thus, it made us believe that the choice of (a, b) that would cause the highest competitive ratio should be closest to (1, 1000) or (100, 1000).  
