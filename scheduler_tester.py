@@ -65,6 +65,25 @@ class SchedulerTester1(unittest.TestCase):
         self.assertEqual(machine0.total_value, 98.0)
         self.assertEqual(machine1.total_value, 42.0)
 
+    def test_Coorperative_Greedy(self):
+        self.scheduler.mechanism = 13
+        machine0 = Machine(2, 2, 0)
+        self.scheduler.machines = [machine0]
+        possible_results = [86, 48, 98, 60, 77, 39, 89, 51]
+        for i in range(1000):
+            self.scheduler.run_schedule()
+            self.assertIn(machine0.total_value, possible_results)
+            self.scheduler.clear()
+
+    def test_Coorperative_Greedy2(self):
+        self.scheduler.mechanism = 13
+        machine0 = Machine(2, 2, 0)
+        machine1 = Machine(2, 2, 1)
+        self.scheduler.machines = [machine0, machine1]
+        self.scheduler.run_schedule()
+        self.assertEqual(machine0.total_value, 60.0)
+        self.assertEqual(machine1.total_value, 89.0) 
+
     def test_offline_optimal1(self):
         self.assertEqual(self.scheduler.offline_single_machine(), 98.0)
 
