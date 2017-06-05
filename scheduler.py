@@ -2,6 +2,7 @@
 import numpy as np
 import bisect
 import logging
+import random
 from job import Job
 
 log = logging.getLogger("MMISLogger")
@@ -76,7 +77,7 @@ class Machine(object):
 
 # TIME_INCREMENT should be greater than EPSILON
 EPSILON = 0.000001
-NUM_MECHANISMS = 12
+NUM_MECHANISMS = 13
 MECHANISMS_WITH_RD = [4, 5, 6, 7, 8, 9, 12] 
 
 class Scheduler(object):
@@ -95,6 +96,7 @@ class Scheduler(object):
     10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine 
     11. (Single Machine) Randomly decide whether we abort
     12. Mechanism 1 + simplified randomized decider says YES 
+    13. (1 or 2 machines) Cooperative Greedy Algorithm
     '''
 
     def __init__(self):
@@ -138,6 +140,7 @@ class Scheduler(object):
         print "10. (Single Machine) Randomly select one abortion ratio from two ratio on the machine"  
         print "11. (Single Machine) Randomly decide whether to abort"
         print "12. Mechanism 1 + simplified randomized decider says YES" 
+        print "13. (1 or 2 machines) Cooperative Greedy Algorithm"
         self.mechanism = int(raw_input("Which mechanism would you prefer? "))
         while (n <= 0 or n > NUM_MECHANISMS):
             self.mechanism = int(raw_input("Which mechanism would you prefer? "))
@@ -298,6 +301,40 @@ class Scheduler(object):
                 and machine.is_replaceable_SRD(job)):
                 machine.start_job(job)
                 return
+
+    def heuristic13(self, job):
+        # This mechanism is only allowed to run on 1 or 2 machines, running heuristic13 on more than 2 machines do not make sense yet
+        assert len(self.machines) == 1 or len(self.machines) == 2
+        log.debug( "heuristic13 has %d at time %d" % (job.name, self.time))
+        if (len(self.machines) == 1):
+            machine = self.machines[0]
+            if (not hasattr(machine, 'primary')):
+                machine.primary = np.random.choice([True, False])
+                machine.phase_end = 0
+            if (job.arrival >= machine.phase_end):
+                machine.primary = not machine.primary
+                machine.phase_end = machine.work_end if (machine.primary and not machine.is_idle()) else (job.arrival + job.duration)
+            if (machine.primary):
+                if (machine.is_idle()):
+                    machine.start_job(job)
+            elif (machine.is_replaceable(job)):
+                    machine.start_job(job)
+        else: # There exist two machines
+            machine1 = self.machines[0]
+            machine2 = self.machines[1]
+            if (not hasattr(machine1, 'primary')):
+                machine1.primary = False
+                machine1.phase_end = 0
+            if (job.arrival >= machine1.phase_end):
+                machine1.primary = not machine1.primary
+                PM = machine1 if machine1.primary else machine2
+                machine1.phase_end = job.arrival + job.duration if PM.is_idle() else PM.work_end
+            PM = machine1 if machine1.primary else machine2
+            SM = machine1 if not machine1.primary else machine2
+            if (PM.is_idle()):
+                PM.start_job(job)
+            elif (SM.is_replaceable(job)):
+                SM.start_job(job)
 
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
