@@ -1,0 +1,106 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+
+Cooperative Greedy Algorithm is a new candidate algorithm to consider. It used to be a scheduling algorithm for cooperation between two machines, but here it has been adjusted such that it can also work as a single-machine algorithm. In this experiment, we will examine the performance of CGA by running it against Poisson arrival sequences that are used in E19/E20. 
+
+When cooperative greedy algorithm was implemented, we generalized it such that we could apply the concept of abortion ratio to it. The original version of CGA is now a special case where abortion ratio is set to 1. As a first step, we will only simulate this simple CGA.
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Borrow input files from E22. It is easier to copy and paste all subdirectories of E22 and erase its result files. Use a bash file E22/run3.sh to rename the subdirectories. Copy and paste run1.sh and run2.sh from E22. 
+
+We will only use these two config files
+
+config1:
+1
+1 1
+13
+
+config2:
+2
+1 1
+1 1
+13
+
+For two-machine algorithms we will set alpha1 = alpha2 = 1. 
+
+Modify run1.sh and run2.sh. Run them. They are automation of job generation and scheduling simulation respectively. Since we would like to compare the competitive ratio against the old experiments, we will set job length to be the same as the past. 
+
+For that purpose, we will generate every job base twice. We simulate single machine algorithms on the job bases with job length 400 and simulate two-machine algorithms on the other job bases with job length 100. Since the single-machine version of the algorithm has a randomized part, we will only generate 100 jobs and run 100 times for each job.
+
+It is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 1 over job base 7, we expect the result residing in E25.7/result1. There are supposed to be two result files for each job base.  
+
+Modify the script E25/clip.py to pick up results
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+
+Redefined competitive ratios of CGA algorithm, along with results in previous experiment (E19, E20, E22)
+
+On PUS job sequences:
+(a,b),f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4   Greedy-1   CGA 
+(5,25),y                  1.07        1.12           1.04       1.84       1.76 
+(5,25),y^2                1.09        1.10           1.13       1.59       1.54
+(5,25),y^3                1.10        1.10           1.17       1.49       1.47
+(5,25),y^3+y^2+y          1.10        1.10           1.17       1.49       1.51
+(5,25),3y^3+2y^2+y        1.10        1.10           1.16       1.49       1.44
+(5,25),e^y                1.02        1.02           1.14       1.19       3.11
+(4,100),y                 1.09        1.12           1.07       1.90       1.27
+(4,100),y^2               1.12        1.11           1.19       1.69       1.57
+(4,100),y^3               1.13        1.11           1.23       1.60       1.52
+(1,125),y                 1.10        1.12           1.09       1.88       1.27
+(1,125),y^2               1.13        1.11           1.20       1.68       1.43
+(1,125),y^3               1.14        1.11           1.25       1.61       1.87
+
+On PES job sequences:
+beta,f(x) of job base    Greedy-2    Greedy-1.5     Greedy-4    Greedy-1  CGA 
+10,y                     1.10        1.16           1.05        1.40      1.12  
+10,y^2                   1.08        1.08           1.14        1.14      1.74  
+10,y^3                   1.06        1.05           1.12        1.07      1.37
+10,y^3+y^2+y             1.06        1.05           1.12        1.07      2.64
+25,y                     1.16        1.23           1.09        1.54      1.26
+25,y^2                   1.12        1.12           1.19        1.21      1.37
+25,y^3                   1.08        1.07           1.16        1.10      5.24
+25,y^3+y^2+y             1.08        1.07           1.16        1.11      4.11
+100,y                    1.33        1.35           1.31        1.61      1.20
+100,y^2                  1.18        1.17           1.31        1.23      4.42
+100,y^3                  1.13        1.10           1.24        1.12      6.80
+100,y^3+y^2+y            1.12        1.10           1.24        1.12      7.76
+
+Comparison of competitive ratios across 3 two-machine algorithms are summerized below
+
+On PUS job sequences:
+(a,b),f(x) of job base  FP(1,1)     ABC(1,1)    LVF(1,1)   CGA 
+(5,25),y                1.73        1.64        1.46       1.29
+(5,25),y^2              1.54        1.44        1.27       1.32
+(5,25),y^3              1.49        1.37        1.21       1.38
+(5,25),y^3+y^2+y        1.49        1.38        1.21       1.37
+(5,25),3y^3+2y^2+y      1.49        1.38        1.21       1.38
+(5,25),e^y              1.49        1.22        1.03       1.45
+(4,100),y               1.82        1.72        1.62       1.40
+(4,100),y^2             1.60        1.50        1.41       1.49
+(4,100),y^3             1.50        1.41        1.31       1.55
+(1,125),y               1.83        1.72        1.63       1.43
+(1,125),y^2             1.58        1.48        1.40       1.49
+(1,125),y^3             1.49        1.40        1.32       1.58
+
+On PES job sequences:
+beta,f(x) of job base   FP(1,1)     ABC(1,1)    LVF(1,1)   CGA
+10,y                    1.38        1.33        1.25       1.17
+10,y^2                  1.22        1.16        1.08       1.21
+10,y^3                  1.15        1.10        1.04       1.21
+10,y^3+y^2+y            1.16        1.10        1.04       1.21
+25,y                    1.56        1.49        1.42       1.30
+25,y^2                  1.27        1.20        1.14       1.37
+25,y^3                  1.18        1.12        1.06       1.36
+25,y^3+y^2+y            1.18        1.12        1.06       1.35
+100,y                   1.26        1.24        1.22       1.41
+100,y^2                 1.10        1.06        1.04       1.42
+100,y^3                 1.08        1.04        1.01       1.38
+100,y^3+y^2+y           1.08        1.04        1.01       1.37
+
+Cooperative Greedy Algorithm has a proven stable performance for two machine scheduling but its single machine counterpart does not show the same property. The case with exponential benevolent function, for example, gave a noticeable remark. In fact, this algorithm does not seem to go well with PES sequences with high-degree polynomial benevolent functions. Despite the low precision of our experiment, we can conclude this algorithm could not be transferred easily to single machine scheduling.  
