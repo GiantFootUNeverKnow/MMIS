@@ -419,7 +419,10 @@ class Scheduler(object):
 
     def postprocess(self):
         # Remove imaginary machines produced during scheduling
-        self.machines = [machine for machine in self.machines if (not hasattr(machine, destroy_token))]
+        self.machines = [machine for machine in self.machines if (not hasattr(machine, 'destroy_token'))]
+        # Remove primary mark
+        for machine in self.machines:
+            delattr(machine, 'primary')
 
     def schedule(self, repetition = 1, print_result = True):
         payoff = 0
