@@ -306,35 +306,31 @@ class Scheduler(object):
         # This mechanism is only allowed to run on 1 or 2 machines, running heuristic13 on more than 2 machines do not make sense yet
         assert len(self.machines) == 1 or len(self.machines) == 2
         log.debug( "heuristic13 has %d at time %d" % (job.name, self.time))
-        if (len(self.machines) == 1):
-            machine = self.machines[0]
-            if (not hasattr(machine, 'primary')):
-                machine.primary = np.random.choice([True, False])
-                machine.phase_end = 0
-            if (job.arrival >= machine.phase_end):
-                machine.primary = not machine.primary
-                machine.phase_end = machine.work_end if (machine.primary and not machine.is_idle()) else (job.arrival + job.duration)
-            if (machine.primary):
-                if (machine.is_idle()):
-                    machine.start_job(job)
-            elif (machine.is_replaceable(job)):
-                    machine.start_job(job)
-        else: # There exist two machines
+        if (len(self.machines) == 1 and not hasattr(self.machines[0], 'primary')):
+            machine1 = self.machines[0]
+            machine2 = Machine(machine1.alpha1, machine1.alpha2, 2)
+            machine2.destroy_token = True
+            self.machines.append(machine2)
+            machine1.primary = np.random.choice([True, False])
+            machine1.phase_end = 0
+        elif (not hasattr(self.machines[0], 'primary')): # There exist two machines
             machine1 = self.machines[0]
             machine2 = self.machines[1]
-            if (not hasattr(machine1, 'primary')):
-                machine1.primary = False
-                machine1.phase_end = 0
-            if (job.arrival >= machine1.phase_end):
-                machine1.primary = not machine1.primary
-                PM = machine1 if machine1.primary else machine2
-                machine1.phase_end = job.arrival + job.duration if PM.is_idle() else PM.work_end
+            machine1.primary = False
+            machine1.phase_end = 0
+        else:
+            machine1 = self.machines[0]
+            machine2 = self.machines[1]
+        if (job.arrival >= machine1.phase_end):
+            machine1.primary = not machine1.primary
             PM = machine1 if machine1.primary else machine2
-            SM = machine1 if not machine1.primary else machine2
-            if (PM.is_idle()):
-                PM.start_job(job)
-            elif (SM.is_replaceable(job)):
-                SM.start_job(job)
+            machine1.phase_end = job.arrival + job.duration if PM.is_idle() else PM.work_end
+        PM = machine1 if machine1.primary else machine2
+        SM = machine1 if not machine1.primary else machine2
+        if (PM.is_idle()):
+            PM.start_job(job)
+        elif (SM.is_replaceable(job)):
+            SM.start_job(job)
 
     def process_job(self, job):
         function_name = "self.heuristic" + str(self.mechanism)
@@ -421,10 +417,15 @@ class Scheduler(object):
                 + "\n" + "-----------------------------------------------------" 
         log.info(formatted_result)
 
+    def postprocess(self):
+        # Remove imaginary machines produced during scheduling
+        self.machines = [machine for machine in self.machines if (not hasattr(machine, destroy_token))]
+
     def schedule(self, repetition = 1, print_result = True):
         payoff = 0
         for i in range(repetition):
             self.run_schedule()
+            self.postprocess()
             self.log_result()
             payoff += self.get_result()
             self.clear()
