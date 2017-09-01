@@ -1,0 +1,45 @@
+
+Objectives
+-----------------------------------------------------------------------------------------
+
+We want to verify a hypothesis: E[OPT] = T / E[l] * E[v] for stochastic sequences. T is totol number of time slots we consider(a predefined constant), l is the length of job (not job length), v is the value of job and E[OPT] is the expectation taken over all job sequences on the optimal reward. 
+
+This straightforward experiment does not fit into our system because we always fix the job length and vary T. To save our effort on development, we "manually" modify the generated sequences to simulate a predefined T. We will use our familiar machinery to compute E[OPT] as usual, and write a new script to calculate l and v. Besides, that script should output the evaluations of both sides of the equation. 
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------
+
+Copy and paste all subdirectories of E20 and erase their result files. Use a bash file run3.sh to rename the subdirectories.  
+Since we only concern the optimal reward instead of results from any attempted algorithm, we can save time by running the main program just once for every job sequence, with the simplest config file.   
+
+Modify run1.sh and run2.sh. Run them. They are automatic job generation and scheduling simulation. We do not have to set the job length as the previous, but there has to be enough jobs. We do no like seeing jobs stop coming before T. For this experiment, we set job length to be 150 
+
+After running run1.sh, observe the job bases. Decide the value of T. Write a script cutoff.py that would delete jobs arriving after T. Then execute run2.sh. 
+
+T = 150 for this experiment 
+
+Usually, it is supposed to run all algorithms on all job bases, and output result files to the proper directory with names being the index of algorithms. For example, when running algorithm 3 over job base 4, we expect the result residing in E20.4/result3. For our experiment, we just output the result files to its subdirectory such as E20.6/result.
+
+Using clip.py as an example, write a new script eval.py which would pick up necessary information and evaluate our equation. 
+
+---------------------------------------------------------------------------------------
+Result
+---------------------------------------------------------------------------------------
+Evaluation of quantities involved in the equation is listed below. (T = 150)
+
+beta,f(x) of job base       E[L]        E[V]        T / E[L] * E[V]     E[OPT]
+10,y                        10.51       10.51       150                 161
+10,y^2                      10.50       209.91      2999.0              5171
+10,y^3                      10.50       6300.8      90000               227097
+10,y^3+y^2+y                10.50       6491.4      92722               231317
+25,y                        25.52       25.52       150                 219.96
+25,y^2                      25.51       1275.22     7498.5              20787.7
+25,y^3                      25.49       95865.9     564120              2585913
+25,y^3+y^2+y                25.51       97440.0     572962              2611648
+100,y                       100.47      100.47      150                 560.47
+100,y^2                     100.47      20083.4     29985.2             260933.6
+100,y^3                     100.43      6021905     8993750             143970245
+100,y^3+y^2+y               100.37      6021403     8998976             143839408
+
+Our hypothesis does not hold in any case above. When the degree of f increases, even the order of two sides of the equation becomes different.
