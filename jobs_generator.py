@@ -241,7 +241,7 @@ class SchemePUS(JobsGenerationScheme):
         arrivals = []
         time = 0
         while len(arrivals) < JOBS_AMOUNT:
-            if (np.random.randint(2)):
+            if (np.random.random() <= self.p):
                 arrivals.append(time)
             time += 1
         self.n = len(arrivals)
@@ -281,7 +281,7 @@ class SchemePPS(JobsGenerationScheme):
         arrivals = []
         time = 0
         while len(arrivals) < JOBS_AMOUNT:
-            if (np.random.randint(2)):
+            if (np.random.random() <= self.p):
                 arrivals.append(time)
             time += 1
         self.n = len(arrivals)
@@ -321,7 +321,7 @@ class SchemePES(JobsGenerationScheme):
         arrivals = []
         time = 0
         while len(arrivals) < JOBS_AMOUNT:
-            if (np.random.randint(2)):
+            if (np.random.random() <= self.p):
                 arrivals.append(time)
             time += 1
         self.n = len(arrivals)
@@ -362,7 +362,7 @@ class SchemePNS(JobsGenerationScheme):
         arrivals = []
         time = 0
         while len(arrivals) < JOBS_AMOUNT:
-            if (np.random.randint(2)):
+            if (np.random.random() <= self.p):
                 arrivals.append(time)
             time += 1
         self.n = len(arrivals)
