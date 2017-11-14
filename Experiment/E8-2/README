@@ -1,0 +1,75 @@
+-----------------------------------------------------------------------------------------
+Objectives
+-----------------------------------------------------------------------------------------
+
+This experiment is close to previous experiments E1 and E6. The only difference is to study PES and PNS instead of PPS or PUS.
+
+We are interested in seeing how competitive ratio would change as p varies.
+Specifically, the experiment would calculate the expectations and variances of competitive ratio of "Greedy-2" algorithm over job sequences produced by PES Scheme and PNS Scheme with different p, and if necessary we will produce graphs describing the function of expectation and variance in terms of p.  
+
+-----------------------------------------------------------------------------------------
+Procedures
+-----------------------------------------------------------------------------------------  
+
+We do the experiment for PES and PNS separately, one for a time.
+First, we generate PES sequences(same for PNS) for different p. 
+To facilitate the procedure, we will use run1.sh, run2.sh and run3.sh to complete the generation. These scirpts can be obtained from E6
+
+Run3.sh is used to generate so-called input files that would be input for run1.sh, which then would produce job sequences for this experiment.Change run3.sh, run2.sh and run1.sh so that files/directories they produce/access are properly labelled for PES or PNS. 
+
+For example, we want the result of generations to be in directories Experiments/E8-2/jobs_PES and Experiment/E8-2/jobs_PNS 
+ 
+Since we only want p to be varied, texts in most input files should be the same. In our case, only the second line would be changed to different chosen p. For this experiment, we want p = 0.05 * k, k = 1,2,...,19 
+ 
+Example input file:
+4
+0.25
+10
+lambda y: y*y
+100
+Y
+
+Example execution of jobs_generator.py (the execution would be automated by run1.sh):
+Run ./jobs_generator.py --batch --redir PPS[k] --jl 400
+    Choose PPS Scheme
+    Enter p
+    For beta, enter 10
+    For benevolent function, enter "lambda y: y * y" (without quotes), if this function is still set as default, dont input anything
+    For the number of job sequences, enter 100
+
+Copy and paste the config file from E6
+
+If any changes occur to this experiment in future, a great approach to change the behavior of the experiment is to modify config.
+Consult MMIS/ConfigFileFormat to understand how it works
+
+Change directory to MMIS, run run2.sh to launch the simulation.
+Run clip.py to collect the result in E8-2. Plotting the result in Canopy is a more intuitive way to understand the result, though we need to uncomment some codes of clip.py
+
+---------------------------------------------------------------------------------------
+Result
+--------------------------------------------------------------------------------------
+
+while variance of the competitive ratios are uniformly small, there is a apparently positive relation between expected competitive ratio and density of the job sequence.  With the data and plot below, we should be able to conclude that the density of a PNS job sequence positively affects the performance of Greedy-2 algorithm. Similar result is obtained for PES job sequences.
+
+p               PNS expected comp ratio  PES expected comp ratio
+0.05            1.03                     1.02       
+0.1             1.05                     1.03
+0.15            1.06                     1.04
+0.2             1.07                     1.05
+0.25            1.07                     1.06
+0.3             1.08                     1.07
+0.35            1.08                     1.07
+0.4             1.08                     1.08 
+0.45            1.08                     1.09
+0.5             1.09                     1.08
+0.55            1.09                     1.08
+0.6             1.09                     1.09
+0.65            1.09                     1.10
+0.7             1.09                     1.11
+0.75            1.10                     1.11
+0.8             1.09                     1.10
+0.85            1.09                     1.12
+0.9             1.10                     1.12
+0.95            1.10                     1.11
+
+In fact, the number of repetition of this experiment could not promise the precision of the last digit. If one tries to obtain reliable and precise last digits, we suggest adjusting the number of job sequences to 10000 and re-evaluating the competitive ratio. We will do so if the experiment will become a part of publication. 
